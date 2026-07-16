@@ -7,10 +7,13 @@
 <meta name="description" content="Diretório moderno de serviços de apoio a pessoas com TEA, pessoas idosas e assistência social em Boa Vista-RR.">
 
 <!-- PWA -->
+<link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#1B4B43">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="RedeApoio-BV">
+<link rel="icon" href="icon-192.png" type="image/png" sizes="192x192">
+<link rel="apple-touch-icon" href="icon-192.png">
 
 <!-- Google Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -787,6 +790,13 @@ window.onload = () => {
   initMap();
   render();
   document.getElementById("code-block").querySelector("code").textContent = document.documentElement.outerHTML;
+
+  // Registro do Service Worker para PWA
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('./sw.js')
+      .then(reg => console.log('Service Worker registrado!', reg))
+      .catch(err => console.log('Erro ao registrar Service Worker', err));
+  }
 };
 </script>
 </body>
