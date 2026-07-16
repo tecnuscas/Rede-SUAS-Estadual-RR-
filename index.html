@@ -364,20 +364,19 @@
     margin-bottom: 2rem;
   }
 
+  #print-section { display: none; }
+
   @media print {
     @page { size: landscape; margin: 0.5cm; }
-    body * { visibility: hidden; }
-    #print-section, #print-section * { visibility: visible; }
+    /* Remove todo o app do fluxo (display:none tira o espaço ocupado,
+       diferente de visibility:hidden, que deixava páginas em branco) */
+    #app-content { display: none !important; }
     #print-section {
       display: block !important;
-      position: absolute;
-      left: 0; top: 0;
       width: 100%;
       background: white;
     }
   }
-
-  #print-section { display: none; }
 
   footer {
     background: var(--brand-secondary);
@@ -403,6 +402,7 @@
 </head>
 <body>
 
+<div id="app-content">
 <header class="hero">
   <div class="container">
     <div class="badge-ui">
@@ -448,13 +448,11 @@
   <div class="grid" id="equipment-list"></div>
 
   <div id="empty-state" style="display:none; text-align:center; padding:8rem 2rem;">
-    <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="var(--border-base)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom: 2rem;"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14a9 3 0 0 0 18 0V5"/><path d="M3 12a9 3 0 0 0 18 0"/></svg>
+    <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#E2E8F0" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom: 2rem;"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14a9 3 0 0 0 18 0V5"/><path d="M3 12a9 3 0 0 0 18 0"/></svg>
     <h2 style="font-family: var(--font-serif); font-size: 2rem; color: var(--text-muted); margin: 0 0 0.5rem;">Nenhum resultado para esta busca</h2>
     <p style="color: var(--text-muted);">Tente outros termos ou limpe os filtros aplicados.</p>
   </div>
 </main>
-
-<div id="print-section"></div>
 
 <footer>
   <div class="container">
@@ -462,6 +460,9 @@
     <p style="font-size: 0.75rem; margin-top: 1rem;">Desenvolvido para profissionais da rede de proteção social.</p>
   </div>
 </footer>
+</div>
+
+<div id="print-section"></div>
 
 <script>
 const DATA = [
@@ -779,7 +780,13 @@ function printReport(id) {
     </div>
   `;
 
-  setTimeout(() => { window.print(); }, 200);
+  // Espera dois frames de renderização para garantir que o navegador
+  // já aplicou o layout do relatório antes de abrir a caixa de impressão.
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      window.print();
+    });
+  });
 }
 
 function exportNotes() {
