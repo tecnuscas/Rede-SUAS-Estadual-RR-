@@ -723,8 +723,8 @@ function printReport(id) {
   const printSection = document.getElementById("print-section");
 
   printSection.innerHTML = `
-    <div style="padding: 40px; font-family: sans-serif; color: #0F172A; background: white; min-height: 100vh; box-sizing: border-box;">
-      <div style="display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 3px solid #115E59; padding-bottom: 20px; margin-bottom: 30px;">
+    <div style="padding: 30px 40px; font-family: sans-serif; color: #0F172A; background: white; box-sizing: border-box;">
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 3px solid #115E59; padding-bottom: 16px; margin-bottom: 24px;">
         <div style="display: flex; align-items: center; gap: 15px;">
           <div style="background: #115E59; color: white; padding: 10px; border-radius: 8px;">
             <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2">
@@ -745,7 +745,7 @@ function printReport(id) {
       <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
         <div>
           <h2 style="font-size: 22px; margin: 0 0 10px; color: #0F172A;">${item.name}</h2>
-          <p style="font-size: 14px; color: #64748B; margin: 0 0 25px;">${item.fullName}</p>
+          <p style="font-size: 14px; color: #64748B; margin: 0 0 20px;">${item.fullName}</p>
 
           <div style="display: flex; flex-direction: column; gap: 15px;">
             <div style="background: #F8FAFC; padding: 15px; border-radius: 10px; border: 1px solid #E2E8F0;">
@@ -763,18 +763,18 @@ function printReport(id) {
           </div>
         </div>
 
-        <div style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 12px; padding: 25px; position: relative;">
+        <div style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 12px; padding: 25px; display: flex; flex-direction: column;">
           <h3 style="font-size: 14px; text-transform: uppercase; color: #115E59; margin: 0 0 15px;">Observações e Encaminhamentos</h3>
-          <div style="font-size: 14px; line-height: 1.8; color: #1E293B; white-space: pre-wrap; min-height: 300px;">${note ? escapeHtml(note) : "Nenhuma observação técnica registrada para este equipamento."}</div>
+          <div style="font-size: 14px; line-height: 1.8; color: #1E293B; white-space: pre-wrap; word-wrap: break-word; overflow-wrap: break-word; min-height: 220px;">${note ? escapeHtml(note) : "Nenhuma observação técnica registrada para este equipamento."}</div>
 
-          <div style="margin-top: 40px; border-top: 1px solid #CBD5E1; padding-top: 20px; text-align: center;">
-            <div style="width: 200px; border-top: 1px solid #0F172A; margin: 40px auto 10px;"></div>
+          <div style="margin-top: 30px; border-top: 1px solid #CBD5E1; padding-top: 20px; text-align: center;">
+            <div style="width: 200px; border-top: 1px solid #0F172A; margin: 30px auto 10px;"></div>
             <p style="margin: 0; font-size: 11px; font-weight: 700;">ASSINATURA DO PROFISSIONAL RESPONSÁVEL</p>
           </div>
         </div>
       </div>
 
-      <div style="position: absolute; bottom: 40px; left: 40px; right: 40px; border-top: 1px solid #E2E8F0; padding-top: 15px; text-align: center; font-size: 10px; color: #94A3B8;">
+      <div style="margin-top: 24px; border-top: 1px solid #E2E8F0; padding-top: 15px; text-align: center; font-size: 10px; color: #94A3B8;">
         Este documento é para uso exclusivo da rede de proteção social. As informações aqui contidas são de natureza profissional.
       </div>
     </div>
