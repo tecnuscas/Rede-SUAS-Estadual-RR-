@@ -6,24 +6,20 @@
 <title>Rede de Apoio · Boa Vista-RR</title>
 <meta name="description" content="Diretório moderno de serviços de apoio a pessoas com TEA, pessoas idosas e assistência social em Boa Vista-RR.">
 
-<!-- PWA -->
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#1B4B43">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="RedeApoio-BV">
 <link rel="icon" href="icon-192.png" type="image/png" sizes="192x192">
-<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 
-<!-- Google Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
-<!-- Lucide Icons -->
 <script src="https://unpkg.com/lucide@latest"></script>
 
-<!-- Leaflet CSS for Maps -->
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
 
 <style>
@@ -478,7 +474,7 @@
   <div class="container">
     <p class="eyebrow"><i data-lucide="map-pin" size="14"></i> Boa Vista · Roraima</p>
     <h1>Rede de Apoio</h1>
-    <p class="lede">Serviços socioassistenciais e apoio à pessoas diagnosticadas com TEA.</p>
+    <p class="lede">Guia completo de serviços socioassistenciais, apoio ao TEA e atendimento à pessoa idosa. Encontre o local mais próximo de você.</p>
   </div>
 </header>
 
@@ -512,7 +508,6 @@
     <p style="font-family:var(--font-serif); font-size:1.25rem; color:var(--ink-soft);">Nenhum serviço encontrado para essa busca.</p>
   </div>
 
-  <!-- Área oculta para impressão -->
   <div id="print-section"></div>
 </main>
 
@@ -524,7 +519,6 @@
   </div>
 </footer>
 
-<!-- Leaflet JS -->
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 
 <script>
@@ -596,7 +590,7 @@ const DATA = [
     hoursText: "Segunda a sexta, 07:00 às 13:00 e 14:00 às 19:00",
     phones: ["(95) 3623-3703"],
     services: ["Acolhimento Idoso", "Fisioterapia", "Atividades de Convivência"],
-    description: "Espaço voltado para o envelhecimento ativo e saudável, com foco preventivo. Atende aproximadamente 856 idosos com realização de 1.500 atendimentos de saúde por mês. Conta com equipe de 217 servidores (cuidadores, médicos, enfermeiros, fisioterapeutas, psicólogos). Oferece hidroginástica, informática, artesanato, oficinas de geração de renda, eventos culturais e atividades de lazer.",
+    description: "Espaço voltado para o envelhecimento active e saudável, com foco preventivo. Atende aproximadamente 856 idosos com realização de 1.500 atendimentos de saúde por mês. Conta com equipe de 217 servidores (cuidadores, médicos, enfermeiros, fisioterapeutas, psicólogos). Oferece hidroginástica, informática, artesanato, oficinas de geração de renda, eventos culturais e atividades de lazer.",
     coords: [2.8452, -60.7018]
   },
   {
@@ -651,8 +645,8 @@ const DATA = [
     hours: [{ days:[1,2,3,4,5], open:"08:00", close:"14:00" }],
     hoursText: "Segunda a sexta, 08:00 às 14:00 (PM 24h)",
     phones: ["(95) 3621-1718"],
-    services: ["Serviço de Convivência", "Oficinas Diversas", "Ações Comunitárias", "Atividades Culturais"],
-    description: "Espaço de integração de políticas públicas da Secretaria de Trabalho e Bem-Estar Social (SETRABES). Atende famílias em vulnerabilidade social com foco na busca de autonomia, cidadania e preparação para o mercado de trabalho.",
+    services: ["Ações de Cidadania", "Licenciamento e CNH (Detran)", "Inclusão Produtiva", "Segurança Comunitária"],
+    description: "Espaço de integração de políticas públicas administrado em parceria com Setrabes, Detran-RR e PMRR. Atende famílias em vulnerabilidade social com foco na busca de autonomia, cidadania e preparação para o mercado de trabalho. Possui unidade permanente da Polícia Militar 24h e facilita serviços de trânsito e geração de renda.",
     coords: [2.8185, -60.7582]
   }
 ];
@@ -828,7 +822,6 @@ function printService(id) {
     </div>
   `;
 
-  // Pequeno delay para garantir que o conteúdo foi renderizado antes de abrir o diálogo de impressão
   setTimeout(() => {
     window.print();
   }, 250);
