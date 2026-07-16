@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rede de Apoio · Boa Vista-RR</title>
+<meta name="description" content="Diretório offline de serviços de apoio a pessoas com TEA, pessoas idosas e assistência social em Boa Vista-RR.">
+
+<!-- PWA: permite instalar na tela inicial do celular e (quando publicado
+     online) abrir com ícone próprio e funcionar offline via cache.
+     Não interfere no uso local por duplo clique no arquivo. -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#1B4B43">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" href="icon-192.png" type="image/png" sizes="192x192">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="SUAS-RR">
+<meta name="mobile-web-app-capable" content="yes">
+
+<style>
+  :root{
+    --bg:#EEF3EC;
+    --bg-alt:#E4ECE0;
+    --ink:#1F2A24;
+    --ink-soft:#4B594F;
+    --primary:#1B4B43;
+    --primary-dark:#123530;
+    --accent:#D98E04;
+    --accent-soft:#F3D48A;
+    --line:#CFDBCC;
+    --card:#FFFFFF;
+    --good:#2E7D4F;
+    --closed:#A64B3F;
+    --radius:14px;
+    --serif: Georgia, "Iowan Old Style", "Palatino Linotype", "Book Antiqua", serif;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, Roboto, Helvetica, Arial, sans-serif;
+    --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:var(--sans);
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--primary);}
+  a:focus-visible, button:focus-visible, input:focus-visible{
+    outline:3px solid var(--accent);
+    outline-offset:2px;
+  }
+
+  header.top{
+    background:linear-gradient(180deg, var(--primary) 0%, var(--primary-dark) 100%);
+    color:#F4F7F2;
+    padding:2.6rem 1.5rem 2rem;
+    border-bottom:6px solid var(--accent);
+  }
+  .top-inner{max-width:920px;margin:0 auto;}
+  .eyebrow{
+    font-family:var(--mono);
+    font-size:.72rem;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--accent-soft);
+    margin:0 0 .6rem;
+  }
+  h1{
+    font-family:var(--serif);
+    font-weight:700;
+    font-size:clamp(1.9rem, 5vw, 2.7rem);
+    margin:0 0 .5rem;
+    letter-spacing:-.01em;
+  }
+  .top-inner p.lede{
+    max-width:60ch;
+    color:#DCE7DB;
+    margin:0;
+    font-size:1.02rem;
+  }
+
+  .toolbar{
+    position:sticky;
+    top:0;
+    z-index:5;
+    background:var(--bg);
+    padding:1rem 1.5rem;
+    border-bottom:1px solid var(--line);
+  }
+  .toolbar-inner{max-width:920px;margin:0 auto;}
+  .search-row{
+    display:flex;
+    gap:.6rem;
+    margin-bottom:.7rem;
+  }
+  input[type="search"]{
+    flex:1;
+    font-family:var(--sans);
+    font-size:1rem;
+    padding:.65rem .9rem;
+    border-radius:10px;
+    border:1.5px solid var(--line);
+    background:var(--card);
+    color:var(--ink);
+  }
+  .chips{
+    display:flex;
+    flex-wrap:wrap;
+    gap:.5rem;
+  }
+  .chip{
+    font-family:var(--mono);
+    font-size:.78rem;
+    letter-spacing:.02em;
+    padding:.4rem .8rem;
+    border-radius:999px;
+    border:1.5px solid var(--line);
+    background:var(--card);
+    color:var(--ink-soft);
+    cursor:pointer;
+  }
+  .chip[aria-pressed="true"]{
+    background:var(--primary);
+    border-color:var(--primary);
+    color:#fff;
+  }
+
+  main{max-width:920px;margin:0 auto;padding:1.5rem;}
+  .count{
+    font-family:var(--mono);
+    font-size:.82rem;
+    color:var(--ink-soft);
+    margin:0 0 1rem;
+  }
+
+  .card{
+    background:var(--card);
+    border-radius:var(--radius);
+    border:1px solid var(--line);
+    border-left:6px solid var(--primary);
+    padding:1.3rem 1.4rem;
+    margin-bottom:1.1rem;
+  }
+  .card[data-cat~="tea"]{border-left-color:var(--primary);}
+  .card[data-cat~="idoso"]{border-left-color:var(--accent);}
+  .card[data-cat~="social"]{border-left-color:#5B7DA6;}
+
+  .card-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:1rem;
+    flex-wrap:wrap;
+  }
+  .card h2{
+    font-family:var(--serif);
+    font-size:1.35rem;
+    margin:0 0 .15rem;
+  }
+  .card .sub{
+    font-size:.88rem;
+    color:var(--ink-soft);
+    margin:0;
+  }
+  .status{
+    font-family:var(--mono);
+    font-size:.75rem;
+    padding:.3rem .6rem;
+    border-radius:999px;
+    white-space:nowrap;
+    font-weight:600;
+  }
+  .status.open{background:#E3F1E7;color:var(--good);}
+  .status.closed{background:#F5E7E4;color:var(--closed);}
+
+  .card .tags{
+    display:flex;flex-wrap:wrap;gap:.4rem;
+    margin:.6rem 0 .9rem;
+  }
+  .tag{
+    font-family:var(--mono);
+    font-size:.68rem;
+    text-transform:uppercase;
+    letter-spacing:.06em;
+    color:var(--ink-soft);
+    background:var(--bg-alt);
+    padding:.2rem .5rem;
+    border-radius:5px;
+  }
+
+  .field{
+    display:grid;
+    grid-template-columns:6.5rem 1fr;
+    gap:.3rem .8rem;
+    font-size:.92rem;
+    padding:.28rem 0;
+    border-top:1px dashed var(--line);
+  }
+  .field:first-of-type{border-top:none;}
+  .field dt{
+    font-family:var(--mono);
+    font-size:.72rem;
+    letter-spacing:.03em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    padding-top:.15rem;
+  }
+  .field dd{margin:0;}
+  .field a{text-decoration:none;}
+  .field a:hover{text-decoration:underline;}
+
+  details.services{margin-top:.8rem;}
+  details.services summary{
+    cursor:pointer;
+    font-family:var(--mono);
+    font-size:.78rem;
+    color:var(--primary);
+    letter-spacing:.02em;
+  }
+  details.services ul{
+    margin:.6rem 0 0;
+    padding-left:1.2rem;
+    font-size:.9rem;
+  }
+  details.services li{margin-bottom:.3rem;}
+
+  .actions{
+    display:flex;
+    gap:.5rem;
+    flex-wrap:wrap;
+    margin-top:.9rem;
+  }
+  .btn{
+    font-family:var(--sans);
+    font-size:.82rem;
+    padding:.45rem .8rem;
+    border-radius:8px;
+    border:1.5px solid var(--primary);
+    background:#fff;
+    color:var(--primary);
+    cursor:pointer;
+    text-decoration:none;
+    display:inline-flex;align-items:center;gap:.35rem;
+  }
+  .btn.primary{background:var(--primary);color:#fff;}
+
+  .empty{
+    text-align:center;
+    padding:3rem 1rem;
+    color:var(--ink-soft);
+    font-family:var(--serif);
+    font-style:italic;
+  }
+
+  footer{
+    max-width:920px;margin:0 auto;
+    padding:1.5rem 1.5rem 3rem;
+    font-size:.8rem;
+    color:var(--ink-soft);
+    font-family:var(--mono);
+  }
+  footer a{color:var(--ink-soft);}
+
+  @media print{
+    .toolbar,.actions,footer{display:none;}
+    header.top{background:none;color:var(--ink);border-bottom:2px solid var(--ink);}
+    .top-inner p.lede{color:var(--ink-soft);}
+    .card{break-inside:avoid;border:1px solid #999;}
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-inner">
+    <p class="eyebrow">Diretório offline · Boa Vista &amp; Roraima</p>
+    <h1>Rede de Apoio</h1>
+    <p class="lede">Endereços, horários e contatos de centros de atendimento a pessoas com TEA, pessoas idosas e assistência social em Boa Vista-RR. Funciona sem internet — salve esta página para consultar quando precisar.</p>
+  </div>
+</header>
+
+<div class="toolbar">
+  <div class="toolbar-inner">
+    <div class="search-row">
+      <input type="search" id="search" placeholder="Buscar por nome, bairro ou serviço…" aria-label="Buscar serviço">
+    </div>
+    <div class="chips" id="chips" role="group" aria-label="Filtrar por categoria">
+      <button class="chip" data-cat="all" aria-pressed="true">Todos</button>
+      <button class="chip" data-cat="tea" aria-pressed="false">Apoio ao TEA</button>
+      <button class="chip" data-cat="idoso" aria-pressed="false">Pessoa idosa</button>
+      <button class="chip" data-cat="social" aria-pressed="false">Assistência social</button>
+    </div>
+  </div>
+</div>
+
+<main>
+  <p class="count" id="count"></p>
+  <div id="list"></div>
+  <div class="empty" id="empty" hidden>Nenhum serviço encontrado para essa busca.</div>
+</main>
+
+<footer>
+  <p>Dados informados pelo usuário · verifique horários e contatos diretamente com cada unidade antes de comparecer, pois podem mudar. Este diretório não é um canal oficial de nenhum órgão.</p>
+</footer>
+
+<script>
+// ---------- DADOS ----------
+// hours: [{days:[1..5=seg..sex,0=dom,6=sab], open:"HH:MM", close:"HH:MM"}]
+const DATA = [
+  {
+    id: "ciapd",
+    name: "CIAPD Boa Vista",
+    fullName: "Centro Integrado de Atenção à Pessoa com Deficiência",
+    cat: ["tea"],
+    tags: ["Acolhimento TEA", "Terapia Ocupacional", "Fonoaudiologia", "Psicologia"],
+    addresses: [
+      { label: "Sede", text: "Avenida São Sebastião, nº 1195 – Santa Tereza, Boa Vista-RR, CEP 69314-152" }
+    ],
+    hours: [{ days:[1,2,3,4,5], open:"07:30", close:"18:00" }],
+    hoursText: "Segunda a sexta-feira, 07:30 às 18:00 (fechado sáb., dom. e feriados)",
+    phones: ["(95) 3621-1000", "(95) 99111-0000"],
+    extraContacts: [{ label: "Secretaria de Saúde (SESAU)", value: "(95) 3621-1001" }],
+    emails: ["ciapd.boavista@saude.rr.gov.br"],
+    services: [
+      "Acolhimento e avaliação inicial especializada para casos de TEA",
+      "Atendimento em Terapia Ocupacional e Integração Sensorial",
+      "Fonoaudiologia focada na comunicação alternativa e linguagem",
+      "Estimulação precoce e psicomotricidade infantil",
+      "Atendimento psicológico individual e apoio a cuidadores",
+      "Assistência Social, orientação de direitos e benefícios (BPC)",
+      "Atividades de inclusão social e oficinas lúdico-terapêuticas"
+    ],
+    mapQuery: "Avenida São Sebastião 1195 Santa Tereza Boa Vista RR"
+  },
+  {
+    id: "teamarr",
+    name: "TEAMARR",
+    fullName: "Centro de Acolhimento ao Autista — atendimento gratuito",
+    cat: ["tea"],
+    tags: ["Gratuito", "TEA", "ABA", "Multidisciplinar"],
+    addresses: [
+      { label: "Nova Unidade", text: "Rua Dorvalina Pessoa da Silva, nº 456 – Jardim Tropical, Boa Vista-RR" },
+      { label: "Sede", text: "Avenida Santos Dumont, nº 1193 – São Francisco, Boa Vista-RR" }
+    ],
+    hours: [{ days:[1,2,3,4,5], open:"08:00", close:"18:00" }],
+    hoursText: "Segunda a sexta-feira, 8h às 18h",
+    phones: ["(95) 99129-7119", "(95) 99164-1475", "(95) 98428-6565"],
+    extraContacts: [{ label: "Call Center", value: "0800 006 0670" }],
+    emails: ["teamarr@outlook.com"],
+    services: [
+      "Atendimento multidisciplinar para crianças e adolescentes com TEA",
+      "Pedagogia e Psicopedagogia",
+      "Psicologia infantil e adulta",
+      "Fisioterapia e Educação Física",
+      "Assistentes terapêuticos especializados em ABA",
+      "Consultas médicas e avaliação integral da saúde",
+      "Capacitação para familiares e profissionais de saúde"
+    ],
+    note: "Destinado a pessoas com Transtorno do Espectro Autista (TEA).",
+    mapQuery: "Avenida Santos Dumont 1193 São Francisco Boa Vista RR"
+  },
+  {
+    id: "setrabes",
+    name: "SETRABES",
+    fullName: "Secretaria do Trabalho e Bem-Estar Social",
+    cat: ["social"],
+    tags: ["Passe Livre", "Colo de Mãe", "Cesta da Família"],
+    addresses: [
+      { label: "Endereço", text: "Av. Mário Homem de Melo, 2310 – Mecejana, Boa Vista-RR, CEP 69304-350" }
+    ],
+    hours: [],
+    hoursText: "Não informado",
+    phones: [],
+    emails: [],
+    services: [
+      "Programa Passe Livre",
+      "Programa Colo de Mãe",
+      "Programa Cesta da Família"
+    ],
+    mapQuery: "Av. Mário Homem de Melo 2310 Mecejana Boa Vista RR"
+  },
+  {
+    id: "ceac",
+    name: "CEAC",
+    fullName: "Centro de Atendimento ao Cidadão",
+    cat: ["social"],
+    tags: ["Atendimento ao cidadão"],
+    addresses: [
+      { label: "Endereço", text: "Av. Mário Homem de Melo, 4534 – Caimbé, Boa Vista-RR, CEP 69312-155" }
+    ],
+    hours: [],
+    hoursText: "Não informado",
+    phones: [],
+    emails: [],
+    services: [],
+    mapQuery: "Av. Mário Homem de Melo 4534 Caimbé Boa Vista RR"
+  },
+  {
+    id: "ciapi",
+    name: "CIAPI",
+    fullName: "Centro Integrado de Atenção à Pessoa Idosa — vinculado à Setrabes",
+    cat: ["idoso"],
+    tags: ["Pessoa idosa"],
+    addresses: [
+      { label: "Endereço", text: "Rua Cabo PM Laurence de Melo, 259 – Caranã, Boa Vista-RR" }
+    ],
+    hours: [],
+    hoursText: "Não informado",
+    phones: [],
+    emails: [],
+    services: [],
+    mapQuery: "Rua Cabo PM Laurence de Melo 259 Caranã Boa Vista RR"
+  }
+];
+
+// ---------- HELPERS ----------
+function computeStatus(hours){
+  if(!hours || hours.length===0) return null;
+  const now = new Date();
+  const day = now.getDay();
+  const minutesNow = now.getHours()*60 + now.getMinutes();
+  for(const block of hours){
+    if(block.days.includes(day)){
+      const [oh,om] = block.open.split(":").map(Number);
+      const [ch,cm] = block.close.split(":").map(Number);
+      const openMin = oh*60+om, closeMin = ch*60+cm;
+      if(minutesNow>=openMin && minutesNow<closeMin) return true;
+    }
+  }
+  return false;
+}
+
+function telHref(p){ return "tel:+55" + p.replace(/\D/g,""); }
+function mapHref(q){ return "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(q); }
+
+function cardHTML(item){
+  const open = computeStatus(item.hours);
+  const statusHTML = open===null ? "" :
+    `<span class="status ${open?'open':'closed'}">${open?'Aberto agora':'Fechado agora'}</span>`;
+
+  const addrHTML = item.addresses.map(a =>
+    `<div class="field"><dt>${item.addresses.length>1?a.label:'Endereço'}</dt><dd>${a.text} · <a href="${mapHref(item.mapQuery)}" target="_blank" rel="noopener">ver no mapa</a></dd></div>`
+  ).join("");
+
+  const hoursHTML = `<div class="field"><dt>Horário</dt><dd>${item.hoursText}</dd></div>`;
+
+  const phonesHTML = item.phones.length ? `<div class="field"><dt>Telefone</dt><dd>${
+    item.phones.map(p=>`<a href="${telHref(p)}">${p}</a>`).join(" · ")
+  }</dd></div>` : "";
+
+  const extraHTML = (item.extraContacts||[]).map(c=>
+    `<div class="field"><dt>${c.label}</dt><dd>${/^\d/.test(c.value)?`<a href="${telHref(c.value)}">${c.value}</a>`:c.value}</dd></div>`
+  ).join("");
+
+  const emailHTML = item.emails.length ? `<div class="field"><dt>E-mail</dt><dd>${
+    item.emails.map(e=>`<a href="mailto:${e}">${e}</a>`).join(" · ")
+  }</dd></div>` : "";
+
+  const servicesHTML = item.services.length ? `
+    <details class="services">
+      <summary>Ver serviços oferecidos (${item.services.length})</summary>
+      <ul>${item.services.map(s=>`<li>${s}</li>`).join("")}</ul>
+    </details>` : "";
+
+  const noteHTML = item.note ? `<p class="sub" style="margin-top:.6rem;font-style:italic;">${item.note}</p>` : "";
+
+  const primaryPhone = item.phones[0];
+  const actionsHTML = `
+    <div class="actions">
+      ${primaryPhone ? `<a class="btn primary" href="${telHref(primaryPhone)}">Ligar</a>` : ""}
+      <a class="btn" href="${mapHref(item.mapQuery)}" target="_blank" rel="noopener">Como chegar</a>
+      <button class="btn" data-copy="${item.addresses.map(a=>a.text).join(' / ')}">Copiar endereço</button>
+    </div>`;
+
+  return `
+    <article class="card" data-cat="${item.cat.join(' ')}" data-search="${(item.name+' '+item.fullName+' '+item.tags.join(' ')+' '+item.services.join(' ')).toLowerCase()}">
+      <div class="card-head">
+        <div>
+          <h2>${item.name}</h2>
+          <p class="sub">${item.fullName}</p>
+        </div>
+        ${statusHTML}
+      </div>
+      <div class="tags">${item.tags.map(t=>`<span class="tag">${t}</span>`).join("")}</div>
+      <dl style="margin:0;">
+        ${addrHTML}
+        ${hoursHTML}
+        ${phonesHTML}
+        ${extraHTML}
+        ${emailHTML}
+      </dl>
+      ${noteHTML}
+      ${servicesHTML}
+      ${actionsHTML}
+    </article>`;
+}
+
+// ---------- RENDER ----------
+const listEl = document.getElementById("list");
+const emptyEl = document.getElementById("empty");
+const countEl = document.getElementById("count");
+let activeCat = "all";
+let query = "";
+
+function render(){
+  const q = query.trim().toLowerCase();
+  const filtered = DATA.filter(item=>{
+    const catOk = activeCat==="all" || item.cat.includes(activeCat);
+    const searchBlob = (item.name+' '+item.fullName+' '+item.tags.join(' ')+' '+item.services.join(' ')).toLowerCase();
+    const qOk = q==="" || searchBlob.includes(q);
+    return catOk && qOk;
+  });
+  listEl.innerHTML = filtered.map(cardHTML).join("");
+  emptyEl.hidden = filtered.length !== 0;
+  countEl.textContent = filtered.length + (filtered.length===1 ? " serviço encontrado" : " serviços encontrados");
+
+  listEl.querySelectorAll("[data-copy]").forEach(btn=>{
+    btn.addEventListener("click", ()=>{
+      const text = btn.getAttribute("data-copy");
+      navigator.clipboard?.writeText(text).then(()=>{
+        const original = btn.textContent;
+        btn.textContent = "Copiado!";
+        setTimeout(()=>btn.textContent = original, 1500);
+      }).catch(()=>{});
+    });
+  });
+}
+
+document.getElementById("search").addEventListener("input", e=>{
+  query = e.target.value;
+  render();
+});
+
+document.querySelectorAll(".chip").forEach(chip=>{
+  chip.addEventListener("click", ()=>{
+    document.querySelectorAll(".chip").forEach(c=>c.setAttribute("aria-pressed","false"));
+    chip.setAttribute("aria-pressed","true");
+    activeCat = chip.dataset.cat;
+    render();
+  });
+});
+
+render();
+
+// ---------- PWA: registra o service worker só quando fizer sentido ----------
+// Em file:// (abertura local por duplo clique) os navegadores não permitem
+// service workers, então isso é ignorado silenciosamente e o app continua
+// funcionando 100% offline do mesmo jeito. Quando publicado via GitHub
+// Pages (https://), o service worker guarda uma cópia do app para abrir
+// mesmo sem internet e permite instalar na tela inicial.
+if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost")) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("service-worker.js").catch(()=>{});
+  });
+}
+</script>
+</body>
+</html>
