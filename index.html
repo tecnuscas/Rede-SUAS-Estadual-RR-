@@ -4,558 +4,790 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Rede de Apoio · Boa Vista-RR</title>
-<meta name="description" content="Diretório offline de serviços de apoio a pessoas com TEA, pessoas idosas e assistência social em Boa Vista-RR.">
+<meta name="description" content="Diretório moderno de serviços de apoio a pessoas com TEA, pessoas idosas e assistência social em Boa Vista-RR.">
 
-<!-- PWA: permite instalar na tela inicial do celular e (quando publicado
-     online) abrir com ícone próprio e funcionar offline via cache.
-     Não interfere no uso local por duplo clique no arquivo. -->
-<link rel="manifest" href="manifest.json">
+<!-- PWA -->
 <meta name="theme-color" content="#1B4B43">
-<link rel="icon" href="favicon.ico" sizes="any">
-<link rel="icon" href="icon-192.png" type="image/png" sizes="192x192">
-<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="SUAS-RR">
-<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="RedeApoio-BV">
+
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<!-- Lucide Icons -->
+<script src="https://unpkg.com/lucide@latest"></script>
+
+<!-- Leaflet CSS for Maps -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
 
 <style>
-  :root{
-    --bg:#EEF3EC;
-    --bg-alt:#E4ECE0;
-    --ink:#1F2A24;
-    --ink-soft:#4B594F;
-    --primary:#1B4B43;
-    --primary-dark:#123530;
-    --accent:#D98E04;
-    --accent-soft:#F3D48A;
-    --line:#CFDBCC;
-    --card:#FFFFFF;
-    --good:#2E7D4F;
-    --closed:#A64B3F;
-    --radius:14px;
-    --serif: Georgia, "Iowan Old Style", "Palatino Linotype", "Book Antiqua", serif;
-    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, Roboto, Helvetica, Arial, sans-serif;
-    --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
-  }
-  *{box-sizing:border-box;}
-  html,body{margin:0;padding:0;}
-  body{
-    background:var(--bg);
-    color:var(--ink);
-    font-family:var(--sans);
-    line-height:1.5;
-    -webkit-font-smoothing:antialiased;
-  }
-  a{color:var(--primary);}
-  a:focus-visible, button:focus-visible, input:focus-visible{
-    outline:3px solid var(--accent);
-    outline-offset:2px;
+  :root {
+    --bg: #F8FAFC;
+    --bg-alt: #F1F5F9;
+    --ink: #0F172A;
+    --ink-soft: #475569;
+    --primary: #1B4B43;
+    --primary-light: #2D6A5F;
+    --primary-soft: #E3F1E7;
+    --accent: #D98E04;
+    --accent-soft: #FEF3C7;
+    --line: #E2E8F0;
+    --card: #FFFFFF;
+    --good: #166534;
+    --good-bg: #DCFCE7;
+    --closed: #991B1B;
+    --closed-bg: #FEE2E2;
+    --radius-sm: 8px;
+    --radius-md: 16px;
+    --radius-lg: 24px;
+    --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+    
+    --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --font-serif: 'Playfair Display', Georgia, serif;
+    --font-mono: 'JetBrains Mono', monospace;
   }
 
-  header.top{
-    background:linear-gradient(180deg, var(--primary) 0%, var(--primary-dark) 100%);
-    color:#F4F7F2;
-    padding:2.6rem 1.5rem 2rem;
-    border-bottom:6px solid var(--accent);
-  }
-  .top-inner{max-width:920px;margin:0 auto;}
-  .eyebrow{
-    font-family:var(--mono);
-    font-size:.72rem;
-    letter-spacing:.14em;
-    text-transform:uppercase;
-    color:var(--accent-soft);
-    margin:0 0 .6rem;
-  }
-  h1{
-    font-family:var(--serif);
-    font-weight:700;
-    font-size:clamp(1.9rem, 5vw, 2.7rem);
-    margin:0 0 .5rem;
-    letter-spacing:-.01em;
-  }
-  .top-inner p.lede{
-    max-width:60ch;
-    color:#DCE7DB;
-    margin:0;
-    font-size:1.02rem;
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  
+  html, body { margin: 0; padding: 0; scroll-behavior: smooth; }
+  
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
   }
 
-  .toolbar{
-    position:sticky;
-    top:0;
-    z-index:5;
-    background:var(--bg);
-    padding:1rem 1.5rem;
-    border-bottom:1px solid var(--line);
+  /* Layout */
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 1.5rem; }
+
+  /* Header Design */
+  header.top {
+    background: var(--primary);
+    background-image: radial-gradient(circle at 20% 20%, rgba(255,255,255,0.05) 0%, transparent 50%),
+                      radial-gradient(circle at 80% 80%, rgba(255,255,255,0.05) 0%, transparent 50%);
+    color: #FFFFFF;
+    padding: 5rem 0 4rem;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
   }
-  .toolbar-inner{max-width:920px;margin:0 auto;}
-  .search-row{
-    display:flex;
-    gap:.6rem;
-    margin-bottom:.7rem;
-  }
-  input[type="search"]{
-    flex:1;
-    font-family:var(--sans);
-    font-size:1rem;
-    padding:.65rem .9rem;
-    border-radius:10px;
-    border:1.5px solid var(--line);
-    background:var(--card);
-    color:var(--ink);
-  }
-  .chips{
-    display:flex;
-    flex-wrap:wrap;
-    gap:.5rem;
-  }
-  .chip{
-    font-family:var(--mono);
-    font-size:.78rem;
-    letter-spacing:.02em;
-    padding:.4rem .8rem;
-    border-radius:999px;
-    border:1.5px solid var(--line);
-    background:var(--card);
-    color:var(--ink-soft);
-    cursor:pointer;
-  }
-  .chip[aria-pressed="true"]{
-    background:var(--primary);
-    border-color:var(--primary);
-    color:#fff;
+  
+  header.top::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--accent);
   }
 
-  main{max-width:920px;margin:0 auto;padding:1.5rem;}
-  .count{
-    font-family:var(--mono);
-    font-size:.82rem;
-    color:var(--ink-soft);
-    margin:0 0 1rem;
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 1rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
   }
 
-  .card{
-    background:var(--card);
-    border-radius:var(--radius);
-    border:1px solid var(--line);
-    border-left:6px solid var(--primary);
-    padding:1.3rem 1.4rem;
-    margin-bottom:1.1rem;
-  }
-  .card[data-cat~="tea"]{border-left-color:var(--primary);}
-  .card[data-cat~="idoso"]{border-left-color:var(--accent);}
-  .card[data-cat~="social"]{border-left-color:#5B7DA6;}
-
-  .card-head{
-    display:flex;
-    justify-content:space-between;
-    align-items:flex-start;
-    gap:1rem;
-    flex-wrap:wrap;
-  }
-  .card h2{
-    font-family:var(--serif);
-    font-size:1.35rem;
-    margin:0 0 .15rem;
-  }
-  .card .sub{
-    font-size:.88rem;
-    color:var(--ink-soft);
-    margin:0;
-  }
-  .status{
-    font-family:var(--mono);
-    font-size:.75rem;
-    padding:.3rem .6rem;
-    border-radius:999px;
-    white-space:nowrap;
-    font-weight:600;
-  }
-  .status.open{background:#E3F1E7;color:var(--good);}
-  .status.closed{background:#F5E7E4;color:var(--closed);}
-
-  .card .tags{
-    display:flex;flex-wrap:wrap;gap:.4rem;
-    margin:.6rem 0 .9rem;
-  }
-  .tag{
-    font-family:var(--mono);
-    font-size:.68rem;
-    text-transform:uppercase;
-    letter-spacing:.06em;
-    color:var(--ink-soft);
-    background:var(--bg-alt);
-    padding:.2rem .5rem;
-    border-radius:5px;
+  h1 {
+    font-family: var(--font-serif);
+    font-size: clamp(2.5rem, 8vw, 4rem);
+    margin: 0 0 1.5rem;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
   }
 
-  .field{
-    display:grid;
-    grid-template-columns:6.5rem 1fr;
-    gap:.3rem .8rem;
-    font-size:.92rem;
-    padding:.28rem 0;
-    border-top:1px dashed var(--line);
-  }
-  .field:first-of-type{border-top:none;}
-  .field dt{
-    font-family:var(--mono);
-    font-size:.72rem;
-    letter-spacing:.03em;
-    text-transform:uppercase;
-    color:var(--ink-soft);
-    padding-top:.15rem;
-  }
-  .field dd{margin:0;}
-  .field a{text-decoration:none;}
-  .field a:hover{text-decoration:underline;}
-
-  details.services{margin-top:.8rem;}
-  details.services summary{
-    cursor:pointer;
-    font-family:var(--mono);
-    font-size:.78rem;
-    color:var(--primary);
-    letter-spacing:.02em;
-  }
-  details.services ul{
-    margin:.6rem 0 0;
-    padding-left:1.2rem;
-    font-size:.9rem;
-  }
-  details.services li{margin-bottom:.3rem;}
-
-  .actions{
-    display:flex;
-    gap:.5rem;
-    flex-wrap:wrap;
-    margin-top:.9rem;
-  }
-  .btn{
-    font-family:var(--sans);
-    font-size:.82rem;
-    padding:.45rem .8rem;
-    border-radius:8px;
-    border:1.5px solid var(--primary);
-    background:#fff;
-    color:var(--primary);
-    cursor:pointer;
-    text-decoration:none;
-    display:inline-flex;align-items:center;gap:.35rem;
-  }
-  .btn.primary{background:var(--primary);color:#fff;}
-
-  .empty{
-    text-align:center;
-    padding:3rem 1rem;
-    color:var(--ink-soft);
-    font-family:var(--serif);
-    font-style:italic;
+  .lede {
+    max-width: 65ch;
+    color: #CBD5E1;
+    font-size: 1.25rem;
+    margin: 0 auto;
   }
 
-  footer{
-    max-width:920px;margin:0 auto;
-    padding:1.5rem 1.5rem 3rem;
-    font-size:.8rem;
-    color:var(--ink-soft);
-    font-family:var(--mono);
+  /* Map Section */
+  .map-section {
+    margin: -2rem auto 2rem;
+    position: relative;
+    z-index: 10;
   }
-  footer a{color:var(--ink-soft);}
 
-  @media print{
-    .toolbar,.actions,footer{display:none;}
-    header.top{background:none;color:var(--ink);border-bottom:2px solid var(--ink);}
-    .top-inner p.lede{color:var(--ink-soft);}
-    .card{break-inside:avoid;border:1px solid #999;}
+  #map {
+    height: 400px;
+    width: 100%;
+    border-radius: var(--radius-lg);
+    border: 4px solid #FFF;
+    box-shadow: var(--shadow-lg);
+    background: var(--bg-alt);
+  }
+
+  /* Toolbar & Search */
+  .toolbar {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(248, 250, 252, 0.9);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    padding: 1.5rem 0;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 2rem;
+  }
+
+  .search-container {
+    position: relative;
+    margin-bottom: 1.25rem;
+  }
+
+  .search-icon {
+    position: absolute;
+    left: 1.25rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--ink-soft);
+    pointer-events: none;
+  }
+
+  input[type="search"] {
+    width: 100%;
+    font-family: var(--font-sans);
+    font-size: 1.125rem;
+    padding: 1rem 1rem 1rem 3.5rem;
+    border-radius: var(--radius-md);
+    border: 2px solid var(--line);
+    background: var(--card);
+    color: var(--ink);
+    transition: all 0.2s ease;
+    box-shadow: var(--shadow);
+  }
+
+  input[type="search"]:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px rgba(27, 75, 67, 0.1);
+  }
+
+  .chips {
+    display: flex;
+    gap: 0.75rem;
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+    scrollbar-width: none;
+  }
+  
+  .chips::-webkit-scrollbar { display: none; }
+
+  .chip {
+    white-space: nowrap;
+    font-family: var(--font-sans);
+    font-size: 0.875rem;
+    font-weight: 600;
+    padding: 0.625rem 1.25rem;
+    border-radius: 999px;
+    border: 2px solid var(--line);
+    background: var(--card);
+    color: var(--ink-soft);
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .chip[aria-pressed="true"] {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: #FFFFFF;
+    box-shadow: 0 4px 12px rgba(27, 75, 67, 0.25);
+  }
+
+  /* Main Content */
+  .count {
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    color: var(--ink-soft);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  /* Card Design */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 4rem;
+  }
+
+  .card {
+    background: var(--card);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--line);
+    padding: 1.75rem;
+    position: relative;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--primary-light);
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    border-radius: var(--radius-md) var(--radius-md) 0 0;
+    background: var(--primary);
+  }
+
+  .card[data-cat~="tea"]::before { background: var(--primary); }
+  .card[data-cat~="idoso"]::before { background: var(--accent); }
+  .card[data-cat~="social"]::before { background: #3B82F6; }
+
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .card-title h2 {
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    margin: 0 0 0.25rem;
+    color: var(--ink);
+    line-height: 1.2;
+  }
+
+  .card-title p {
+    font-size: 0.875rem;
+    color: var(--ink-soft);
+    margin: 0;
+    font-weight: 500;
+  }
+
+  .status-badge {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    font-weight: 700;
+    padding: 0.25rem 0.6rem;
+    border-radius: 999px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    flex-shrink: 0;
+  }
+
+  .status-badge.open { background: var(--good-bg); color: var(--good); }
+  .status-badge.closed { background: var(--closed-bg); color: var(--closed); }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .tag {
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--primary-light);
+    background: var(--primary-soft);
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
+  }
+
+  .info-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .info-item {
+    display: grid;
+    grid-template-columns: 1.25rem 1fr;
+    gap: 0.75rem;
+    align-items: flex-start;
+    font-size: 0.9rem;
+  }
+
+  .info-icon { color: var(--primary); margin-top: 0.2rem; }
+  
+  .info-content dd { margin: 0; color: var(--ink); }
+  .info-content a { color: var(--primary); text-decoration: none; font-weight: 600; }
+  .info-content a:hover { text-decoration: underline; }
+
+  /* Services Details */
+  details.services-dropdown {
+    border-top: 1px solid var(--line);
+    padding-top: 1rem;
+  }
+
+  details.services-dropdown summary {
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 0.875rem;
+    color: var(--primary);
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    user-select: none;
+  }
+
+  details.services-dropdown summary::-webkit-details-marker { display: none; }
+
+  .services-list {
+    margin: 0.75rem 0 0;
+    padding-left: 1.25rem;
+    font-size: 0.875rem;
+    color: var(--ink-soft);
+  }
+
+  .services-list li { margin-bottom: 0.4rem; }
+
+  /* Actions */
+  .card-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    margin-top: auto;
+    padding-top: 1rem;
+  }
+
+  .btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.8rem;
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    border: none;
+  }
+
+  .btn-primary { background: var(--primary); color: #FFFFFF; }
+  .btn-primary:hover { background: var(--primary-light); transform: scale(1.02); }
+
+  .btn-outline {
+    background: transparent;
+    border: 2px solid var(--line);
+    color: var(--ink);
+  }
+
+  .btn-outline:hover { background: var(--bg-alt); border-color: var(--ink-soft); }
+
+  .btn-full { grid-column: span 2; }
+
+  /* Code Viewer */
+  .code-viewer {
+    background: #1E293B;
+    border-radius: var(--radius-md);
+    padding: 2rem;
+    margin: 4rem 0;
+    color: #E2E8F0;
+    box-shadow: var(--shadow-lg);
+  }
+
+  .code-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .code-header h3 {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    color: #F8FAFC;
+  }
+
+  pre {
+    margin: 0;
+    padding: 1.5rem;
+    background: #0F172A;
+    border-radius: var(--radius-sm);
+    overflow-x: auto;
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    line-height: 1.5;
+    max-height: 400px;
+    border: 1px solid #334155;
+  }
+
+  /* Footer */
+  footer {
+    padding: 4rem 0;
+    text-align: center;
+    border-top: 1px solid var(--line);
+    background: var(--bg-alt);
+  }
+
+  .footer-text {
+    font-size: 0.875rem;
+    color: var(--ink-soft);
+    max-width: 60ch;
+    margin: 0 auto;
+  }
+
+  /* Responsive Adjustments */
+  @media (max-width: 768px) {
+    header.top { padding: 4rem 0 3rem; }
+    h1 { font-size: 2.5rem; }
+    .card-grid { grid-template-columns: 1fr; }
+    #map { height: 300px; }
+  }
+
+  @media print {
+    .toolbar, .card-actions, footer, .map-section, .code-viewer { display: none; }
+    body { background: white; }
+    .card { border: 1px solid #000; break-inside: avoid; box-shadow: none; }
   }
 </style>
 </head>
 <body>
 
 <header class="top">
-  <div class="top-inner">
-    <p class="eyebrow">Diretório offline · Boa Vista &amp; Roraima</p>
+  <div class="container">
+    <p class="eyebrow"><i data-lucide="map-pin" size="14"></i> Boa Vista · Roraima</p>
     <h1>Rede de Apoio</h1>
-    <p class="lede">Endereços, horários e contatos de centros de atendimento a pessoas com TEA, pessoas idosas e assistência social em Boa Vista-RR. Funciona sem internet — salve esta página para consultar quando precisar.</p>
+    <p class="lede">Guia completo de serviços socioassistenciais, apoio ao TEA e atendimento à pessoa idosa. Encontre o local mais próximo de você.</p>
   </div>
 </header>
 
+<div class="container map-section">
+  <div id="map"></div>
+</div>
+
 <div class="toolbar">
-  <div class="toolbar-inner">
-    <div class="search-row">
-      <input type="search" id="search" placeholder="Buscar por nome, bairro ou serviço…" aria-label="Buscar serviço">
+  <div class="container">
+    <div class="search-container">
+      <i data-lucide="search" class="search-icon" size="24"></i>
+      <input type="search" id="search" placeholder="Buscar por nome, bairro ou serviço..." aria-label="Buscar serviço">
     </div>
     <div class="chips" id="chips" role="group" aria-label="Filtrar por categoria">
-      <button class="chip" data-cat="all" aria-pressed="true">Todos</button>
+      <button class="chip" data-cat="all" aria-pressed="true">Todos os Serviços</button>
       <button class="chip" data-cat="tea" aria-pressed="false">Apoio ao TEA</button>
-      <button class="chip" data-cat="idoso" aria-pressed="false">Pessoa idosa</button>
-      <button class="chip" data-cat="social" aria-pressed="false">Assistência social</button>
+      <button class="chip" data-cat="idoso" aria-pressed="false">Pessoa Idosa</button>
+      <button class="chip" data-cat="social" aria-pressed="false">Assistência Social</button>
     </div>
   </div>
 </div>
 
-<main>
-  <p class="count" id="count"></p>
-  <div id="list"></div>
-  <div class="empty" id="empty" hidden>Nenhum serviço encontrado para essa busca.</div>
+<main class="container">
+  <p class="count" id="count">
+    <i data-lucide="info" size="16"></i>
+    <span>Carregando serviços...</span>
+  </p>
+  <div id="list" class="card-grid"></div>
+  <div id="empty" style="display:none; text-align:center; padding:4rem 1rem;">
+    <i data-lucide="search-x" size="48" style="color:var(--ink-soft); margin-bottom:1rem;"></i>
+    <p style="font-family:var(--font-serif); font-size:1.25rem; color:var(--ink-soft);">Nenhum serviço encontrado para essa busca.</p>
+  </div>
+
+  <section class="code-viewer">
+    <div class="code-header">
+      <h3>Código Fonte</h3>
+      <button class="btn btn-primary" onclick="copyCode()">
+        <i data-lucide="copy" size="18"></i> Copiar Código
+      </button>
+    </div>
+    <pre id="code-block"><code><!-- O código será inserido aqui via JS --></code></pre>
+  </section>
 </main>
 
 <footer>
-  <p>Dados informados pelo usuário · verifique horários e contatos diretamente com cada unidade antes de comparecer, pois podem mudar. Este diretório não é um canal oficial de nenhum órgão.</p>
+  <div class="container">
+    <p class="footer-text">
+      <strong>Aviso Importante:</strong> Este é um diretório informativo. Verifique sempre os horários e contatos diretamente com cada unidade. Desenvolvido para facilitar o acesso à rede de proteção de Boa Vista-RR.
+    </p>
+  </div>
 </footer>
 
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
 <script>
-// ---------- DADOS ----------
-// hours: [{days:[1..5=seg..sex,0=dom,6=sab], open:"HH:MM", close:"HH:MM"}]
 const DATA = [
   {
     id: "ciapd",
-    name: "CIAPD Boa Vista",
+    name: "CIAPD",
     fullName: "Centro Integrado de Atenção à Pessoa com Deficiência",
     cat: ["tea"],
-    tags: ["Acolhimento TEA", "Terapia Ocupacional", "Fonoaudiologia", "Psicologia"],
-    addresses: [
-      { label: "Sede", text: "Avenida São Sebastião, nº 1195 – Santa Tereza, Boa Vista-RR, CEP 69314-152" }
-    ],
+    tags: ["TEA", "Terapia Ocupacional", "Fonoaudiologia"],
+    address: "Avenida São Sebastião, 1195 – Santa Tereza, Boa Vista-RR",
     hours: [{ days:[1,2,3,4,5], open:"07:30", close:"18:00" }],
-    hoursText: "Segunda a sexta-feira, 07:30 às 18:00 (fechado sáb., dom. e feriados)",
-    phones: ["(95) 3621-1000", "(95) 99111-0000"],
-    extraContacts: [{ label: "Secretaria de Saúde (SESAU)", value: "(95) 3621-1001" }],
-    emails: ["ciapd.boavista@saude.rr.gov.br"],
-    services: [
-      "Acolhimento e avaliação inicial especializada para casos de TEA",
-      "Atendimento em Terapia Ocupacional e Integração Sensorial",
-      "Fonoaudiologia focada na comunicação alternativa e linguagem",
-      "Estimulação precoce e psicomotricidade infantil",
-      "Atendimento psicológico individual e apoio a cuidadores",
-      "Assistência Social, orientação de direitos e benefícios (BPC)",
-      "Atividades de inclusão social e oficinas lúdico-terapêuticas"
-    ],
-    mapQuery: "Avenida São Sebastião 1195 Santa Tereza Boa Vista RR"
+    hoursText: "Segunda a sexta, 07:30 às 18:00",
+    phones: ["(95) 3621-1000"],
+    services: ["Acolhimento TEA", "Terapia Ocupacional", "Fonoaudiologia", "Psicologia"],
+    coords: [2.8315, -60.6935]
   },
   {
     id: "teamarr",
     name: "TEAMARR",
-    fullName: "Centro de Acolhimento ao Autista — atendimento gratuito",
+    fullName: "Centro de Acolhimento ao Autista (ALE-RR)",
     cat: ["tea"],
-    tags: ["Gratuito", "TEA", "ABA", "Multidisciplinar"],
-    addresses: [
-      { label: "Nova Unidade", text: "Rua Dorvalina Pessoa da Silva, nº 456 – Jardim Tropical, Boa Vista-RR" },
-      { label: "Sede", text: "Avenida Santos Dumont, nº 1193 – São Francisco, Boa Vista-RR" }
-    ],
+    tags: ["Gratuito", "TEA", "Multidisciplinar"],
+    address: "Avenida Santos Dumont, 1193 – São Francisco, Boa Vista-RR",
     hours: [{ days:[1,2,3,4,5], open:"08:00", close:"18:00" }],
-    hoursText: "Segunda a sexta-feira, 8h às 18h",
-    phones: ["(95) 99129-7119", "(95) 99164-1475", "(95) 98428-6565"],
-    extraContacts: [{ label: "Call Center", value: "0800 006 0670" }],
-    emails: ["teamarr@outlook.com"],
-    services: [
-      "Atendimento multidisciplinar para crianças e adolescentes com TEA",
-      "Pedagogia e Psicopedagogia",
-      "Psicologia infantil e adulta",
-      "Fisioterapia e Educação Física",
-      "Assistentes terapêuticos especializados em ABA",
-      "Consultas médicas e avaliação integral da saúde",
-      "Capacitação para familiares e profissionais de saúde"
-    ],
-    note: "Destinado a pessoas com Transtorno do Espectro Autista (TEA).",
-    mapQuery: "Avenida Santos Dumont 1193 São Francisco Boa Vista RR"
+    hoursText: "Segunda a sexta, 08:00 às 12:00 e 14:00 às 18:00",
+    phones: ["(95) 99164-1475"],
+    services: ["Psicologia", "Pedagogia", "Fisioterapia", "Método ABA"],
+    coords: [2.8302, -60.6628]
   },
   {
-    id: "setrabes",
-    name: "SETRABES",
-    fullName: "Secretaria do Trabalho e Bem-Estar Social",
-    cat: ["social"],
-    tags: ["Passe Livre", "Colo de Mãe", "Cesta da Família"],
-    addresses: [
-      { label: "Endereço", text: "Av. Mário Homem de Melo, 2310 – Mecejana, Boa Vista-RR, CEP 69304-350" }
-    ],
-    hours: [],
-    hoursText: "Não informado",
-    phones: [],
-    emails: [],
-    services: [
-      "Programa Passe Livre",
-      "Programa Colo de Mãe",
-      "Programa Cesta da Família"
-    ],
-    mapQuery: "Av. Mário Homem de Melo 2310 Mecejana Boa Vista RR"
+    id: "cea-prefeitura",
+    name: "CEA Boa Vista",
+    fullName: "Centro Especializado em Autismo (Prefeitura)",
+    cat: ["tea"],
+    tags: ["Municipal", "Educação Inclusiva", "TEA"],
+    address: "Rua Sólon Rodrigues Pessoa, s/n - Pintolândia, Boa Vista-RR",
+    hours: [{ days:[1,2,3,4,5], open:"07:30", close:"17:30" }],
+    hoursText: "Segunda a sexta, 07:30 às 17:30",
+    phones: ["(95) 3621-1700"],
+    services: ["Atendimento Educacional Especializado", "Serviço Social", "Avaliação Multidisciplinar"],
+    coords: [2.8115, -60.7435]
   },
   {
-    id: "ceac",
-    name: "CEAC",
-    fullName: "Centro de Atendimento ao Cidadão",
-    cat: ["social"],
-    tags: ["Atendimento ao cidadão"],
-    addresses: [
-      { label: "Endereço", text: "Av. Mário Homem de Melo, 4534 – Caimbé, Boa Vista-RR, CEP 69312-155" }
-    ],
-    hours: [],
-    hoursText: "Não informado",
-    phones: [],
-    emails: [],
-    services: [],
-    mapQuery: "Av. Mário Homem de Melo 4534 Caimbé Boa Vista RR"
+    id: "apae-bv",
+    name: "APAE Boa Vista",
+    fullName: "Associação de Pais e Amigos dos Excepcionais",
+    cat: ["tea", "social"],
+    tags: ["PcD", "Saúde", "Assistência Social"],
+    address: "Avenida Capitão Júlio Bezerra, 192 - Aparecida, Boa Vista-RR",
+    hours: [{ days:[1,2,3,4,5], open:"08:00", close:"18:00" }],
+    hoursText: "Segunda a sexta, 08:00 às 12:00 e 14:00 às 18:00",
+    phones: ["(95) 3224-2755"],
+    services: ["Educação Especial", "Fisioterapia", "Assistência Social"],
+    coords: [2.8255, -60.6712]
   },
   {
     id: "ciapi",
     name: "CIAPI",
-    fullName: "Centro Integrado de Atenção à Pessoa Idosa — vinculado à Setrabes",
+    fullName: "Centro Integrado de Atenção à Pessoa Idosa",
     cat: ["idoso"],
-    tags: ["Pessoa idosa"],
-    addresses: [
-      { label: "Endereço", text: "Rua Cabo PM Laurence de Melo, 259 – Caranã, Boa Vista-RR" }
-    ],
-    hours: [],
-    hoursText: "Não informado",
-    phones: [],
-    emails: [],
-    services: [],
-    mapQuery: "Rua Cabo PM Laurence de Melo 259 Caranã Boa Vista RR"
+    tags: ["Pessoa Idosa", "Fisioterapia", "Serviço Social"],
+    address: "Rua Cabo PM Laurence de Melo, 259 – Caranã, Boa Vista-RR",
+    hours: [{ days:[1,2,3,4,5], open:"07:00", close:"19:00" }],
+    hoursText: "Segunda a sexta, 07:00 às 13:00 e 14:00 às 19:00",
+    phones: ["(95) 3623-3703"],
+    services: ["Acolhimento Idoso", "Fisioterapia", "Atividades de Convivência"],
+    coords: [2.8452, -60.7018]
+  },
+  {
+    id: "cras-uniao",
+    name: "CRAS União",
+    fullName: "Centro de Referência de Assistência Social",
+    cat: ["social"],
+    tags: ["CadÚnico", "Bolsa Família", "Proteção Básica"],
+    address: "Rua Hilda Sobral Guedes, 81 – União, Boa Vista-RR",
+    hours: [{ days:[1,2,3,4,5], open:"08:00", close:"18:00" }],
+    hoursText: "Segunda a sexta, 08:00 às 18:00",
+    phones: ["(95) 98400-5452"],
+    services: ["Cadastro Único", "Acompanhamento Familiar", "Programas Sociais"],
+    coords: [2.8368, -60.7132]
+  },
+  {
+    id: "cras-pintolandia",
+    name: "CRAS Pintolândia",
+    fullName: "Centro de Referência de Assistência Social",
+    cat: ["social"],
+    tags: ["CadÚnico", "Assistência", "Comunitário"],
+    address: "Rua Delman Veras, S/N – Pintolândia, Boa Vista-RR",
+    hours: [{ days:[1,2,3,4,5], open:"08:00", close:"18:00" }],
+    hoursText: "Segunda a sexta, 08:00 às 18:00",
+    phones: ["(95) 98400-8881"],
+    services: ["Atendimento Social", "CadÚnico", "Serviço de Convivência"],
+    coords: [2.8125, -60.7408]
+  },
+  {
+    id: "creas-centro",
+    name: "CREAS Centro",
+    fullName: "Centro de Referência Especializado de Assistência Social",
+    cat: ["social"],
+    tags: ["Proteção Especial", "Direitos"],
+    address: "Avenida Mário Homem de Melo, 514 – Centro, Boa Vista-RR",
+    hours: [{ days:[1,2,3,4,5], open:"08:00", close:"18:00" }],
+    hoursText: "Segunda a sexta, 08:00 às 18:00",
+    phones: ["(95) 98405-5704"],
+    services: ["Acompanhamento Especializado", "Denúncias", "Proteção de Direitos"],
+    coords: [2.8212, -60.6762]
   }
 ];
 
-// ---------- HELPERS ----------
-function computeStatus(hours){
-  if(!hours || hours.length===0) return null;
+let map, markers = [];
+
+function initMap() {
+  map = L.map('map').setView([2.8235, -60.6758], 13);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© OpenStreetMap contributors'
+  }).addTo(map);
+  updateMarkers(DATA);
+}
+
+function updateMarkers(items) {
+  markers.forEach(m => map.removeLayer(m));
+  markers = [];
+  items.forEach(item => {
+    if (item.coords) {
+      const marker = L.marker(item.coords).addTo(map)
+        .bindPopup(`<b>${item.name}</b><br>${item.address}`);
+      markers.push(marker);
+    }
+  });
+  if (markers.length > 0) {
+    const group = new L.featureGroup(markers);
+    map.fitBounds(group.getBounds().pad(0.1));
+  }
+}
+
+function computeStatus(hours) {
+  if (!hours || hours.length === 0) return null;
   const now = new Date();
   const day = now.getDay();
-  const minutesNow = now.getHours()*60 + now.getMinutes();
-  for(const block of hours){
-    if(block.days.includes(day)){
-      const [oh,om] = block.open.split(":").map(Number);
-      const [ch,cm] = block.close.split(":").map(Number);
-      const openMin = oh*60+om, closeMin = ch*60+cm;
-      if(minutesNow>=openMin && minutesNow<closeMin) return true;
+  const minutesNow = now.getHours() * 60 + now.getMinutes();
+  for (const block of hours) {
+    if (block.days.includes(day)) {
+      const [oh, om] = block.open.split(":").map(Number);
+      const [ch, cm] = block.close.split(":").map(Number);
+      const openMin = oh * 60 + om, closeMin = ch * 60 + cm;
+      if (minutesNow >= openMin && minutesNow < closeMin) return true;
     }
   }
   return false;
 }
 
-function telHref(p){ return "tel:+55" + p.replace(/\D/g,""); }
-function mapHref(q){ return "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(q); }
+function telHref(p) { return "tel:+55" + p.replace(/\D/g, ""); }
+function mapHref(c) { return `https://www.google.com/maps/search/?api=1&query=${c[0]},${c[1]}`; }
 
-function cardHTML(item){
-  const open = computeStatus(item.hours);
-  const statusHTML = open===null ? "" :
-    `<span class="status ${open?'open':'closed'}">${open?'Aberto agora':'Fechado agora'}</span>`;
-
-  const addrHTML = item.addresses.map(a =>
-    `<div class="field"><dt>${item.addresses.length>1?a.label:'Endereço'}</dt><dd>${a.text} · <a href="${mapHref(item.mapQuery)}" target="_blank" rel="noopener">ver no mapa</a></dd></div>`
-  ).join("");
-
-  const hoursHTML = `<div class="field"><dt>Horário</dt><dd>${item.hoursText}</dd></div>`;
-
-  const phonesHTML = item.phones.length ? `<div class="field"><dt>Telefone</dt><dd>${
-    item.phones.map(p=>`<a href="${telHref(p)}">${p}</a>`).join(" · ")
-  }</dd></div>` : "";
-
-  const extraHTML = (item.extraContacts||[]).map(c=>
-    `<div class="field"><dt>${c.label}</dt><dd>${/^\d/.test(c.value)?`<a href="${telHref(c.value)}">${c.value}</a>`:c.value}</dd></div>`
-  ).join("");
-
-  const emailHTML = item.emails.length ? `<div class="field"><dt>E-mail</dt><dd>${
-    item.emails.map(e=>`<a href="mailto:${e}">${e}</a>`).join(" · ")
-  }</dd></div>` : "";
-
-  const servicesHTML = item.services.length ? `
-    <details class="services">
-      <summary>Ver serviços oferecidos (${item.services.length})</summary>
-      <ul>${item.services.map(s=>`<li>${s}</li>`).join("")}</ul>
-    </details>` : "";
-
-  const noteHTML = item.note ? `<p class="sub" style="margin-top:.6rem;font-style:italic;">${item.note}</p>` : "";
-
-  const primaryPhone = item.phones[0];
-  const actionsHTML = `
-    <div class="actions">
-      ${primaryPhone ? `<a class="btn primary" href="${telHref(primaryPhone)}">Ligar</a>` : ""}
-      <a class="btn" href="${mapHref(item.mapQuery)}" target="_blank" rel="noopener">Como chegar</a>
-      <button class="btn" data-copy="${item.addresses.map(a=>a.text).join(' / ')}">Copiar endereço</button>
-    </div>`;
+function cardHTML(item) {
+  const isOpen = computeStatus(item.hours);
+  const statusBadge = isOpen === null ? "" : 
+    `<span class="status-badge ${isOpen ? 'open' : 'closed'}">${isOpen ? 'Aberto' : 'Fechado'}</span>`;
 
   return `
-    <article class="card" data-cat="${item.cat.join(' ')}" data-search="${(item.name+' '+item.fullName+' '+item.tags.join(' ')+' '+item.services.join(' ')).toLowerCase()}">
-      <div class="card-head">
-        <div>
+    <article class="card" data-cat="${item.cat.join(' ')}">
+      <div class="card-header">
+        <div class="card-title">
           <h2>${item.name}</h2>
-          <p class="sub">${item.fullName}</p>
+          <p>${item.fullName}</p>
         </div>
-        ${statusHTML}
+        ${statusBadge}
       </div>
-      <div class="tags">${item.tags.map(t=>`<span class="tag">${t}</span>`).join("")}</div>
-      <dl style="margin:0;">
-        ${addrHTML}
-        ${hoursHTML}
-        ${phonesHTML}
-        ${extraHTML}
-        ${emailHTML}
-      </dl>
-      ${noteHTML}
-      ${servicesHTML}
-      ${actionsHTML}
-    </article>`;
+      
+      <div class="tags">
+        ${item.tags.map(t => `<span class="tag">${t}</span>`).join("")}
+      </div>
+
+      <ul class="info-list">
+        <li class="info-item">
+          <i data-lucide="map-pin" class="info-icon" size="16"></i>
+          <div class="info-content">
+            <dd>${item.address}</dd>
+          </div>
+        </li>
+        <li class="info-item">
+          <i data-lucide="clock" class="info-icon" size="16"></i>
+          <div class="info-content">
+            <dd>${item.hoursText}</dd>
+          </div>
+        </li>
+        <li class="info-item">
+          <i data-lucide="phone" class="info-icon" size="16"></i>
+          <div class="info-content">
+            <dd><a href="${telHref(item.phones[0])}">${item.phones[0]}</a></dd>
+          </div>
+        </li>
+      </ul>
+
+      <details class="services-dropdown">
+        <summary><i data-lucide="chevron-down" size="16"></i> Ver serviços</summary>
+        <ul class="services-list">
+          ${item.services.map(s => `<li>${s}</li>`).join("")}
+        </ul>
+      </details>
+
+      <div class="card-actions">
+        <a href="${telHref(item.phones[0])}" class="btn btn-primary">
+          <i data-lucide="phone-call" size="16"></i> Ligar
+        </a>
+        <a href="${mapHref(item.coords)}" target="_blank" class="btn btn-outline">
+          <i data-lucide="navigation" size="16"></i> Rota
+        </a>
+      </div>
+    </article>
+  `;
 }
 
-// ---------- RENDER ----------
-const listEl = document.getElementById("list");
-const emptyEl = document.getElementById("empty");
-const countEl = document.getElementById("count");
-let activeCat = "all";
-let query = "";
-
-function render(){
-  const q = query.trim().toLowerCase();
-  const filtered = DATA.filter(item=>{
-    const catOk = activeCat==="all" || item.cat.includes(activeCat);
-    const searchBlob = (item.name+' '+item.fullName+' '+item.tags.join(' ')+' '+item.services.join(' ')).toLowerCase();
-    const qOk = q==="" || searchBlob.includes(q);
+function render() {
+  const q = document.getElementById("search").value.toLowerCase();
+  const activeCat = document.querySelector(".chip[aria-pressed='true']").dataset.cat;
+  
+  const filtered = DATA.filter(item => {
+    const catOk = activeCat === "all" || item.cat.includes(activeCat);
+    const searchBlob = (item.name + ' ' + item.fullName + ' ' + item.address + ' ' + item.tags.join(' ')).toLowerCase();
+    const qOk = q === "" || searchBlob.includes(q);
     return catOk && qOk;
   });
-  listEl.innerHTML = filtered.map(cardHTML).join("");
-  emptyEl.hidden = filtered.length !== 0;
-  countEl.textContent = filtered.length + (filtered.length===1 ? " serviço encontrado" : " serviços encontrados");
 
-  listEl.querySelectorAll("[data-copy]").forEach(btn=>{
-    btn.addEventListener("click", ()=>{
-      const text = btn.getAttribute("data-copy");
-      navigator.clipboard?.writeText(text).then(()=>{
-        const original = btn.textContent;
-        btn.textContent = "Copiado!";
-        setTimeout(()=>btn.textContent = original, 1500);
-      }).catch(()=>{});
-    });
+  document.getElementById("list").innerHTML = filtered.map(cardHTML).join("");
+  document.getElementById("empty").style.display = filtered.length === 0 ? "block" : "none";
+  document.getElementById("count").querySelector("span").textContent = `${filtered.length} serviços encontrados`;
+  
+  updateMarkers(filtered);
+  lucide.createIcons();
+}
+
+function copyCode() {
+  const code = document.documentElement.outerHTML;
+  navigator.clipboard.writeText(code).then(() => {
+    alert("Código copiado com sucesso!");
   });
 }
 
-document.getElementById("search").addEventListener("input", e=>{
-  query = e.target.value;
-  render();
-});
+function copyAddress(text) {
+  navigator.clipboard.writeText(text).then(() => alert("Endereço copiado!"));
+}
 
-document.querySelectorAll(".chip").forEach(chip=>{
-  chip.addEventListener("click", ()=>{
-    document.querySelectorAll(".chip").forEach(c=>c.setAttribute("aria-pressed","false"));
-    chip.setAttribute("aria-pressed","true");
-    activeCat = chip.dataset.cat;
+// Setup
+document.getElementById("search").addEventListener("input", render);
+document.querySelectorAll(".chip").forEach(chip => {
+  chip.addEventListener("click", () => {
+    document.querySelectorAll(".chip").forEach(c => c.setAttribute("aria-pressed", "false"));
+    chip.setAttribute("aria-pressed", "true");
     render();
   });
 });
 
-render();
-
-// ---------- PWA: registra o service worker só quando fizer sentido ----------
-// Em file:// (abertura local por duplo clique) os navegadores não permitem
-// service workers, então isso é ignorado silenciosamente e o app continua
-// funcionando 100% offline do mesmo jeito. Quando publicado via GitHub
-// Pages (https://), o service worker guarda uma cópia do app para abrir
-// mesmo sem internet e permite instalar na tela inicial.
-if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost")) {
-  window.addEventListener("load", () => {
-    navigator.serviceWorker.register("service-worker.js").catch(()=>{});
-  });
-}
+window.onload = () => {
+  initMap();
+  render();
+  document.getElementById("code-block").querySelector("code").textContent = document.documentElement.outerHTML;
+};
 </script>
 </body>
 </html>
