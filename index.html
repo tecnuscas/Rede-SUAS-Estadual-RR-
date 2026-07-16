@@ -5,28 +5,18 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Rede de Apoio · Sistema de Gestão de Equipamentos</title>
 <meta name="description" content="Sistema robusto de gestão e diretório de serviços socioassistenciais e rede de apoio TEA em Boa Vista-RR.">
-
 <meta name="theme-color" content="#115E59">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-
-<script src="https://unpkg.com/lucide@latest"></script>
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-
 <style>
   :root {
-    /* Brand Palette - Deep Teal & Slate */
     --brand-primary: #115E59;
     --brand-primary-light: #14B8A6;
     --brand-primary-soft: #F0FDFA;
     --brand-secondary: #0F172A;
     --brand-accent: #F59E0B;
-    
-    /* Semantic Colors */
+
     --bg-main: #F8FAFC;
     --bg-surface: #FFFFFF;
     --bg-muted: #F1F5F9;
@@ -34,8 +24,7 @@
     --text-muted: #64748B;
     --border-base: #E2E8F0;
     --border-focus: #115E59;
-    
-    /* Design Tokens */
+
     --radius-xs: 6px;
     --radius-sm: 10px;
     --radius-md: 16px;
@@ -43,18 +32,18 @@
     --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
     --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
     --shadow-lg: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
-    
-    /* Typography */
-    --font-sans: 'Plus Jakarta Sans', sans-serif;
-    --font-serif: 'Instrument Serif', serif;
-    --font-mono: 'JetBrains Mono', monospace;
+
+    /* Fontes 100% locais — nenhuma dependência de rede */
+    --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --font-serif: Georgia, "Times New Roman", serif;
+    --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
   }
 
   * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-  
-  html, body { 
-    margin: 0; 
-    padding: 0; 
+
+  html, body {
+    margin: 0;
+    padding: 0;
     scroll-behavior: smooth;
     background: var(--bg-main);
     color: var(--text-main);
@@ -62,13 +51,14 @@
     -webkit-font-smoothing: antialiased;
   }
 
+  svg.icon { flex-shrink: 0; }
+
   .container { max-width: 1280px; margin: 0 auto; padding: 0 2rem; }
 
-  /* Header - Premium & Modern */
   header.hero {
     background: var(--brand-secondary);
     color: white;
-    padding: 6rem 0 8rem;
+    padding: 5rem 0 4rem;
     position: relative;
     overflow: hidden;
     text-align: left;
@@ -78,7 +68,7 @@
     content: '';
     position: absolute;
     top: 0; right: 0; bottom: 0; left: 0;
-    background-image: 
+    background-image:
       radial-gradient(circle at 10% 20%, rgba(20, 184, 166, 0.15) 0%, transparent 40%),
       radial-gradient(circle at 90% 80%, rgba(245, 158, 11, 0.1) 0%, transparent 40%);
     pointer-events: none;
@@ -98,44 +88,32 @@
     color: var(--brand-primary-light);
     margin-bottom: 1.5rem;
     border: 1px solid rgba(255,255,255,0.1);
+    position: relative;
   }
 
   h1 {
     font-family: var(--font-serif);
-    font-size: clamp(3rem, 10vw, 5rem);
-    line-height: 0.9;
+    font-style: italic;
+    font-size: clamp(2.75rem, 9vw, 4.5rem);
+    line-height: 0.95;
     margin: 0 0 1.5rem;
     font-weight: 400;
+    position: relative;
   }
 
   .hero-description {
     max-width: 600px;
-    font-size: 1.25rem;
+    font-size: 1.15rem;
     color: #94A3B8;
     line-height: 1.5;
-  }
-
-  /* Map Integration */
-  .map-wrapper {
-    margin-top: -5rem;
     position: relative;
-    z-index: 20;
   }
 
-  #map {
-    height: 450px;
-    border-radius: var(--radius-lg);
-    border: 8px solid var(--bg-surface);
-    box-shadow: var(--shadow-lg);
-    background: var(--bg-muted);
-  }
-
-  /* Control Bar */
   .controls {
     position: sticky;
     top: 0;
     z-index: 100;
-    background: rgba(248, 250, 252, 0.8);
+    background: rgba(248, 250, 252, 0.92);
     backdrop-filter: blur(20px);
     border-bottom: 1px solid var(--border-base);
     padding: 1.5rem 0;
@@ -149,7 +127,7 @@
 
   .search-box input {
     width: 100%;
-    padding: 1.25rem 1.5rem 1.25rem 3.5rem;
+    padding: 1.1rem 1.5rem 1.1rem 3.25rem;
     border-radius: var(--radius-md);
     border: 1px solid var(--border-base);
     font-size: 1rem;
@@ -164,9 +142,9 @@
     box-shadow: 0 0 0 4px rgba(17, 94, 89, 0.1);
   }
 
-  .search-box i {
+  .search-box svg.icon {
     position: absolute;
-    left: 1.25rem;
+    left: 1.1rem;
     top: 50%;
     transform: translateY(-50%);
     color: var(--text-muted);
@@ -201,7 +179,6 @@
     box-shadow: 0 10px 15px -3px rgba(17, 94, 89, 0.3);
   }
 
-  /* Equipment Cards */
   .grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
@@ -217,12 +194,12 @@
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transition: all 0.3s ease;
     position: relative;
   }
 
   .card:hover {
-    transform: translateY(-10px);
+    transform: translateY(-6px);
     box-shadow: var(--shadow-lg);
     border-color: var(--brand-primary-light);
   }
@@ -231,11 +208,12 @@
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
+    gap: 1rem;
   }
 
   .card-title h3 {
     margin: 0 0 0.5rem;
-    font-size: 1.5rem;
+    font-size: 1.4rem;
     font-weight: 800;
     color: var(--brand-secondary);
     letter-spacing: -0.02em;
@@ -257,10 +235,26 @@
     text-transform: uppercase;
     padding: 0.4rem 0.8rem;
     border-radius: 99px;
+    flex-shrink: 0;
   }
 
   .status-dot.open { background: #DCFCE7; color: #166534; }
   .status-dot.closed { background: #FEE2E2; color: #991B1B; }
+
+  .tag-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .tag {
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 0.3rem 0.65rem;
+    border-radius: 99px;
+    background: var(--brand-primary-soft);
+    color: var(--brand-primary);
+  }
 
   .info-stack {
     display: flex;
@@ -270,14 +264,20 @@
 
   .info-row {
     display: flex;
-    gap: 1rem;
+    gap: 0.85rem;
     font-size: 0.935rem;
   }
 
-  .info-row i { color: var(--brand-primary); flex-shrink: 0; margin-top: 0.2rem; }
+  .info-row svg.icon { color: var(--brand-primary); margin-top: 0.2rem; }
   .info-row span { color: var(--text-main); line-height: 1.4; }
 
-  /* Robust Notes Section */
+  .desc-text {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin: 0;
+  }
+
   .notes-box {
     background: var(--bg-muted);
     border-radius: var(--radius-sm);
@@ -317,12 +317,11 @@
     font-size: 0.875rem;
     color: var(--text-main);
     resize: none;
-    min-height: 100px;
+    min-height: 90px;
     outline: none;
     line-height: 1.6;
   }
 
-  /* Actions */
   .card-footer {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -347,11 +346,24 @@
 
   .btn-solid { background: var(--brand-primary); color: white; }
   .btn-solid:hover { background: var(--brand-primary-light); transform: translateY(-2px); }
-  
+
   .btn-outline { background: transparent; border-color: var(--border-base); color: var(--text-main); }
   .btn-outline:hover { background: var(--bg-muted); border-color: var(--text-muted); }
 
-  /* Print Layout - Landscape Optimized */
+  .offline-note {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: var(--brand-primary-soft);
+    color: var(--brand-primary);
+    border: 1px solid #99F6E4;
+    border-radius: var(--radius-sm);
+    padding: 0.85rem 1.1rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-bottom: 2rem;
+  }
+
   @media print {
     @page { size: landscape; margin: 0.5cm; }
     body * { visibility: hidden; }
@@ -366,7 +378,6 @@
 
   #print-section { display: none; }
 
-  /* Footer */
   footer {
     background: var(--brand-secondary);
     color: #94A3B8;
@@ -375,13 +386,18 @@
     border-top: 1px solid rgba(255,255,255,0.05);
   }
 
-  /* Animations */
   @keyframes fadeInUp {
-    from { opacity: 0; transform: translateY(20px); }
+    from { opacity: 0; transform: translateY(16px); }
     to { opacity: 1; transform: translateY(0); }
   }
 
-  .card { animation: fadeInUp 0.5s ease backwards; }
+  .card { animation: fadeInUp 0.4s ease backwards; }
+
+  @media (max-width: 640px) {
+    .container { padding: 0 1.25rem; }
+    header.hero { padding: 3.5rem 0 2.5rem; }
+    .card-footer { grid-template-columns: 1fr; }
+  }
 </style>
 </head>
 <body>
@@ -389,26 +405,24 @@
 <header class="hero">
   <div class="container">
     <div class="badge-ui">
-      <i data-lucide="shield-check" size="14"></i> Sistema Oficial de Gestão
+      <svg class="icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+      Sistema Oficial de Gestão
     </div>
     <h1>Rede de Apoio</h1>
-    <p class="hero-description">Gestão centralizada de equipamentos socioassistenciais e suporte à rede TEA de Boa Vista, Roraima.</p>
+    <p class="hero-description">Gestão centralizada de equipamentos socioassistenciais e suporte à rede TEA de Boa Vista, Roraima. Funciona 100% offline.</p>
   </div>
 </header>
-
-<div class="container map-wrapper">
-  <div id="map"></div>
-</div>
 
 <div class="controls">
   <div class="container">
     <div style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
       <div class="search-box">
-        <i data-lucide="search" size="20"></i>
+        <svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
         <input type="search" id="search" placeholder="Buscar por unidade, bairro ou serviço especializado...">
       </div>
       <button class="btn btn-outline" onclick="exportNotes()">
-        <i data-lucide="download" size="18"></i> Backup de Notas
+        <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Backup de Notas
       </button>
     </div>
     <div class="filter-group" id="filters">
@@ -421,17 +435,20 @@
 </div>
 
 <main class="container">
+  <div class="offline-note">
+    <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+    Este sistema funciona sem conexão com a internet. As anotações ficam salvas neste dispositivo/navegador.
+  </div>
+
   <div id="stats" style="margin-bottom: 2rem; font-size: 0.875rem; color: var(--text-muted); font-weight: 600;">
     <span id="result-count">0</span> equipamentos encontrados
   </div>
-  
-  <div class="grid" id="equipment-list">
-    <!-- Cards will be injected here -->
-  </div>
+
+  <div class="grid" id="equipment-list"></div>
 
   <div id="empty-state" style="display:none; text-align:center; padding:8rem 2rem;">
-    <i data-lucide="database-zap" size="64" style="color: var(--border-base); margin-bottom: 2rem;"></i>
-    <h2 style="font-family: var(--font-serif); font-size: 2rem; color: var(--text-muted);">Nenhum resultado para esta busca</h2>
+    <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="var(--border-base)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom: 2rem;"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14a9 3 0 0 0 18 0V5"/><path d="M3 12a9 3 0 0 0 18 0"/></svg>
+    <h2 style="font-family: var(--font-serif); font-size: 2rem; color: var(--text-muted); margin: 0 0 0.5rem;">Nenhum resultado para esta busca</h2>
     <p style="color: var(--text-muted);">Tente outros termos ou limpe os filtros aplicados.</p>
   </div>
 </main>
@@ -445,7 +462,6 @@
   </div>
 </footer>
 
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
 const DATA = [
   {
@@ -571,49 +587,42 @@ const DATA = [
     hoursText: "Segunda a sexta, 08:00 às 12:00 e 14:00 às 22:00",
     phones: ["(95) 3621-1718"],
     services: ["Serviço de Convivência", "Oficinas Diversas", "Ações Comunitárias", "Atividades Culturais"],
-    description: "Espaço de integração de políticas públicas da Secretaria do Trabalho e Bem-Estar Social (SETRABES)",
+    description: "Espaço de integração de políticas públicas da Secretaria do Trabalho e Bem-Estar Social (SETRABES).",
     coords: [2.8185, -60.7582]
   }
 ];
 
-let map, markers = [];
+/* Ícones SVG embutidos — nenhuma chamada de rede necessária */
+const ICONS = {
+  mapPin: '<svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>',
+  clock: '<svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>',
+  phone: '<svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>',
+  check: '<svg class="icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>',
+  closed: '<svg class="icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>',
+  file: '<svg class="icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg>',
+  printer: '<svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>',
+  map: '<svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/><line x1="9" y1="3" x2="9" y2="18"/><line x1="15" y1="6" x2="15" y2="21"/></svg>'
+};
 
 const NotesStore = {
-  get: (id) => localStorage.getItem(`robust_note_${id}`) || "",
-  save: (id, text) => localStorage.setItem(`robust_note_${id}`, text),
+  get: (id) => {
+    try { return localStorage.getItem(`robust_note_${id}`) || ""; }
+    catch (e) { return ""; }
+  },
+  save: (id, text) => {
+    try { localStorage.setItem(`robust_note_${id}`, text); }
+    catch (e) { /* armazenamento indisponível — ignora silenciosamente */ }
+  },
   getAll: () => {
     const all = {};
     DATA.forEach(item => {
-      const note = localStorage.getItem(`robust_note_${item.id}`);
-      if(note) all[item.name] = note;
+      let note = "";
+      try { note = localStorage.getItem(`robust_note_${item.id}`); } catch (e) {}
+      if (note) all[item.name] = note;
     });
     return all;
   }
 };
-
-function initMap() {
-  map = L.map('map', { scrollWheelZoom: false }).setView([2.8235, -60.6758], 13);
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-    attribution: '&copy; OpenStreetMap &copy; CARTO'
-  }).addTo(map);
-  updateMarkers(DATA);
-}
-
-function updateMarkers(items) {
-  markers.forEach(m => map.removeLayer(m));
-  markers = [];
-  items.forEach(item => {
-    if (item.coords) {
-      const marker = L.marker(item.coords).addTo(map)
-        .bindPopup(`<b>${item.name}</b><br>${item.address}`);
-      markers.push(marker);
-    }
-  });
-  if (markers.length > 0) {
-    const group = new L.featureGroup(markers);
-    map.fitBounds(group.getBounds().pad(0.2));
-  }
-}
 
 function computeStatus(hours) {
   if (!hours || hours.length === 0) return null;
@@ -631,54 +640,57 @@ function computeStatus(hours) {
   return false;
 }
 
+function escapeHtml(str) {
+  const div = document.createElement("div");
+  div.textContent = str;
+  return div.innerHTML;
+}
+
 function createCard(item, index) {
   const isOpen = computeStatus(item.hours);
   const note = NotesStore.get(item.id);
-  
+
   return `
-    <article class="card" style="animation-delay: ${index * 0.1}s">
+    <article class="card" style="animation-delay: ${index * 0.06}s">
       <div class="card-header">
         <div class="card-title">
           <h3>${item.name}</h3>
           <p>${item.fullName}</p>
         </div>
         <div class="status-dot ${isOpen ? 'open' : 'closed'}">
-          <i data-lucide="${isOpen ? 'circle-check' : 'clock-8'}" size="12"></i>
+          ${isOpen ? ICONS.check : ICONS.closed}
           ${isOpen ? 'Aberto' : 'Fechado'}
         </div>
       </div>
 
-      <div class="info-stack">
-        <div class="info-row">
-          <i data-lucide="map-pin" size="18"></i>
-          <span>${item.address}</span>
-        </div>
-        <div class="info-row">
-          <i data-lucide="clock" size="18"></i>
-          <span>${item.hoursText}</span>
-        </div>
-        <div class="info-row">
-          <i data-lucide="phone" size="18"></i>
-          <span>${item.phones[0]}</span>
-        </div>
+      <div class="tag-row">
+        ${item.tags.map(t => `<span class="tag">${t}</span>`).join("")}
       </div>
+
+      <div class="info-stack">
+        <div class="info-row">${ICONS.mapPin}<span>${item.address}</span></div>
+        <div class="info-row">${ICONS.clock}<span>${item.hoursText}</span></div>
+        <div class="info-row">${ICONS.phone}<span>${item.phones.join(" / ")}</span></div>
+      </div>
+
+      <p class="desc-text">${item.description}</p>
 
       <div class="notes-box">
         <div class="notes-header">
-          <label><i data-lucide="file-text" size="14"></i> Observações Técnicas</label>
+          <label>${ICONS.file} Observações Técnicas</label>
         </div>
-        <textarea class="notes-textarea" 
+        <textarea class="notes-textarea"
                   placeholder="Registre aqui informações relevantes sobre o atendimento ou fluxos deste equipamento..."
-                  oninput="NotesStore.save('${item.id}', this.value)">${note}</textarea>
+                  oninput="NotesStore.save('${item.id}', this.value)">${escapeHtml(note)}</textarea>
       </div>
 
       <div class="card-footer">
         <button class="btn btn-solid" onclick="printReport('${item.id}')">
-          <i data-lucide="printer" size="18"></i> Imprimir Ficha
+          ${ICONS.printer} Imprimir Ficha
         </button>
-        <a href="https://www.google.com/maps/search/?api=1&query=${item.coords[0]},${item.coords[1]}" 
-           target="_blank" class="btn btn-outline">
-          <i data-lucide="map" size="18"></i> Ver Rota
+        <a href="https://www.google.com/maps/search/?api=1&query=${item.coords[0]},${item.coords[1]}"
+           target="_blank" rel="noopener" class="btn btn-outline">
+          ${ICONS.map} Ver Rota
         </a>
       </div>
     </article>
@@ -687,11 +699,13 @@ function createCard(item, index) {
 
 function render() {
   const query = document.getElementById("search").value.toLowerCase();
-  const category = document.querySelector(".filter-btn.active").dataset.cat;
-  
+  const activeBtn = document.querySelector(".filter-btn.active");
+  const category = activeBtn ? activeBtn.dataset.cat : "all";
+
   const filtered = DATA.filter(item => {
     const matchCat = category === "all" || item.cat.includes(category);
-    const matchSearch = (item.name + item.fullName + item.address + item.services.join(' ')).toLowerCase().includes(query);
+    const haystack = (item.name + " " + item.fullName + " " + item.address + " " + item.services.join(" ")).toLowerCase();
+    const matchSearch = haystack.includes(query);
     return matchCat && matchSearch;
   });
 
@@ -699,19 +713,15 @@ function render() {
   list.innerHTML = filtered.map((item, idx) => createCard(item, idx)).join("");
   document.getElementById("result-count").textContent = filtered.length;
   document.getElementById("empty-state").style.display = filtered.length === 0 ? "block" : "none";
-  
-  updateMarkers(filtered);
-  lucide.createIcons();
 }
 
 function printReport(id) {
   const item = DATA.find(i => i.id === id);
   const note = NotesStore.get(id);
   const printSection = document.getElementById("print-section");
-  
+
   printSection.innerHTML = `
-    <div style="padding: 40px; font-family: 'Plus Jakarta Sans', sans-serif; color: #0F172A; background: white; min-height: 100vh; box-sizing: border-box;">
-      <!-- Header do Relatório -->
+    <div style="padding: 40px; font-family: sans-serif; color: #0F172A; background: white; min-height: 100vh; box-sizing: border-box;">
       <div style="display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 3px solid #115E59; padding-bottom: 20px; margin-bottom: 30px;">
         <div style="display: flex; align-items: center; gap: 15px;">
           <div style="background: #115E59; color: white; padding: 10px; border-radius: 8px;">
@@ -730,37 +740,31 @@ function printReport(id) {
         </div>
       </div>
 
-      <!-- Conteúdo em Grid -->
       <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
-        <!-- Lado Esquerdo: Dados do Equipamento -->
         <div>
           <h2 style="font-size: 22px; margin: 0 0 10px; color: #0F172A;">${item.name}</h2>
           <p style="font-size: 14px; color: #64748B; margin: 0 0 25px;">${item.fullName}</p>
-          
+
           <div style="display: flex; flex-direction: column; gap: 15px;">
             <div style="background: #F8FAFC; padding: 15px; border-radius: 10px; border: 1px solid #E2E8F0;">
-              <p style="margin: 0 0 10px; font-size: 13px;"><strong>📍 LOCALIZAÇÃO:</strong><br>${item.address}</p>
-              <p style="margin: 0 0 10px; font-size: 13px;"><strong>⏰ FUNCIONAMENTO:</strong><br>${item.hoursText}</p>
-              <p style="margin: 0; font-size: 13px;"><strong>📞 CONTATO:</strong><br>${item.phones.join(" / ")}</p>
+              <p style="margin: 0 0 10px; font-size: 13px;"><strong>LOCALIZAÇÃO:</strong><br>${item.address}</p>
+              <p style="margin: 0 0 10px; font-size: 13px;"><strong>FUNCIONAMENTO:</strong><br>${item.hoursText}</p>
+              <p style="margin: 0; font-size: 13px;"><strong>CONTATO:</strong><br>${item.phones.join(" / ")}</p>
             </div>
-            
+
             <div>
               <h3 style="font-size: 14px; text-transform: uppercase; color: #115E59; border-bottom: 1px solid #E2E8F0; padding-bottom: 5px; margin-bottom: 10px;">Serviços Ofertados</h3>
-              <ul style="margin: 0; padding-left: 20px; font-size: 12px; color: #1E293B; columns: 1;">
+              <ul style="margin: 0; padding-left: 20px; font-size: 12px; color: #1E293B;">
                 ${item.services.map(s => `<li style="margin-bottom: 5px;">${s}</li>`).join("")}
               </ul>
             </div>
           </div>
         </div>
 
-        <!-- Lado Direito: Anotações -->
         <div style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 12px; padding: 25px; position: relative;">
-          <h3 style="font-size: 14px; text-transform: uppercase; color: #115E59; margin: 0 0 15px; display: flex; align-items: center; gap: 10px;">
-            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-            Observações e Encaminhamentos
-          </h3>
-          <div style="font-size: 14px; line-height: 1.8; color: #1E293B; white-space: pre-wrap; min-height: 300px;">${note || "Nenhuma observação técnica registrada para este equipamento."}</div>
-          
+          <h3 style="font-size: 14px; text-transform: uppercase; color: #115E59; margin: 0 0 15px;">Observações e Encaminhamentos</h3>
+          <div style="font-size: 14px; line-height: 1.8; color: #1E293B; white-space: pre-wrap; min-height: 300px;">${note ? escapeHtml(note) : "Nenhuma observação técnica registrada para este equipamento."}</div>
+
           <div style="margin-top: 40px; border-top: 1px solid #CBD5E1; padding-top: 20px; text-align: center;">
             <div style="width: 200px; border-top: 1px solid #0F172A; margin: 40px auto 10px;"></div>
             <p style="margin: 0; font-size: 11px; font-weight: 700;">ASSINATURA DO PROFISSIONAL RESPONSÁVEL</p>
@@ -773,10 +777,8 @@ function printReport(id) {
       </div>
     </div>
   `;
-  
-  setTimeout(() => {
-    window.print();
-  }, 300);
+
+  setTimeout(() => { window.print(); }, 200);
 }
 
 function exportNotes() {
@@ -787,9 +789,9 @@ function exportNotes() {
   a.href = url;
   a.download = `backup_notas_rede_apoio_${new Date().toISOString().split('T')[0]}.json`;
   a.click();
+  URL.revokeObjectURL(url);
 }
 
-// Event Listeners
 document.getElementById("search").addEventListener("input", render);
 document.querySelectorAll(".filter-btn").forEach(btn => {
   btn.addEventListener("click", () => {
@@ -799,10 +801,7 @@ document.querySelectorAll(".filter-btn").forEach(btn => {
   });
 });
 
-window.onload = () => {
-  initMap();
-  render();
-};
+render();
 </script>
 </body>
 </html>
