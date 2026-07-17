@@ -2,7 +2,12 @@ const CACHE_NAME = 'rede-apoio-v1';
 const ASSETS = [
   './',
   './index.html',
-  './manifest.json'
+  './manifest.json',
+  './icon-192.png',
+  './icon-512.png',
+  './icon-maskable-512.png',
+  './apple-touch-icon.png',
+  './favicon.ico'
 ];
 
 self.addEventListener('install', (event) => {
