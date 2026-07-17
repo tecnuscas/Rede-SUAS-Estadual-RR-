@@ -369,16 +369,12 @@
   #print-section { display: none; }
 
   @media print {
-    @page { size: portrait; margin: 1cm; }
+    @page { size: landscape; margin: 1cm; }
     #app-content { display: none !important; }
     #print-section {
       display: block !important;
       width: 100%;
       background: white;
-    }
-    .print-container {
-        padding: 0 !important;
-        margin: 0 !important;
     }
   }
 
@@ -1010,27 +1006,66 @@ function printCard(id) {
   const item = DATA.find(d => d.id === id);
   const note = localStorage.getItem('note_' + id) || '';
   const printArea = document.getElementById('print-section');
+  const date = new Date().toLocaleDateString('pt-BR', { day: 'numeric', month: 'long', year: 'numeric' });
 
   printArea.innerHTML = `
-    <div style="padding: 40px; font-family: sans-serif; border: 2px solid #115E59; border-radius: 16px;">
-      <h1 style="margin: 0; color: #115E59;">${item.fullName}</h1>
-      <p style="color: #64748B; font-weight: bold;">${item.tags.join(' · ')}</p>
-      <hr style="border: 0; border-top: 1px solid #E2E8F0; margin: 20px 0;">
-      <p><strong>Endereço:</strong> ${item.address}</p>
-      <p><strong>Horário:</strong> ${item.hoursText}</p>
-      <p><strong>Telefone:</strong> ${item.phones.join(' · ')}</p>
-      <p><strong>Serviços:</strong> ${item.services.join(', ')}</p>
-      <div style="margin-top: 20px; padding: 15px; background: #F8FAFC; border-radius: 8px;">
-        <strong>Descrição:</strong><br>${item.description}
+    <div style="padding: 40px; font-family: 'Segoe UI', Roboto, sans-serif; position: relative; min-height: 18cm; color: #1E293B; background: white;">
+      <!-- Símbolo da Psicologia (Marca d'água) -->
+      <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); opacity: 0.05; z-index: 0; pointer-events: none;">
+        <svg width="500" height="500" viewBox="0 0 24 24" fill="#115E59"><path d="M12,2C6.48,2,2,6.48,2,12s4.48,10,10,10s10-4.48,10-10S17.52,2,12,2z M17,13h-4v4h-2v-4H7v-2h4V7h2v4h4V13z"/></svg>
       </div>
-      ${note ? `
-        <div style="margin-top: 20px; padding: 15px; border-left: 4px solid #115E59; background: #F0FDFA; word-wrap: break-word; overflow-wrap: break-word; white-space: pre-wrap;">
-          <strong>Minhas Notas:</strong><br>${note}
+
+      <div style="position: relative; z-index: 1;">
+        <!-- Cabeçalho de Encaminhamento -->
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 2px solid #115E59; padding-bottom: 20px; margin-bottom: 30px;">
+          <div>
+            <h1 style="margin: 0; color: #115E59; font-size: 28px; text-transform: uppercase; letter-spacing: 1px;">Guia de Encaminhamento</h1>
+            <p style="margin: 5px 0 0; color: #64748B; font-weight: 600;">Rede de Proteção Social e Apoio TEA</p>
+          </div>
+          <div style="text-align: right;">
+            <p style="margin: 0; font-weight: 800; color: #0F172A;">Paulo Xavier</p>
+            <p style="margin: 2px 0; color: #115E59; font-weight: 600;">Psicólogo</p>
+            <p style="margin: 0; font-size: 12px; color: #64748B;">CRP-20/09816</p>
+          </div>
         </div>
-      ` : ''}
-      <p style="margin-top: 40px; font-size: 12px; color: #94A3B8; text-align: center;">
-        Ficha gerada via Sistema de Rede de Apoio · Boa Vista-RR
-      </p>
+
+        <div style="display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 40px;">
+          <!-- Coluna Principal: Destino e Orientações -->
+          <div>
+            <p style="margin-bottom: 20px;"><strong>Ao Serviço:</strong><br><span style="font-size: 20px; color: #115E59; font-weight: 800;">${item.fullName}</span></p>
+            
+            <div style="margin-bottom: 25px;">
+              <strong>Finalidade do Encaminhamento / Conduta:</strong>
+              <div style="margin-top: 10px; padding: 15px; border: 1px solid #E2E8F0; border-radius: 8px; min-height: 120px; background: #F8FAFC; word-wrap: break-word; overflow-wrap: break-word; white-space: pre-wrap;">${note || 'Encaminhamento para avaliação e acompanhamento especializado conforme necessidade da rede de apoio.'}</div>
+            </div>
+
+            <div style="margin-top: 40px; border-top: 1px solid #E2E8F0; padding-top: 20px;">
+              <p style="font-size: 14px; color: #64748B;"><strong>Descrição do Equipamento:</strong><br>${item.description}</p>
+            </div>
+          </div>
+
+          <!-- Coluna Lateral: Informações do Local -->
+          <div style="background: #F0FDFA; padding: 20px; border-radius: 12px; border: 1px solid #99F6E4;">
+            <h3 style="margin-top: 0; color: #115E59; font-size: 16px;">Dados da Unidade</h3>
+            <p style="font-size: 14px; margin: 10px 0;"><strong>Endereço:</strong><br>${item.address}</p>
+            <p style="font-size: 14px; margin: 10px 0;"><strong>Horário:</strong><br>${item.hoursText}</p>
+            <p style="font-size: 14px; margin: 10px 0;"><strong>Contato:</strong><br>${item.phones.join(' · ')}</p>
+            <p style="font-size: 14px; margin: 10px 0;"><strong>Serviços:</strong><br>${item.services.join(', ')}</p>
+          </div>
+        </div>
+
+        <!-- Rodapé e Assinatura -->
+        <div style="margin-top: 60px; display: flex; justify-content: space-between; align-items: flex-end;">
+          <div>
+            <p style="font-size: 14px; color: #1E293B;">Boa Vista - RR, ${date}.</p>
+          </div>
+          <div style="text-align: center; width: 250px;">
+            <div style="border-top: 1px solid #1E293B; margin-bottom: 5px;"></div>
+            <p style="margin: 0; font-size: 14px; font-weight: 700;">Paulo Xavier</p>
+            <p style="margin: 0; font-size: 12px; color: #64748B;">Psicólogo · CRP-20/09816</p>
+          </div>
+        </div>
+      </div>
     </div>
   `;
   window.print();
@@ -1074,4 +1109,3 @@ renderEquipment();
 </script>
 </body>
 </html>
-
