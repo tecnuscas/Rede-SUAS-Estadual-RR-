@@ -79,7 +79,25 @@
     background: var(--brand-secondary);
     color: white;
     padding: 4rem 0;
-    border-bottom: 4px solid var(--brand-primary);
+  }
+
+  .flag-stripe {
+    height: 7px;
+    background: linear-gradient(
+      90deg,
+      #0091C2 0%, #0091C2 34%,
+      #FFFFFF 34%, #FFFFFF 40%,
+      #009739 40%, #009739 92%,
+      #ED1C24 92%, #ED1C24 100%
+    );
+  }
+
+  .hero h1 .flag-star {
+    color: #FEDD00;
+    -webkit-text-stroke: 0.5px rgba(0,0,0,0.15);
+    margin-right: 0.3rem;
+    font-size: 0.7em;
+    vertical-align: middle;
   }
 
   .hero h1 {
@@ -319,10 +337,11 @@
 
 <header class="hero">
   <div class="container">
-    <h1>Rede de Apoio</h1>
+    <h1><span class="flag-star">★</span>Rede de Apoio</h1>
     <p>Diretório técnico de equipamentos socioassistenciais e suporte à rede RAPS de Boa Vista, Roraima. Gestão centralizada para profissionais de saúde e assistência.</p>
   </div>
 </header>
+<div class="flag-stripe"></div>
 
 <div class="controls">
   <div class="container">
@@ -894,6 +913,4 @@ render();
 </script>
 </body>
 </html>
-
-
 
