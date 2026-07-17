@@ -453,22 +453,11 @@ const DATA = [
     desc: "Programa legislativo de suporte e acolhimento à rede TEA e seus familiares."
   },
   {
-    id: "cmae",
-    name: "CMAE",
-    fullName: "Centro Municipal de Atendimento Especializado",
-    cat: ["tea"],
-    address: "Rua Sólon Rodrigues Pessoa, s/n - Pintolândia, Boa Vista-RR",
-    hours: "Segunda a sexta, 07:30 às 17:30",
-    phones: ["(95) 3621-1700"],
-    services: "AEE, Suporte Pedagógico, Avaliação Multidisciplinar.",
-    desc: "Referência municipal para educação inclusiva de alunos com TEA."
-  },
-  {
     id: "apae-bv",
     name: "APAE Boa Vista",
     fullName: "Associação de Pais e Amigos dos Excepcionais",
     cat: ["tea", "social"],
-    address: "Avenida Capitão Júlio Bezerra, 192 - Aparecida, Boa Vista-RR",
+    address: "Av. Surumu, nº 71 - Calungá, Boa Vista-RR",
     hours: "08:00 às 12:00 / 14:00 às 18:00",
     phones: ["(95) 3224-2755"],
     services: "Educação Especial, Fisioterapia, Esporte Inclusivo (TEAtivo).",
@@ -783,7 +772,7 @@ function printGuide(id) {
             <h2 style="margin:0 0 15px 0; font-size:1.3rem; color:#115E59;">${i.fullName}</h2>
             
             <p style="margin:0 0 5px 0; font-size:0.8rem; font-weight:800; color:#64748B; text-transform:uppercase;">Conduta e Orientações:</p>
-            <div style="flex-grow:1; padding:12px; border:1.5px solid #115E59; border-radius:8px; font-size:0.9rem; line-height:1.4; white-space:pre-wrap; background:rgba(17,94,89,0.01); overflow:hidden;">${note}</div>
+            <div id="printNoteBox" style="flex-grow:1; padding:12px; border:1.5px solid #115E59; border-radius:8px; font-size:15px; line-height:1.4; white-space:pre-wrap; background:rgba(17,94,89,0.01); overflow:hidden;">${note}</div>
           </div>
 
           <div style="background:#F8FAFC; padding:15px; border-radius:8px; border:1px solid #E2E8F0; display:flex; flex-direction:column; gap:12px;">
@@ -815,6 +804,20 @@ function printGuide(id) {
       </div>
     </div>
   `;
+
+  // Ajuste automático do texto de "Conduta e Orientações" para caber em uma
+  // única página sem cortar conteúdo. Reduz a fonte progressivamente até o
+  // texto caber na altura disponível da caixa (mínimo 8px de legibilidade).
+  const noteBox = document.getElementById('printNoteBox');
+  if (noteBox) {
+    let fontSize = 15;
+    noteBox.style.fontSize = fontSize + 'px';
+    while (noteBox.scrollHeight > noteBox.clientHeight && fontSize > 8) {
+      fontSize -= 0.5;
+      noteBox.style.fontSize = fontSize + 'px';
+    }
+  }
+
   window.print();
 }
 
@@ -845,6 +848,7 @@ render();
 </script>
 </body>
 </html>
+
 
 
 
