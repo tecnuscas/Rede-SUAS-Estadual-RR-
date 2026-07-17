@@ -696,14 +696,14 @@ function printGuide(id) {
   const date = new Date().toLocaleDateString('pt-BR', {day:'numeric', month:'long', year:'numeric'});
   
   document.getElementById('print-area').innerHTML = `
-    <div style="padding:30px; background:white; color:#0F172A; font-family:sans-serif; min-height:19cm; width:100%; max-width:28cm; margin:0 auto; position:relative; box-sizing:border-box; overflow:hidden;">
+    <div style="padding:20px; background:white; color:#0F172A; font-family:sans-serif; height:18.5cm; width:100%; max-width:28cm; margin:0 auto; position:relative; box-sizing:border-box; overflow:hidden;">
       <div style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); opacity:0.04; z-index:0;">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/S%C3%ADmbolo_da_Psicologia.svg/1200px-S%C3%ADmbolo_da_Psicologia.svg.png" style="width:500px; height:auto;">
       </div>
       <div style="position:relative; z-index:1;">
-        <div style="display:flex; justify-content:space-between; border-bottom:3px solid #115E59; padding-bottom:20px; margin-bottom:40px;">
+        <div style="display:flex; justify-content:space-between; border-bottom:3px solid #115E59; padding-bottom:15px; margin-bottom:25px;">
           <div>
-            <h1 style="margin:0; font-family:serif; font-size:2.5rem; color:#115E59;">Guia de Encaminhamento</h1>
+            <h1 style="margin:0; font-family:serif; font-size:2rem; color:#115E59;">Guia de Encaminhamento</h1>
             <p style="margin:5px 0; color:#64748B; font-weight:700; text-transform:uppercase; letter-spacing:1px;">Rede de Políticas Públicas</p>
           </div>
           <div style="text-align:right;">
@@ -718,7 +718,7 @@ function printGuide(id) {
             <h2 style="margin:0; font-size:1.8rem; color:#115E59;">${i.fullName}</h2>
             <div style="margin-top:30px;">
               <p style="font-size:0.9rem; font-weight:800; text-transform:uppercase; color:#64748B; margin-bottom:10px;">Conduta e Orientações:</p>
-              <div style="padding:20px; border:2px solid #115E59; border-radius:12px; min-height:250px; font-size:1.05rem; line-height:1.5; white-space:pre-wrap; background:rgba(17,94,89,0.01); word-break:break-word; overflow-wrap:break-word;">${note}</div>
+              <div style="padding:15px; border:2px solid #115E59; border-radius:12px; min-height:200px; font-size:1rem; line-height:1.4; white-space:pre-wrap; background:rgba(17,94,89,0.01); word-break:break-word; overflow-wrap:break-word;">${note}</div>
             </div>
           </div>
           <div style="background:#F8FAFC; padding:30px; border-radius:12px; border:1px solid #E2E8F0;">
@@ -728,7 +728,7 @@ function printGuide(id) {
             <p><strong>CONTATO:</strong><br><span style="font-size:1.2rem; color:#115E59; font-weight:800;">${i.phones.join(' · ')}</span></p>
           </div>
         </div>
-        <div style="margin-top:100px; display:flex; justify-content:space-between; align-items:flex-end;">
+        <div style="margin-top:50px; display:flex; justify-content:space-between; align-items:flex-end;">
           <p style="font-weight:600;">Boa Vista - RR, ${date}.</p>
           <div style="text-align:center; width:300px;">
             <div style="border-top:2px solid #0F172A; margin-bottom:8px;"></div>
@@ -769,6 +769,7 @@ render();
 </script>
 </body>
 </html>
+
 
 
 
