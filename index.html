@@ -106,6 +106,7 @@
     backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--border-ui);
     padding: 1rem 0;
+    box-shadow: 0 4px 16px -8px rgba(15, 23, 42, 0.08);
   }
 
   .search-wrapper {
@@ -170,6 +171,7 @@
   .tech-card {
     background: var(--bg-card);
     border: 1px solid var(--border-ui);
+    border-top: 3px solid var(--brand-primary);
     border-radius: var(--radius-ui);
     display: flex;
     flex-direction: column;
@@ -185,7 +187,7 @@
   .card-top {
     padding: 1.5rem;
     border-bottom: 1px solid var(--border-ui);
-    background: rgba(17, 94, 89, 0.02);
+    background: linear-gradient(180deg, rgba(17, 94, 89, 0.05), rgba(17, 94, 89, 0) 80%);
   }
 
   .card-top h3 {
@@ -343,7 +345,7 @@
 </div>
 
 <main class="container">
-  <div id="resultsInfo" style="margin-top: 1.5rem; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; color: var(--text-muted);">
+  <div id="resultsInfo" style="margin-top: 1.5rem; display:inline-flex; align-items:center; gap:0.4rem; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; color: var(--brand-primary); background: rgba(17, 94, 89, 0.08); padding: 0.4rem 0.9rem; border-radius: 999px;">
     <span id="counter">0</span> registros localizados
   </div>
   <div class="equipment-grid" id="grid"></div>
@@ -693,6 +695,28 @@ const DATA = [
     phones: ["(95) 3198-9316"],
     services: "Gestão da Assistência Social Municipal.",
     desc: "Órgão gestor municipal responsável pela política de assistência social."
+  },
+  {
+    id: "setrabes",
+    name: "SETRABES",
+    fullName: "Secretaria de Estado do Trabalho e Bem-Estar Social",
+    cat: ["social"],
+    address: "Av. Mário Homem de Melo, 2310 - Mecejana, CEP 69.304-350, Boa Vista-RR",
+    hours: "Segunda a sexta, 08:00 às 14:00",
+    phones: ["(95) 3627-7995"],
+    services: "Gestão Estadual da Assistência Social, Programas de Trabalho e Renda.",
+    desc: "Órgão gestor estadual responsável pela política de assistência social, trabalho e bem-estar social em Roraima."
+  },
+  {
+    id: "inss-boa-vista",
+    name: "INSS",
+    fullName: "Instituto Nacional do Seguro Social",
+    cat: ["social"],
+    address: "Av. Glaycon de Paiva, 86 - Mecejana, Boa Vista-RR, 69301-250",
+    hours: "Segunda a sexta, 07:00 às 13:00 (mediante agendamento)",
+    phones: ["135"],
+    services: "Aposentadoria, Auxílio-doença, BPC/LOAS, Pensão por Morte, Perícia Médica.",
+    desc: "Agência federal de previdência social; atendimento presencial exclusivamente mediante agendamento pela Central 135 ou Meu INSS."
   }
 ];
 
@@ -764,7 +788,7 @@ function share(id) {
 
 function printGuide(id) {
   const i = DATA.find(x => x.id === id);
-  const note = localStorage.getItem('note_'+id) || 'Encaminhamento para avaliação e conduta especializada.';
+  const note = localStorage.getItem('note_'+id) || 'Avaliação técnica e conduta especializada indicadas.';
   const date = new Date().toLocaleDateString('pt-BR', {day:'numeric', month:'long', year:'numeric'});
   
   document.getElementById('print-area').innerHTML = `
@@ -778,8 +802,8 @@ function printGuide(id) {
         <!-- Cabeçalho Compacto -->
         <div style="display:flex; justify-content:space-between; border-bottom:2px solid #115E59; padding-bottom:10px; margin-bottom:15px;">
           <div>
-            <h1 style="margin:0; font-size:1.5rem; color:#115E59; font-family:serif;">Guia de Encaminhamento</h1>
-            <p style="margin:2px 0; font-size:0.75rem; font-weight:700; color:#64748B; text-transform:uppercase;">Rede de Políticas Públicas</p>
+            <h1 style="margin:0; font-size:1.5rem; color:#115E59; font-family:serif;">Guia Técnico de Atendimento</h1>
+            <p style="margin:2px 0; font-size:0.75rem; font-weight:700; color:#64748B; text-transform:uppercase;">Sistema Único de Assistência Social (SUAS) · Roraima</p>
           </div>
           <div style="text-align:right;">
             <p style="margin:0; font-size:1.2rem; font-weight:800; color:#0F172A;">Paulo Xavier</p>
