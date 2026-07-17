@@ -334,6 +334,7 @@
       <button class="filter-chip active" data-cat="all">Todos os Equipamentos</button>
       <button class="filter-chip" data-cat="saude">RAPS</button>
       <button class="filter-chip" data-cat="social">Assistência Social</button>
+      <button class="filter-chip" data-cat="educacao">Educação</button>
       <button class="filter-chip" data-cat="juridico">Sistema Judicial</button>
       <button class="filter-chip" data-cat="conselho">Conselho Tutelar</button>
       <button class="filter-chip" data-cat="fav">⭐ Favoritos</button>
@@ -489,33 +490,33 @@ const DATA = [
     name: "CRAS Pintolândia",
     fullName: "Centro de Referência de Assistência Social",
     cat: ["social"],
-    address: "R. Sólon Rodrigues Pessoa, 615 - Nova Canaã, Boa Vista-RR",
+    address: "R. Sólon Rodrigues Pessoa, 615 - Nova Canaã (Sede do FQA), Boa Vista-RR",
     hours: "Segunda a sexta, 08:00 às 18:00",
     phones: ["(95) 98407-3680"],
     services: "CadÚnico, PAIF, Serviço de Convivência.",
-    desc: "Proteção Social Básica para Pintolândia, Silvio Botelho, Hélio Campos e adjacências."
+    desc: "Cobertura: Dr. Silvio Botelho, Jardim Tropical, Pintolândia, Santa Luzia, Senador Hélio Campos."
   },
   {
     id: "cras-silvio-leite",
     name: "CRAS Dr. Silvio Leite",
     fullName: "Centro de Referência de Assistência Social",
     cat: ["social"],
-    address: "R. Marieta de Mello Marquês, 869 - Silvio Leite, Boa Vista-RR",
+    address: "R. Marieta de Mello Marquês, 869 - Dr. Silvio Leite, Boa Vista-RR",
     hours: "Segunda a sexta, 08:00 às 18:00",
     phones: ["(95) 98403-1682"],
     services: "Acompanhamento Familiar, Cadastro Único.",
-    desc: "Atendimento para Alvorada, Silvio Leite, Equatorial, Laura Moreira e adjacências."
+    desc: "Bairros atendidos: Alvorada, Dr. Silvio Leite, Equatorial, Nova Esperança, Conjunto Cruviana, Jardim Primavera, Laura Moreira, Conjunto Cidadão, Conjunto Manaíra."
   },
   {
     id: "cras-cauame",
     name: "CRAS Cauamé",
     fullName: "Centro de Referência de Assistência Social",
     cat: ["social"],
-    address: "Av. Carlos Pereira de Melo, 207 - Jd Floresta, Boa Vista-RR",
+    address: "Av. Carlos Pereira de Melo, 207 - Jardim Floresta, Boa Vista-RR",
     hours: "Segunda a sexta, 08:00 às 18:00",
     phones: ["(95) 98410-1337"],
     services: "Proteção Básica, CadÚnico, PAIF.",
-    desc: "Referência para Cauamé, Caranã, Aeroporto, Said Salomão e Pedra Pintada."
+    desc: "Bairros atendidos: Aeroporto, Monte das Oliveiras, Cauamé, Caranã, Jardim Floresta, Said Salomão, Pedra Pintada."
   },
   {
     id: "cras-sao-francisco",
@@ -526,29 +527,84 @@ const DATA = [
     hours: "Segunda a sexta, 08:00 às 18:00",
     phones: ["(95) 98410-4092"],
     services: "PAIF, CadÚnico, Convivência.",
-    desc: "Atendimento para Centro, São Francisco, Caçari, Paraviana e bairros centrais."
+    desc: "Bairros atendidos: 31 de Março, Caçari, Calungá, Canarinho, Centro, Dos Estados, Mecejana, Nossa Senhora de Aparecida, Paraviana, São Francisco, São Pedro, São Vicente."
   },
   {
     id: "cras-uniao",
     name: "CRAS União",
     fullName: "Centro de Referência de Assistência Social",
     cat: ["social"],
-    address: "R. Hilda Sobral Guedes, 81 - União, Boa Vista-RR",
+    address: "R. Hilda Sobral Guedes, 81 - Bairro União, Boa Vista-RR",
     hours: "Segunda a sexta, 08:00 às 18:00",
     phones: ["(95) 98405-9001"],
     services: "Cadastro Único, PAIF, Acompanhamento.",
-    desc: "Referência para União, Vila Jardim, João de Barro e Cidade Satélite."
+    desc: "Bairros atendidos: Cidade Satélite, Conjunto Universitário, Vila Jardim, João de Barro, Murilo Teixeira, Piscicultura, Santa Tereza, Jardim Caranã, União."
+  },
+  {
+    id: "cras-nova-cidade",
+    name: "CRAS Nova Cidade",
+    fullName: "Centro de Referência de Assistência Social",
+    cat: ["social"],
+    address: "Rua Curitiba, 336 - Nova Cidade, Boa Vista-RR",
+    hours: "Segunda a sexta, 08:00 às 18:00",
+    phones: ["(95) 98403-0174"],
+    services: "CadÚnico, PAIF, Serviço de Convivência.",
+    desc: "Bairros atendidos: Bela Vista, Dr. Airton Rocha, Conjunto Pérola, Ajuricaba, Governador Aquilino Mota Duarte, Jardim Copaíbas, Distrito Industrial, Nova Cidade, Operário, Raiar do Sol, São Bento."
+  },
+  {
+    id: "cras-cristiana-vicente-nunes",
+    name: "CRAS Cristiana Vicente Nunes",
+    fullName: "Centro de Referência de Assistência Social",
+    cat: ["social"],
+    address: "Rua Santo Agostinho, 193 - Centenário, Boa Vista-RR",
+    hours: "Segunda a sexta, 08:00 às 18:00",
+    phones: ["(95) 98402-6617"],
+    services: "CadÚnico, PAIF, Serviço de Convivência.",
+    desc: "Bairros atendidos: 13 de Setembro, Asa Branca, Buritis, Caimbé, Cambará, Centenário, Cinturão Verde, Jóquei Clube, Liberdade, Marechal Rondon, Nova Canaã, Olímpico, Pricumã, Professora Araceli Souto Maior, Tancredo Neves."
+  },
+  {
+    id: "cras-itinerante",
+    name: "CRAS Itinerante",
+    fullName: "Centro de Referência de Assistência Social - Itinerante",
+    cat: ["social"],
+    address: "R. Maj. Manoel Corrêa, 620 - São Francisco, Boa Vista-RR",
+    hours: "A confirmar conforme itinerário",
+    phones: ["N/A"],
+    services: "CadÚnico, PAIF, Atendimento Móvel.",
+    desc: "Atendimento para Comunidades Indígenas e Zona Rural de Boa Vista."
+  },
+  {
+    id: "creas-centenario",
+    name: "CREAS Centenário",
+    fullName: "Centro de Referência Especializado de Assistência Social - Centenário",
+    cat: ["social"],
+    address: "R. Turin, 282 - Centenário, Boa Vista-RR",
+    hours: "Segunda a sexta, 08:00 às 18:00",
+    phones: ["(95) 98412-1829"],
+    services: "Proteção Especial, Abordagem, Acompanhamento de Violações.",
+    desc: "Bairros atendidos: Alvorada, Cambará, Centenário, Cinturão Verde, Cruviana, Dr. Airton Rocha, Dr. Sílvio Botelho, Dr. Sílvio Leite, Equatorial, Governador Aquilino Mota Duarte, Jardim Bela Vista, Jardim das Copaíbas, Jóquei Clube, Nova Canaã, Olímpico, Araceli, Jardim Primavera, Jardim Tropical, Laura Moreira, Marechal Rondon, Manaíra, Murilo Teixeira, Operário, Pintolândia, Piscicultura, Raiar do Sol, São Bento, Santa Luzia, Senador Hélio Campos."
   },
   {
     id: "creas-centro",
     name: "CREAS Centro",
-    fullName: "Centro de Referência Especializado de Assistência Social",
+    fullName: "Centro de Referência Especializado de Assistência Social - Centro",
     cat: ["social"],
-    address: "Av. Mário Homem de Melo, 514 – Centro, Boa Vista-RR",
+    address: "Av. Mário Homem de Melo, 514 - Centro, Boa Vista-RR",
     hours: "Segunda a sexta, 08:00 às 18:00",
-    phones: ["(95) 98405-5704"],
+    phones: ["(95) 98404-5621"],
     services: "Proteção Especial, Abordagem, Acompanhamento de Violações.",
-    desc: "Unidade para casos de violência, abandono e violação de direitos (Proteção Média)."
+    desc: "Bairros atendidos: 13 de Setembro, 31 de Março, Aeroporto, Aparecida, Área Rural e Indígena, Asa Branca, Buritis, Caçari, Caetano Filho, Caimbé, Calungá, Canarinho, Caranã, Cauamé, Centro, Cidade Satélite, Dos Estados, Jardim Caranã, Jardim Floresta, João de Barro, Liberdade, Mecejana, Monte das Oliveiras, Paraviana, Pedra Pintada, Pricumã, Said Salomão, São Francisco, São Pedro, São Vicente, Tancredo Neves, União."
+  },
+  {
+    id: "abrigo-pedra-pintada",
+    name: "Abrigo Infantil Pedra Pintada",
+    fullName: "Abrigo Infantil Pedra Pintada",
+    cat: ["social"],
+    address: "R. Interna, 182 - Centenário, Boa Vista-RR",
+    hours: "Atendimento Direto",
+    phones: ["N/A"],
+    services: "Acolhimento Institucional Infantil.",
+    desc: "Acolhimento para crianças de até 12 anos incompletos em situação de vulnerabilidade social."
   },
   {
     id: "ct-territorio-1",
@@ -587,7 +643,7 @@ const DATA = [
     id: "seed-rr",
     name: "SEED",
     fullName: "Secretaria de Estado da Educação e Desporto",
-    cat: ["social"],
+    cat: ["educacao"],
     address: "Praça do Centro Cívico, 550 - Centro, Boa Vista-RR",
     hours: "Segunda a sexta, 08:00 às 14:00",
     phones: ["(95) 2121-7930"],
@@ -598,7 +654,7 @@ const DATA = [
     id: "smec-bv",
     name: "SMEC",
     fullName: "Secretaria Municipal de Educação e Cultura",
-    cat: ["social"],
+    cat: ["educacao"],
     address: "R. Gen. Penha Brasil, 705 - São Francisco, Boa Vista-RR",
     hours: "Segunda a sexta, 08:00 às 14:00",
     phones: ["0800 280 3536"],
@@ -789,7 +845,6 @@ render();
 </script>
 </body>
 </html>
-
 
 
 
