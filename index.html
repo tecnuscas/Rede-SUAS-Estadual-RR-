@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Rede de Apoio · Sistema de Gestão de Equipamentos</title>
-<meta name="description" content="Sistema robusto de gestão e diretório de serviços socioassistenciais e rede de apoio TEA em Boa Vista-RR.">
+<title>Rede de Apoio · Gestão Técnica de Equipamentos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
 <meta name="theme-color" content="#115E59">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="icon" href="favicon.ico">
@@ -16,324 +16,326 @@
   :root {
     --brand-primary: #115E59;
     --brand-primary-light: #14B8A6;
-    --brand-primary-soft: #F0FDFA;
     --brand-secondary: #0F172A;
-    --brand-accent: #F59E0B;
-    --bg-main: #F8FAFC;
-    --bg-surface: #FFFFFF;
-    --bg-muted: #F1F5F9;
     --text-main: #1E293B;
-    --text-muted: #64748B;
-    --border-base: #E2E8F0;
-    --border-focus: #115E59;
-    --radius-xs: 6px;
-    --radius-sm: 10px;
-    --radius-md: 16px;
-    --radius-lg: 24px;
-    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-    --shadow-lg: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
-    --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    --font-serif: Georgia, "Times New Roman", serif;
+    --text-muted: #475569;
+    --bg-main: #F8FAFC;
+    --bg-card: #FFFFFF;
+    --border-ui: #E2E8F0;
+    --radius-ui: 12px;
+    --font-sans: 'Inter', -apple-system, sans-serif;
+    --font-serif: 'Lora', serif;
   }
 
   @media (prefers-color-scheme: dark) {
     :root {
-      --bg-main: #0F172A;
-      --bg-surface: #1E293B;
-      --bg-muted: #334155;
-      --text-main: #F8FAFC;
+      --text-main: #F1F5F9;
       --text-muted: #94A3B8;
-      --border-base: #334155;
-      --brand-primary-soft: rgba(20, 184, 166, 0.1);
+      --bg-main: #020617;
+      --bg-card: #0F172A;
+      --border-ui: #1E293B;
     }
   }
 
-  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; outline: none; }
-
-  html, body {
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  
+  body {
     margin: 0;
-    padding: 0;
-    scroll-behavior: smooth;
     background: var(--bg-main);
+    background-image: 
+      url('https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/S%C3%ADmbolo_da_Psicologia.svg/1200px-S%C3%ADmbolo_da_Psicologia.svg.png'),
+      url('https://seeklogo.com/images/S/suas-logo-A78B0E8D10-seeklogo.com.png');
+    background-repeat: no-repeat, no-repeat;
+    background-position: bottom 5% right 5%, bottom 5% left 5%;
+    background-size: 300px, 200px;
+    background-attachment: fixed, fixed;
     color: var(--text-main);
     font-family: var(--font-sans);
+    line-height: 1.6;
     -webkit-font-smoothing: antialiased;
-    transition: background 0.3s, color 0.3s;
   }
 
-  .container { max-width: 1280px; margin: 0 auto; padding: 0 2rem; }
+  @media (prefers-color-scheme: dark) {
+    body {
+      background-image: 
+        linear-gradient(rgba(2, 6, 23, 0.9), rgba(2, 6, 23, 0.9)),
+        url('https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/S%C3%ADmbolo_da_Psicologia.svg/1200px-S%C3%ADmbolo_da_Psicologia.svg.png'),
+        url('https://seeklogo.com/images/S/suas-logo-A78B0E8D10-seeklogo.com.png');
+      background-size: cover, 300px, 200px;
+    }
+  }
 
+  /* Ajuste para não atrapalhar a leitura nos cartões */
+  .tech-card {
+    position: relative;
+    z-index: 1;
+    background: var(--bg-card);
+  }
+
+  .container { max-width: 1400px; margin: 0 auto; padding: 0 1.5rem; }
+
+  /* Header Técnico */
   header.hero {
     background: var(--brand-secondary);
     color: white;
-    padding: 6rem 0 4rem;
-    position: relative;
-    overflow: hidden;
-    text-align: left;
+    padding: 4rem 0;
+    border-bottom: 4px solid var(--brand-primary);
   }
 
-  header.hero::before {
-    content: '';
-    position: absolute;
-    top: 0; right: 0; bottom: 0; left: 0;
-    background-image:
-      radial-gradient(circle at 10% 20%, rgba(20, 184, 166, 0.15) 0%, transparent 40%),
-      radial-gradient(circle at 90% 80%, rgba(245, 158, 11, 0.1) 0%, transparent 40%);
-    pointer-events: none;
-  }
-
-  .badge-ui {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    background: rgba(255,255,255,0.1);
-    padding: 0.5rem 1rem;
-    border-radius: 99px;
-    font-size: 0.75rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    color: var(--brand-primary-light);
-    margin-bottom: 1.5rem;
-    border: 1px solid rgba(255,255,255,0.1);
-  }
-
-  h1 {
+  .hero h1 {
     font-family: var(--font-serif);
-    font-style: italic;
-    font-size: clamp(2.5rem, 8vw, 4rem);
-    line-height: 1;
-    margin: 0 0 1.5rem;
-    font-weight: 400;
+    font-size: 3rem;
+    margin: 0;
+    font-weight: 500;
+    letter-spacing: -0.02em;
   }
 
-  .hero-description {
-    max-width: 600px;
-    font-size: 1.15rem;
+  .hero p {
     color: #94A3B8;
-    line-height: 1.5;
+    max-width: 700px;
+    font-size: 1.1rem;
+    margin-top: 1rem;
   }
 
+  /* Controles de Navegação */
   .controls {
     position: sticky;
     top: 0;
     z-index: 100;
     background: var(--bg-main);
-    backdrop-filter: blur(20px);
-    border-bottom: 1px solid var(--border-base);
-    padding: 1.5rem 0;
-    margin-bottom: 2rem;
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border-ui);
+    padding: 1rem 0;
   }
 
-  .search-box { position: relative; flex-grow: 1; }
-  .search-box input {
-    width: 100%;
-    padding: 1.1rem 1.5rem 1.1rem 3.25rem;
-    border-radius: var(--radius-md);
-    border: 1px solid var(--border-base);
-    font-size: 1rem;
-    background: var(--bg-surface);
-    color: var(--text-main);
-    transition: all 0.3s;
-    box-shadow: var(--shadow-sm);
-  }
-
-  .search-box input:focus { border-color: var(--brand-primary); box-shadow: 0 0 0 4px rgba(17, 94, 89, 0.1); }
-  .search-box svg { position: absolute; left: 1.1rem; top: 50%; transform: translateY(-50%); color: var(--text-muted); }
-
-  .filter-group {
+  .search-wrapper {
     display: flex;
-    gap: 0.75rem;
-    margin-top: 1.5rem;
+    gap: 1rem;
+    align-items: center;
+  }
+
+  .search-input {
+    flex: 1;
+    background: var(--bg-card);
+    border: 1.5px solid var(--border-ui);
+    padding: 0.8rem 1.2rem;
+    border-radius: 8px;
+    color: var(--text-main);
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    transition: all 0.2s;
+  }
+
+  .search-input:focus {
+    border-color: var(--brand-primary);
+    box-shadow: 0 0 0 3px rgba(17, 94, 89, 0.1);
+  }
+
+  .filter-bar {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
     overflow-x: auto;
     padding-bottom: 0.5rem;
     scrollbar-width: none;
   }
-  .filter-group::-webkit-scrollbar { display: none; }
 
-  .filter-btn {
+  .filter-chip {
     white-space: nowrap;
-    padding: 0.75rem 1.5rem;
-    border-radius: 99px;
-    border: 1px solid var(--border-base);
-    background: var(--bg-surface);
+    background: var(--bg-card);
+    border: 1px solid var(--border-ui);
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
     font-weight: 600;
-    font-size: 0.875rem;
     cursor: pointer;
-    transition: all 0.2s;
     color: var(--text-muted);
+    transition: all 0.2s;
   }
-  .filter-btn.active { background: var(--brand-primary); border-color: var(--brand-primary); color: white; }
 
-  .grid {
+  .filter-chip.active {
+    background: var(--brand-primary);
+    color: white;
+    border-color: var(--brand-primary);
+  }
+
+  /* Grid de Equipamentos */
+  .equipment-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
     gap: 1.5rem;
-    margin-bottom: 4rem;
+    padding: 2rem 0;
   }
 
-  .card {
-    background: var(--bg-surface);
-    border-radius: var(--radius-md);
-    border: 1px solid var(--border-base);
-    padding: 1.5rem;
+  .tech-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-ui);
+    border-radius: var(--radius-ui);
     display: flex;
     flex-direction: column;
-    gap: 1.25rem;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
   }
-  .card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); border-color: var(--brand-primary-light); }
 
-  .card-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; }
-  .card-title h3 { margin: 0 0 0.25rem; font-size: 1.25rem; font-weight: 800; color: var(--brand-primary); }
-  .card-title p { margin: 0; font-size: 0.8rem; color: var(--text-muted); font-weight: 600; }
+  .tech-card:hover {
+    box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1);
+    transform: translateY(-2px);
+  }
 
-  .fav-btn {
-    background: transparent;
-    border: none;
-    cursor: pointer;
+  .card-top {
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--border-ui);
+    background: rgba(17, 94, 89, 0.02);
+  }
+
+  .card-top h3 {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--brand-primary);
+    line-height: 1.2;
+  }
+
+  .card-top .subtitle {
+    font-size: 0.8rem;
     color: var(--text-muted);
-    padding: 5px;
-    transition: transform 0.2s;
-  }
-  .fav-btn.active { color: var(--brand-accent); }
-  .fav-btn:active { transform: scale(1.3); }
-
-  .status-dot {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    font-size: 0.65rem;
-    font-weight: 800;
     text-transform: uppercase;
-    padding: 0.35rem 0.75rem;
-    border-radius: 99px;
+    letter-spacing: 0.05em;
+    font-weight: 700;
+    margin-top: 0.5rem;
+    display: block;
   }
-  .status-dot.open { background: #DCFCE7; color: #166534; }
-  .status-dot.closed { background: #FEE2E2; color: #991B1B; }
 
-  .info-stack { display: flex; flex-direction: column; gap: 0.75rem; font-size: 0.9rem; }
-  .info-row { display: flex; gap: 0.75rem; }
-  .info-row svg { color: var(--brand-primary); flex-shrink: 0; margin-top: 2px; }
+  .card-body {
+    padding: 1.5rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
 
-  .notes-box {
-    background: var(--bg-muted);
-    border-radius: var(--radius-sm);
+  .info-group {
+    display: grid;
+    grid-template-columns: 24px 1fr;
+    gap: 0.75rem;
+    font-size: 0.9rem;
+  }
+
+  .info-group svg {
+    color: var(--brand-primary);
+    margin-top: 0.2rem;
+  }
+
+  .label-tech {
+    font-size: 0.7rem;
+    font-weight: 800;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 0.2rem;
+  }
+
+  .desc-box {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    background: var(--bg-main);
     padding: 1rem;
+    border-radius: 8px;
+    margin-top: 0.5rem;
   }
-  .notes-textarea {
+
+  .tech-notes {
     width: 100%;
-    border: none;
     background: transparent;
-    font-family: inherit;
+    border: 1.5px dashed var(--border-ui);
+    border-radius: 8px;
+    padding: 1rem;
+    font-family: var(--font-sans);
     font-size: 0.85rem;
     color: var(--text-main);
     resize: none;
-    min-height: 80px;
+    min-height: 100px;
   }
 
-  .card-footer { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
-  .btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
+  .card-actions {
+    padding: 1.25rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    background: rgba(0,0,0,0.02);
+  }
+
+  .btn-tech {
     padding: 0.75rem;
-    border-radius: var(--radius-sm);
+    border-radius: 6px;
     font-size: 0.85rem;
     font-weight: 700;
     cursor: pointer;
-    transition: all 0.2s;
-    border: 1px solid transparent;
-    text-decoration: none;
-  }
-  .btn-solid { background: var(--brand-primary); color: white; }
-  .btn-outline { background: transparent; border-color: var(--border-base); color: var(--text-main); }
-
-  .install-banner {
-    display: none;
-    position: fixed;
-    bottom: 2rem;
-    left: 50%;
-    transform: translateX(-50%);
-    background: var(--brand-secondary);
-    color: white;
-    padding: 1rem 1.5rem;
-    border-radius: var(--radius-lg);
-    z-index: 1000;
-    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--border-ui);
+    display: flex;
     align-items: center;
-    gap: 1.5rem;
-    animation: slideUp 0.5s ease;
+    justify-content: center;
+    gap: 0.5rem;
+    transition: all 0.2s;
   }
-  @keyframes slideUp { from { bottom: -100px; } to { bottom: 2rem; } }
 
-  #print-section { display: none; }
+  .btn-primary { background: var(--brand-primary); color: white; border-color: var(--brand-primary); }
+  .btn-primary:hover { background: var(--brand-primary-light); }
+  .btn-secondary { background: var(--bg-card); color: var(--text-main); }
+  .btn-secondary:hover { background: var(--bg-main); }
+
+  /* Impressão Técnica */
+  #print-area { display: none; }
   @media print {
     @page { size: landscape; margin: 1cm; }
-    #app-content { display: none !important; }
-    #print-section { display: block !important; }
+    body * { visibility: hidden; }
+    #print-area, #print-area * { visibility: visible; }
+    #print-area { display: block; position: absolute; left: 0; top: 0; width: 100%; }
   }
 
   @media (max-width: 640px) {
-    .container { padding: 0 1rem; }
-    .grid { grid-template-columns: 1fr; }
-    .card-footer { grid-template-columns: 1fr; }
+    .equipment-grid { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 2rem; }
   }
 </style>
 </head>
 <body>
 
-<div id="app-content">
-  <header class="hero">
-    <div class="container">
-      <div class="badge-ui">Rede de Apoio • PWA</div>
-      <h1>Gestão de Rede</h1>
-      <p class="hero-description">Diretório profissional de serviços socioassistenciais e rede TEA. Funciona offline em qualquer dispositivo.</p>
-    </div>
-  </header>
-
-  <div class="controls">
-    <div class="container">
-      <div style="display: flex; gap: 1rem; align-items: center;">
-        <div class="search-box">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-          <input type="search" id="search" placeholder="Buscar por nome, bairro ou serviço...">
-        </div>
-        <button class="btn btn-outline" onclick="exportNotes()" title="Backup">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-        </button>
-      </div>
-      <div class="filter-group" id="filters">
-        <button class="filter-btn active" data-cat="all">Todos</button>
-        <button class="filter-btn" data-cat="fav">⭐ Favoritos</button>
-        <button class="filter-btn" data-cat="tea">Apoio TEA</button>
-        <button class="filter-btn" data-cat="saude">Saúde</button>
-        <button class="filter-btn" data-cat="social">Social</button>
-        <button class="filter-btn" data-cat="juridico">Jurídico</button>
-        <button class="filter-btn" data-cat="idoso">Pessoa Idosa</button>
-        <button class="filter-btn" data-cat="conselho">Conselho Tutelar</button>
-      </div>
-    </div>
+<header class="hero">
+  <div class="container">
+    <h1>Rede de Apoio</h1>
+    <p>Diretório técnico de equipamentos socioassistenciais e suporte à rede RAPS/TEA de Boa Vista, Roraima. Gestão centralizada para profissionais de saúde e assistência.</p>
   </div>
+</header>
 
-  <main class="container">
-    <div id="stats" style="margin-bottom: 1rem; font-size: 0.8rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase;">
-      <span id="result-count">0</span> resultados encontrados
+<div class="controls">
+  <div class="container">
+    <div class="search-wrapper">
+      <input type="text" id="mainSearch" class="search-input" placeholder="Pesquisar por unidade, bairro ou serviço técnico...">
+      <button class="btn-tech btn-secondary" onclick="exportData()" title="Backup de Dados">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      </button>
     </div>
-    <div class="grid" id="equipment-list"></div>
-    <div id="empty-state" style="display:none; text-align:center; padding:5rem 0;">
-      <h2 style="color: var(--text-muted);">Nenhum resultado encontrado</h2>
+    <div class="filter-bar" id="filterBar">
+      <button class="filter-chip active" data-cat="all">Todos os Equipamentos</button>
+      <button class="filter-chip" data-cat="tea">Apoio TEA</button>
+      <button class="filter-chip" data-cat="saude">RAPS</button>
+      <button class="filter-chip" data-cat="social">Assistência Social</button>
+      <button class="filter-chip" data-cat="juridico">Sistema Judicial</button>
+      <button class="filter-chip" data-cat="conselho">Conselho Tutelar</button>
+      <button class="filter-chip" data-cat="fav">⭐ Favoritos</button>
     </div>
-  </main>
-
-  <div id="install-banner" class="install-banner">
-    <span>Instale o app para acesso rápido!</span>
-    <button class="btn btn-solid" id="install-btn" style="padding: 0.5rem 1rem;">Instalar</button>
   </div>
 </div>
 
-<div id="print-section"></div>
+<main class="container">
+  <div id="resultsInfo" style="margin-top: 1.5rem; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; color: var(--text-muted);">
+    <span id="counter">0</span> registros localizados
+  </div>
+  <div class="equipment-grid" id="grid"></div>
+</main>
+
+<div id="print-area"></div>
 
 <script>
 const DATA = [
@@ -342,544 +344,389 @@ const DATA = [
     name: "DPE/Civil",
     fullName: "Defensoria Pública Estadual - Área Cível",
     cat: ["juridico"],
-    tags: ["Jurídico", "Cível", "Gratuito"],
     address: "Av. Sebastião Diniz, 1165 - Centro, Boa Vista-RR",
-    hours: [{ days:[1,2,3,4,5], open:"08:00", close:"14:00" }],
-    hoursText: "Segunda a sexta, 08:00 às 14:00",
+    hours: "Segunda a sexta, 08:00 às 14:00",
     phones: ["(95) 2121-4777"],
-    services: ["Causas cíveis", "Pedidos de guarda", "Tutela", "Curatela", "Divórcio", "Família", "Pensão Alimentícia"],
-    description: "Órgão estadual que oferece assistência jurídica gratuita para cidadãos em vulnerabilidade. Atende demandas de direito de família, registros públicos e outras causas cíveis.",
-    coords: [2.8212, -60.6762]
+    services: "Causas cíveis, Família, Pensão, Divórcio, Guarda, Tutela/Curatela.",
+    desc: "Assistência jurídica gratuita estadual para demandas de direito civil e família."
   },
   {
     id: "dpu",
     name: "DPU",
     fullName: "Defensoria Pública da União",
     cat: ["juridico"],
-    tags: ["Jurídico", "Federal", "BPC"],
     address: "R. Gen. Penha Brasil, 1262 - São Francisco, Boa Vista-RR",
-    hours: [{ days:[1,2,3,4,5], open:"08:00", close:"14:00" }],
-    hoursText: "Segunda a sexta, 08:00 às 14:00",
+    hours: "Segunda a sexta, 08:00 às 14:00",
     phones: ["(95) 3212-3000"],
-    services: ["Demandas judiciais federais", "BPC", "Benefícios", "INSS", "LOAS"],
-    description: "Instituição que presta assistência jurídica gratuita em matérias de competência da União. Referência para pedidos de benefícios previdenciários e assistenciais (BPC/LOAS) negados pelo INSS.",
-    coords: [2.8285, -60.6685]
+    services: "Demandas Federais, BPC/LOAS, Previdência (INSS), Saúde Federal.",
+    desc: "Assistência jurídica gratuita em causas de competência da União e autarquias federais."
   },
   {
     id: "dpe-criminal",
     name: "DPE/Criminal",
     fullName: "Defensoria Pública Estadual - Área Criminal",
     cat: ["juridico"],
-    tags: ["Jurídico", "Criminal", "Defesa"],
-    address: "R. Soldado-Polícia Militar Arineu Ferreira Lima, 1415 - Caranã, Boa Vista-RR",
-    hours: [{ days:[1,2,3,4,5], open:"08:00", close:"14:00" }],
-    hoursText: "Segunda a sexta, 08:00 às 14:00",
+    address: "R. Arineu Ferreira Lima, 1415 - Caranã, Boa Vista-RR",
+    hours: "Segunda a sexta, 08:00 às 14:00",
     phones: ["(95) 2121-4777"],
-    services: ["Área criminal", "Defesa criminal", "Processos penais", "Execução Penal"],
-    description: "Unidade da Defensoria Pública voltada para a defesa de cidadãos em processos criminais e acompanhamento de execução penal.",
-    coords: [2.8315, -60.7035]
+    services: "Defesa criminal, Processos penais, Execução Penal.",
+    desc: "Unidade especializada em defesa criminal e acompanhamento de custodiados."
   },
   {
     id: "ubs-bernardo-alem",
     name: "UBS Bernardo Além",
     fullName: "Unidade Básica de Saúde Bernardo Além",
     cat: ["saude"],
-    tags: ["Saúde", "UBS", "Atenção Básica"],
     address: "R. Josemar Batista de Souza - Cidade Satélite, Boa Vista-RR",
-    hours: [{ days:[1,2,3,4,5], open:"08:00", close:"18:00" }],
-    hoursText: "Segunda a sexta, horário comercial",
+    hours: "Segunda a sexta, 08:00 às 18:00",
     phones: ["N/A"],
-    services: ["Atendimento Médico", "Enfermagem", "Vacinação"],
-    description: "Responsabilidade Macroárea 04: Alvorada, Cidade Satélite, Murilo Teixeira, João de Barro, Satélite City, Silvio Leite, Equatorial, Jd Equatorial e Laura Moreira.",
-    coords: [2.8185, -60.7582]
+    services: "Atenção Básica, Vacinação, Consultas, Curativos.",
+    desc: "Referência para Cidade Satélite, Alvorada, Silvio Leite e adjacências (Macroárea 04)."
   },
   {
     id: "caps-ad-iii",
     name: "CAPS AD III",
     fullName: "Centro de Atenção Psicossocial - Álcool e Drogas",
     cat: ["saude"],
-    tags: ["Saúde Mental", "Álcool e Drogas", "CAPS"],
     address: "R. José Bonifácio, 630 - Aparecida, Boa Vista-RR",
-    hours: [{ days:[1,2,3,4,5,6,7], open:"00:00", close:"23:59" }],
-    hoursText: "Atendimento 24 horas",
+    hours: "Atendimento 24 horas",
     phones: ["(95) 98407-2238"],
     services: ["Tratamento de Dependência Química", "Apoio Psicossocial"],
-    description: "Responsabilidade Geral (Álcool e Drogas) - Macroáreas 1 a 8.",
-    coords: [2.8255, -60.6712]
+    desc: "Unidade RAPS de acolhimento noturno e tratamento para uso prejudicial de substâncias."
   },
   {
     id: "caps-iii",
     name: "CAPS III",
     fullName: "Centro de Atenção Psicossocial III",
     cat: ["saude"],
-    tags: ["Saúde Mental", "CAPS", "Atendimento Intensivo"],
     address: "Av. Cap. Ene Garcês, 497 - Centro, Boa Vista-RR",
-    hours: [{ days:[1,2,3,4,5,6,7], open:"00:00", close:"23:59" }],
-    hoursText: "Atendimento 24 horas",
+    hours: "Atendimento 24 horas",
     phones: ["N/A"],
-    services: ["Saúde Mental", "Acompanhamento Terapêutico"],
-    description: "Responsabilidade Macroáreas: 4, 5, 7 e 8. Bairros: Alvorada, Cidade Satélite, Murilo Teixeira, João de Barro, Satélite City, Silvio Leite, Equatorial, Jd Equatorial, Laura Moreira, Cambará, Nova Canaã, Asa Branca, Centenário, Cinturão Verde, Jóquei Clube, Aracelis, Santa Luzia, Pintolândia, Senador Helio Campos, Olímpico, Jd Tropical, Nova Cidade, Bela Vista, Airton Rocha, Operário, Distrito Industrial, São Bento e Raiar do Sol.",
-    coords: [2.8212, -60.6762]
+    services: ["Saúde Mental Grave", "Acompanhamento Intensivo"],
+    desc: "Referência RAPS para transtornos mentais graves e persistentes (Macroáreas 4, 5, 7 e 8)."
   },
   {
     id: "caps-ii",
     name: "CAPS II",
     fullName: "Centro de Atenção Psicossocial II",
     cat: ["saude"],
-    tags: ["Saúde Mental", "CAPS"],
     address: "R. Pavão, 295 - Mecejana, Boa Vista-RR",
-    hours: [{ days:[1,2,3,4,5], open:"08:00", close:"18:00" }],
-    hoursText: "Segunda a sexta, horário comercial",
+    hours: "Segunda a sexta, 08:00 às 18:00",
     phones: ["N/A"],
-    services: ["Saúde Mental", "Atendimento Psicossocial"],
-    description: "Responsabilidade Macroáreas: 1, 2, 3 e 6. Bairros: Caranã, Tancredo Neves, Santa Tereza, Psicultura, Jardim Primavera, União, Jd Caranã, Cauamé, Aeroporto, Monte das Oliveiras, Jd Floresta, Caimbé, Said Salomão, Monte Cristo, Pedra Pintada, PA Nova Amazônia, 31 de Março, Aparecida, São Francisco, Paraviana, Bairro dos Estados, Caçari, São Pedro, Canarinho, Centro, Mecejana, São Vicente, Calungá, 13 de Setembro, Liberdade, Pricumã e Buritis.",
-    coords: [2.8212, -60.6762]
+    services: ["Saúde Mental", "Atendimento Multidisciplinar"],
+    desc: "Referência RAPS para transtornos mentais (Macroáreas 1, 2, 3 e 6)."
   },
   {
     id: "ciapd",
     name: "CIAPD",
     fullName: "Centro Integrado de Atenção à Pessoa com Deficiência",
     cat: ["tea"],
-    tags: ["TEA", "Terapia Ocupacional", "Fonoaudiologia"],
     address: "Avenida São Sebastião, 1195 – Santa Tereza, Boa Vista-RR",
-    hours: [{ days:[1,2,3,4,5], open:"07:30", close:"18:00" }],
-    hoursText: "Segunda a sexta, 07:30 às 18:00",
+    hours: "Segunda a sexta, 07:30 às 18:00",
     phones: ["(95) 3621-1000"],
-    services: ["Acolhimento TEA", "Terapia Ocupacional", "Fonoaudiologia", "Psicologia"],
-    description: "Unidade de referência do Governo de Roraima para reabilitação e acompanhamento de pessoas com deficiência. Possui a cozinha de panificação 'Café Jardim' para qualificação profissional e geração de renda. Oferece atendimento multidisciplinar com ênfase em inclusão produtiva.",
-    coords: [2.8315, -60.6935]
+    services: "Reabilitação, Fonoaudiologia, TO, Psicologia, Inclusão Produtiva.",
+    desc: "Unidade estadual de referência para PcD e TEA com foco em reabilitação e autonomia."
   },
   {
     id: "teamarr",
     name: "TEAMARR",
     fullName: "Centro de Acolhimento ao Autista (ALE-RR)",
     cat: ["tea"],
-    tags: ["Gratuito", "TEA", "Multidisciplinar"],
     address: "Avenida Santos Dumont, 1193 – São Francisco, Boa Vista-RR",
-    hours: [{ days:[1,2,3,4,5], open:"08:00", close:"18:00" }],
-    hoursText: "Segunda a sexta, 08:00 às 18:00",
+    hours: "Segunda a sexta, 08:00 às 18:00",
     phones: ["(95) 98402-2654"],
-    services: ["Acolhimento", "Orientação Familiar", "Triagem Multidisciplinar"],
-    description: "Programa da Assembleia Legislativa de Roraima voltado para o acolhimento de pessoas com autismo e seus familiares. Realiza triagens, orientações e encaminhamentos, além de oferecer capacitações para profissionais e familiares da rede TEA.",
-    coords: [2.8285, -60.6685]
+    services: "Acolhimento, Triagem Multidisciplinar, Orientação Familiar.",
+    desc: "Programa legislativo de suporte e acolhimento à rede TEA e seus familiares."
   },
   {
     id: "cmae",
     name: "CMAE",
     fullName: "Centro Municipal de Atendimento Especializado",
     cat: ["tea"],
-    tags: ["Municipal", "Educação Inclusiva", "TEA"],
     address: "Rua Sólon Rodrigues Pessoa, s/n - Pintolândia, Boa Vista-RR",
-    hours: [{ days:[1,2,3,4,5], open:"07:30", close:"17:30" }],
-    hoursText: "Segunda a sexta, 07:30 às 17:30",
+    hours: "Segunda a sexta, 07:30 às 17:30",
     phones: ["(95) 3621-1700"],
-    services: ["Atendimento Educacional Especializado", "Serviço Social", "Avaliação Multidisciplinar"],
-    description: "Unidade municipal focada em educação inclusiva e avaliação multidisciplinar de crianças com TEA. Oferece Atendimento Educacional Especializado (AEE) e suporte pedagógico para alunos da rede municipal com Transtorno do Espectro Autista.",
-    coords: [2.8115, -60.7435]
+    services: "AEE, Suporte Pedagógico, Avaliação Multidisciplinar.",
+    desc: "Referência municipal para educação inclusiva de alunos com TEA."
   },
   {
     id: "apae-bv",
     name: "APAE Boa Vista",
     fullName: "Associação de Pais e Amigos dos Excepcionais",
     cat: ["tea", "social"],
-    tags: ["PcD", "Saúde", "Assistência Social"],
     address: "Avenida Capitão Júlio Bezerra, 192 - Aparecida, Boa Vista-RR",
-    hours: [{ days:[1,2,3,4,5], open:"08:00", close:"18:00" }],
-    hoursText: "Segunda a sexta, 08:00 às 12:00 e 14:00 às 18:00",
+    hours: "08:00 às 12:00 / 14:00 às 18:00",
     phones: ["(95) 3224-2755"],
-    services: ["Educação Especial", "Fisioterapia", "Assistência Social"],
-    description: "Instituição sem fins lucrativos de referência no atendimento à pessoa com deficiência e TEA. Oferece o programa 'TEAtivo' com modalidades esportivas como natação, futsal, capoeira e atletismo, promovendo inclusão e qualidade de vida.",
-    coords: [2.8255, -60.6712]
+    services: "Educação Especial, Fisioterapia, Esporte Inclusivo (TEAtivo).",
+    desc: "Instituição filantrópica de suporte à pessoa com deficiência intelectual e múltipla."
   },
   {
     id: "ciapi",
     name: "CIAPI",
     fullName: "Centro Integrado de Atenção à Pessoa Idosa",
-    cat: ["idoso"],
-    tags: ["Pessoa Idosa", "Fisioterapia", "Serviço Social"],
+    cat: ["idoso", "social"],
     address: "Rua Cabo PM Laurence de Melo, 259 – Caranã, Boa Vista-RR",
-    hours: [{ days:[1,2,3,4,5], open:"07:00", close:"19:00" }],
-    hoursText: "Segunda a sexta, 07:00 às 13:00 e 14:00 às 19:00",
+    hours: "07:00 às 13:00 / 14:00 às 19:00",
     phones: ["(95) 3623-3703"],
-    services: ["Acolhimento Idoso", "Fisioterapia", "Atividades de Convivência"],
-    description: "Espaço voltado para o envelhecimento ativo e saudável, com foco preventivo. Atende aproximadamente 856 idosos com realização de 1.500 atendimentos de saúde por mês. Conta com equipe de 217 servidores (cuidadores, médicos, enfermeiros, fisioterapeutas, psicólogos). Oferece hidroginástica, informática, artesanato, oficinas de geração de renda, eventos culturais e atividades de lazer.",
-    coords: [2.8452, -60.7018]
+    services: "Fisioterapia, Hidroginástica, Oficinas, Convivência.",
+    desc: "Espaço estadual focado no envelhecimento ativo e prevenção em saúde para idosos."
   },
   {
     id: "cras-pintolandia",
     name: "CRAS Pintolândia",
     fullName: "Centro de Referência de Assistência Social",
     cat: ["social"],
-    tags: ["CadÚnico", "Assistência", "Comunitário"],
-    address: "R. Sólon Rodrigues Pessoa, 615 - Nova Canaã (Sede do FQA), Boa Vista-RR",
-    hours: [{ days:[1,2,3,4,5], open:"08:00", close:"18:00" }],
-    hoursText: "Segunda a sexta, 08:00 às 18:00",
+    address: "R. Sólon Rodrigues Pessoa, 615 - Nova Canaã, Boa Vista-RR",
+    hours: "Segunda a sexta, 08:00 às 18:00",
     phones: ["(95) 98407-3680"],
-    services: ["Cadastro Único", "Acompanhamento Familiar", "Serviço de Convivência"],
-    description: "Área de Cobertura: Dr. Silvio Botelho, Jardim Tropical, Pintolândia, Santa Luzia, Senador Hélio Campos.",
-    coords: [2.8125, -60.7408]
+    services: "CadÚnico, PAIF, Serviço de Convivência.",
+    desc: "Proteção Social Básica para Pintolândia, Silvio Botelho, Hélio Campos e adjacências."
   },
   {
     id: "cras-silvio-leite",
     name: "CRAS Dr. Silvio Leite",
     fullName: "Centro de Referência de Assistência Social",
     cat: ["social"],
-    tags: ["CadÚnico", "Assistência", "Comunitário"],
-    address: "R. Marieta de Mello Marquês, 869 - Dr. Silvio Leite, Boa Vista-RR",
-    hours: [{ days:[1,2,3,4,5], open:"08:00", close:"18:00" }],
-    hoursText: "Segunda a sexta, 08:00 às 18:00",
+    address: "R. Marieta de Mello Marquês, 869 - Silvio Leite, Boa Vista-RR",
+    hours: "Segunda a sexta, 08:00 às 18:00",
     phones: ["(95) 98403-1682"],
-    services: ["Cadastro Único", "Acompanhamento Familiar", "Serviço de Convivência"],
-    description: "Bairros Atendidos: Alvorada, Dr. Silvio Leite, Equatorial, Nova Esperança, Conjunto Cruviana, Jardim Primavera, Laura Moreira, Conjunto Cidadão, Conjunto Manaíra.",
-    coords: [2.8055, -60.7285]
+    services: "Acompanhamento Familiar, Cadastro Único.",
+    desc: "Atendimento para Alvorada, Silvio Leite, Equatorial, Laura Moreira e adjacências."
   },
   {
     id: "cras-cauame",
     name: "CRAS Cauamé",
     fullName: "Centro de Referência de Assistência Social",
     cat: ["social"],
-    tags: ["CadÚnico", "Assistência", "Comunitário"],
-    address: "Av. Carlos Pereira de Melo, 207 - Jardim Floresta, Boa Vista-RR",
-    hours: [{ days:[1,2,3,4,5], open:"08:00", close:"18:00" }],
-    hoursText: "Segunda a sexta, 08:00 às 18:00",
+    address: "Av. Carlos Pereira de Melo, 207 - Jd Floresta, Boa Vista-RR",
+    hours: "Segunda a sexta, 08:00 às 18:00",
     phones: ["(95) 98410-1337"],
-    services: ["Cadastro Único", "Acompanhamento Familiar", "Serviço de Convivência"],
-    description: "Bairros Atendidos: Aeroporto, Monte das Oliveiras, Cauamé, Caranã, Jardim Floresta, Said Salomão, Pedra Pintada.",
-    coords: [2.8485, -60.6985]
-  },
-  {
-    id: "cras-itinerante",
-    name: "CRAS Itinerante",
-    fullName: "Centro de Referência de Assistência Social",
-    cat: ["social"],
-    tags: ["Itinerante", "Zona Rural", "Indígena"],
-    address: "R. Maj. Manoel Corrêa, 620 - São Francisco, Boa Vista-RR",
-    hours: [{ days:[1,2,3,4,5], open:"08:00", close:"18:00" }],
-    hoursText: "Segunda a sexta, 08:00 às 18:00",
-    phones: ["N/A"],
-    services: ["Atendimento Itinerante", "CadÚnico", "Proteção Básica"],
-    description: "Bairros Atendidos: Comunidades Indígenas e Zona Rural de Boa Vista.",
-    coords: [2.8285, -60.6685]
+    services: "Proteção Básica, CadÚnico, PAIF.",
+    desc: "Referência para Cauamé, Caranã, Aeroporto, Said Salomão e Pedra Pintada."
   },
   {
     id: "cras-sao-francisco",
     name: "CRAS São Francisco",
     fullName: "Centro de Referência de Assistência Social",
     cat: ["social"],
-    tags: ["CadÚnico", "Assistência", "Comunitário"],
     address: "R. Floriano Peixoto, 140 - Centro, Boa Vista-RR",
-    hours: [{ days:[1,2,3,4,5], open:"08:00", close:"18:00" }],
-    hoursText: "Segunda a sexta, 08:00 às 18:00",
+    hours: "Segunda a sexta, 08:00 às 18:00",
     phones: ["(95) 98410-4092"],
-    services: ["Cadastro Único", "Acompanhamento Familiar", "Serviço de Convivência"],
-    description: "Bairros Atendidos: 31 de Março, Caçari, Calungá, Canarinho, Centro, Dos Estados, Mecejana, Nossa Senhora de Aparecida, Paraviana, São Francisco, São Pedro, São Vicente.",
-    coords: [2.8212, -60.6762]
-  },
-  {
-    id: "cras-cristiana",
-    name: "CRAS Cristiana Vicente Nunes",
-    fullName: "Centro de Referência de Assistência Social",
-    cat: ["social"],
-    tags: ["CadÚnico", "Assistência", "Comunitário"],
-    address: "Rua Santo Agostinho, 193 - Centenário, Boa Vista-RR",
-    hours: [{ days:[1,2,3,4,5], open:"08:00", close:"18:00" }],
-    hoursText: "Segunda a sexta, 08:00 às 18:00",
-    phones: ["(95) 98402-6617"],
-    services: ["Cadastro Único", "Acompanhamento Familiar", "Serviço de Convivência"],
-    description: "Bairros Atendidos: 13 de Setembro, Asa Branca, Buritis, Caimbé, Cambará, Centenário, Cinturão Verde, Jóquei Clube, Liberdade, Marechal Rondon, Nova Canaã, Olímpico, Pricumã, Professora Araceli Souto Maior, Tancredo Neves.",
-    coords: [2.8185, -60.7182]
-  },
-  {
-    id: "cras-nova-cidade",
-    name: "CRAS Nova Cidade",
-    fullName: "Centro de Referência de Assistência Social",
-    cat: ["social"],
-    tags: ["CadÚnico", "Assistência", "Comunitário"],
-    address: "Rua Curitiba, 336 - Nova Cidade, Boa Vista-RR",
-    hours: [{ days:[1,2,3,4,5], open:"08:00", close:"18:00" }],
-    hoursText: "Segunda a sexta, 08:00 às 18:00",
-    phones: ["(95) 98403-0174"],
-    services: ["Cadastro Único", "Acompanhamento Familiar", "Serviço de Convivência"],
-    description: "Área de Cobertura: Bela Vista, Dr. Airton Rocha, Conjunto Pérola, Ajuricaba, Governador Aquilino Mota Duarte, Jardim Copaíbas, Distrito Industrial, Nova Cidade, Operário, Raiar do Sol, São Bento.",
-    coords: [2.7601, -60.7337]
+    services: "PAIF, CadÚnico, Convivência.",
+    desc: "Atendimento para Centro, São Francisco, Caçari, Paraviana e bairros centrais."
   },
   {
     id: "cras-uniao",
     name: "CRAS União",
     fullName: "Centro de Referência de Assistência Social",
     cat: ["social"],
-    tags: ["CadÚnico", "Assistência", "Comunitário"],
-    address: "R. Hilda Sobral Guedes, 81 - Bairro União, Boa Vista-RR",
-    hours: [{ days:[1,2,3,4,5], open:"08:00", close:"18:00" }],
-    hoursText: "Segunda a sexta, 08:00 às 18:00",
+    address: "R. Hilda Sobral Guedes, 81 - União, Boa Vista-RR",
+    hours: "Segunda a sexta, 08:00 às 18:00",
     phones: ["(95) 98405-9001"],
-    services: ["Cadastro Único", "Acompanhamento Familiar", "Serviço de Convivência"],
-    description: "Área de Cobertura: Cidade Satélite, Conjunto Universitário, Vila Jardim, João de Barro, Murilo Teixeira, Piscicultura, Santa Tereza, Jardim Caranã, União.",
-    coords: [2.8460, -60.7294]
+    services: "Cadastro Único, PAIF, Acompanhamento.",
+    desc: "Referência para União, Vila Jardim, João de Barro e Cidade Satélite."
   },
   {
     id: "creas-centro",
     name: "CREAS Centro",
     fullName: "Centro de Referência Especializado de Assistência Social",
     cat: ["social"],
-    tags: ["Proteção Especial", "Direitos"],
-    address: "Avenida Mário Homem de Melo, 514 – Centro, Boa Vista-RR",
-    hours: [{ days:[1,2,3,4,5], open:"08:00", close:"18:00" }],
-    hoursText: "Segunda a sexta, 08:00 às 18:00",
+    address: "Av. Mário Homem de Melo, 514 – Centro, Boa Vista-RR",
+    hours: "Segunda a sexta, 08:00 às 18:00",
     phones: ["(95) 98405-5704"],
-    services: ["Acompanhamento Especializado", "Denúncias", "Proteção de Direitos"],
-    description: "Unidade de proteção social especial para casos de violação de direitos. Oferece atendimento psicológico, orientação jurídica, apoio familiar e acompanhamento especializado de crianças, adolescentes e famílias vítimas de violência, abandono e exploração.",
-    coords: [2.8212, -60.6762]
-  },
-  {
-    id: "creas-centenario",
-    name: "CREAS Centenário",
-    fullName: "Centro de Referência Especializado de Assistência Social",
-    cat: ["social"],
-    tags: ["Proteção Especial", "Direitos", "Vulnerabilidade"],
-    address: "R. Turin, 282 - Centenário, Boa Vista-RR",
-    hours: [{ days:[1,2,3,4,5], open:"08:00", close:"18:00" }],
-    hoursText: "Segunda a sexta, 08:00 às 18:00",
-    phones: ["(95) 98412-1829"],
-    services: ["Acompanhamento Especializado", "Proteção de Direitos", "Apoio Familiar"],
-    description: "Área de Abrangência: Alvorada; Cambará; Centenário; Cinturão Verde; Cruviana; Dr. Airton Rocha; Dr. Sílvio Botelho; Dr. Sílvio Leite; Equatorial; Governador Aquilo da Mota Duarte; Jardim Bela Vista; Jardim das Copaíbas; Jóquei Clube; Nova Canaã; Olímpico; Araceli; Equatorial; Jardim Primavera; Tropical; Laura Moreira; Rondon; Manaíra; Murilo Teixeira; Operário; Pintolândia; Piscicultura; Raiar do Sol; São Bento; Santa Luzia; Hélio Campos.",
-    coords: [2.8185, -60.7182]
+    services: "Proteção Especial, Abordagem, Acompanhamento de Violações.",
+    desc: "Unidade para casos de violência, abandono e violação de direitos (Proteção Média)."
   },
   {
     id: "ct-territorio-1",
-    name: "Conselho Tutelar - Território I",
-    fullName: "Órgão Permanente e Autônomo de Proteção à Criança e Adolescente",
+    name: "Conselho Tutelar I",
+    fullName: "Conselho Tutelar - Território I",
     cat: ["conselho", "social"],
-    tags: ["Proteção", "Direitos", "Criança e Adolescente"],
     address: "R. Bento Brasil, 835 - Centro, Boa Vista-RR",
-    hours: [{ days:[1,2,3,4,5], open:"08:00", close:"18:00" }],
-    hoursText: "Segunda a sexta, 08:00 às 18:00 (Plantão 24h via telefone)",
+    hours: "08:00 às 18:00 (Plantão 24h)",
     phones: ["(95) 98410-4003"],
-    services: ["Zelar pelo cumprimento dos direitos da criança e do adolescente", "Aplicação de medidas de proteção"],
-    description: "Bairros Atendidos: Aeroporto; Cauamé; Calungá; Liberdade; Jardim Floresta; Pricumã; 13 de Setembro; São Vicente; Centro; São Pedro; Aparecida; Canarinho; Paraviana; Caçari; Bairro dos Estados; 31 de Março; São Francisco; Mecejana; Monte Cristo; Said Salomão; Áreas Indígenas.",
-    coords: [2.8212, -60.6762]
+    services: "Zelar pelos direitos da Criança e Adolescente.",
+    desc: "Abrangência: Centro, São Vicente, Aparecida, Paraviana, Caçari e áreas indígenas."
   },
   {
     id: "ct-territorio-2",
-    name: "Conselho Tutelar - Território II",
-    fullName: "Órgão Permanente e Autônomo de Proteção à Criança e Adolescente",
+    name: "Conselho Tutelar II",
+    fullName: "Conselho Tutelar - Território II",
     cat: ["conselho", "social"],
-    tags: ["Proteção", "Direitos", "Criança e Adolescente"],
     address: "R. Dico Viêira, 1497 - Caimbé, Boa Vista-RR",
-    hours: [{ days:[1,2,3,4,5], open:"08:00", close:"18:00" }],
-    hoursText: "Segunda a sexta, 08:00 às 18:00 (Plantão 24h via telefone)",
+    hours: "08:00 às 18:00 (Plantão 24h)",
     phones: ["(95) 98403-7780"],
-    services: ["Zelar pelo cumprimento dos direitos da criança e do adolescente", "Aplicação de medidas de proteção"],
-    description: "Bairros Atendidos: Jardim Caranã; Caranã; Tancredo Neves; Caimbé; Asa Branca; Buritis; Jóquei Clube; União; Cinturão Verde; Centenário; Araceli; São Bento; Raiar do Sol; Bela Vista; Operário; Nova Cidade; Brigadeiro; Distrito Industrial; Pérola.",
-    coords: [2.8315, -60.7035]
+    services: "Medidas de Proteção, Garantia de Direitos.",
+    desc: "Abrangência: Caranã, Tancredo Neves, Caimbé, Asa Branca, União e Nova Cidade."
   },
   {
     id: "ct-territorio-3",
-    name: "Conselho Tutelar - Território III",
-    fullName: "Órgão Permanente e Autônomo de Proteção à Criança e Adolescente",
+    name: "Conselho Tutelar III",
+    fullName: "Conselho Tutelar - Território III",
     cat: ["conselho", "social"],
-    tags: ["Proteção", "Direitos", "Criança e Adolescente"],
-    address: "R. Pedro Aldemar Bantim, 1337 - Dr. Silvio Botelho, Boa Vista-RR",
-    hours: [{ days:[1,2,3,4,5], open:"08:00", close:"18:00" }],
-    hoursText: "Segunda a sexta, 08:00 às 18:00 (Plantão 24h via telefone)",
+    address: "R. Pedro Aldemar Bantim, 1337 - Silvio Botelho, Boa Vista-RR",
+    hours: "08:00 às 18:00 (Plantão 24h)",
     phones: ["(95) 98411-6943"],
-    services: ["Zelar pelo cumprimento dos direitos da criança e do adolescente", "Aplicação de medidas de proteção"],
-    description: "Bairros Atendidos: Cidade Satélite; Piscicultura; Jardim Primavera; Santa Tereza; Dr. Silvio Botelho; Dr. Silvio Leite; Alvorada; Pintolândia; Jardim Olímpico; Jardim Tropical; Hélio Campos; Equatorial; Santa Luzia; Nova Canaã; Cambará; Cruviana; Laura Moreira.",
-    coords: [2.8125, -60.7385]
-  },
-  {
-    id: "cas-vilajardim",
-    name: "CAS Vila Jardim",
-    fullName: "Centro de Atendimento Social (Vila Jardim)",
-    cat: ["social"],
-    tags: ["Cidadania", "Apoio Social", "Vila Jardim"],
-    address: "Residencial Vila Jardim - Bairro Cidade Satélite, Boa Vista-RR",
-    hours: [{ days:[1,2,3,4,5], open:"08:00", close:"14:00" }],
-    hoursText: "Segunda a sexta, 08:00 às 12:00 e 14:00 às 22:00",
-    phones: ["(95) 3621-1718"],
-    services: ["Serviço de Convivência", "Oficinas Diversas", "Ações Comunitárias", "Atividades Cultural"],
-    description: "Espaço de integração de políticas públicas da Secretaria do Trabalho e Bem-Estar Social (SETRABES).",
-    coords: [2.8185, -60.7582]
+    services: "Zelar pelos direitos da Criança e Adolescente.",
+    desc: "Abrangência: Satélite, Silvio Leite, Pintolândia, Hélio Campos e Santa Luzia."
   },
   {
     id: "seed-rr",
     name: "SEED",
     fullName: "Secretaria de Estado da Educação e Desporto",
     cat: ["social"],
-    tags: ["Educação", "Estadual", "Gestão", "Matrícula"],
-    address: "Praça do Centro Cívico, 550 - Centro, Boa Vista - RR, 69301-069",
-    hours: [{ days:[1,2,3,4,5], open:"08:00", close:"14:00" }],
-    hoursText: "Segunda a sexta, 08:00 às 14:00",
+    address: "Praça do Centro Cívico, 550 - Centro, Boa Vista-RR",
+    hours: "Segunda a sexta, 08:00 às 14:00",
     phones: ["(95) 2121-7930"],
-    services: ["Matrícula Rede Estadual", "Suporte Pedagógico", "Educação Especial", "Cursos Técnicos", "Programa Roraima Alfabetizando"],
-    description: "DOCUMENTOS PARA MATRÍCULA: RG/Certidão do aluno, CPF, Cartão de Vacina, Comprovante de Residência, Cartão do Bolsa Família, RG/CPF do responsável, Laudo Médico (se PcD) e Histórico Escolar. SETORES: Ceforr (Formação), DIE (Educação Especial), Matrícula (ccm.rr.gov.br).",
-    coords: [2.8212, -60.6762]
+    services: "Matrículas Estaduais, Educação Especial (DIE).",
+    desc: "Gestão da rede estadual de ensino e suporte pedagógico inclusivo."
   },
   {
     id: "smec-bv",
     name: "SMEC",
     fullName: "Secretaria Municipal de Educação e Cultura",
     cat: ["social"],
-    tags: ["Educação", "Municipal", "Creche", "Matrícula"],
-    address: "R. Gen. Penha Brasil, 705 - São Francisco, Boa Vista - RR, 69305-130",
-    hours: [{ days:[1,2,3,4,5], open:"08:00", close:"14:00" }],
-    hoursText: "Segunda a sexta, 08:00 às 14:00",
-    phones: ["(95) 98411-1108", "0800 280 3536"],
-    services: ["Matrícula Online", "Creches (2 e 3 anos)", "Ensino Fundamental I", "Transporte Escolar", "Cardápio Escolar"],
-    description: "MATRÍCULA CRECHES: Processo online (matriculaonline.boavista.rr.gov.br). DOCUMENTOS: Certidão/RG/CPF da criança, Cartão SUS, Cartão Vacina, Comprovante de Residência, 2 fotos 3x4. PRIORIDADES: PcD, TEA, Vulnerabilidade Social, Vítimas de Violência.",
-    coords: [2.8285, -60.6685]
+    address: "R. Gen. Penha Brasil, 705 - São Francisco, Boa Vista-RR",
+    hours: "Segunda a sexta, 08:00 às 14:00",
+    phones: ["0800 280 3536"],
+    services: "Matrículas Municipais, Creches, Fundamental I.",
+    desc: "Gestão da rede municipal e processos de matrícula para educação infantil."
   },
   {
     id: "sesau-rr",
     name: "SESAU",
     fullName: "Secretaria de Estado da Saúde de Roraima",
     cat: ["saude"],
-    tags: ["Saúde", "Estadual", "Especialidades", "Exames"],
-    address: "R. Madrid, 180 - Aeroporto, Boa Vista - RR",
-    hours: [{ days:[1,2,3,4,5], open:"07:30", close:"18:00" }],
-    hoursText: "Segunda a sexta, 07:30 às 12:00 e 14:00 às 18:00",
+    address: "R. Madrid, 180 - Aeroporto, Boa Vista-RR",
+    hours: "07:30 às 12:00 / 14:00 às 18:00",
     phones: ["N/A"],
-    services: ["Regulação (SISREG)", "Marcação de Exames", "Hospitais de Referência", "Medicamentos de Alto Custo", "Tratamento Fora de Domicílio (TFD)"],
-    description: "FLUXO: Atendimento via encaminhamento da UBS para o SISREG. DOCUMENTOS: Cartão SUS, Documento com foto, Pedido médico carimbado, Comprovante de residência. SETORES: Coordenadoria de Regulação, Departamento de Assistência Farmacêutica.",
-    coords: [2.8485, -60.6985]
+    services: "Regulação (SISREG), Especialidades, Alto Custo, TFD.",
+    desc: "Gestão da saúde estadual, regulação de exames e hospitais de referência."
   },
   {
     id: "smsa-bv",
     name: "SMSA",
     fullName: "Secretaria Municipal de Saúde de Boa Vista",
     cat: ["saude"],
-    tags: ["Saúde", "Municipal", "Atenção Primária", "HCSA"],
-    address: "R. Cel. Mota, 418 - Centro, Boa Vista - RR, 69301-120",
-    hours: [{ days:[1,2,3,4,5], open:"08:00", close:"14:00" }],
-    hoursText: "Segunda a sexta, 08:00 às 14:00",
-    phones: ["(95) 99174-0804", "156"],
-    services: ["UBS (Postos de Saúde)", "Hospital da Criança (HCSA)", "SAMU 192", "Vigilância Sanitária", "Imunização"],
-    description: "ATENÇÃO BÁSICA: Primeiro nível de atendimento. DOCUMENTOS: Cartão SUS Municipal, RG/Certidão, Comprovante de Residência. SETORES: Departamento de Atenção Básica, Vigilância em Saúde, Central de Imunização.",
-    coords: [2.8212, -60.6762]
+    address: "R. Cel. Mota, 418 - Centro, Boa Vista-RR",
+    hours: "Segunda a sexta, 08:00 às 14:00",
+    phones: ["156"],
+    services: "Atenção Primária (UBS), Hospital da Criança, SAMU.",
+    desc: "Gestão da saúde municipal e unidades básicas de atendimento."
   }
 ];
 
 const ICONS = {
-  map: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>',
-  clock: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>',
-  phone: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>',
-  star: '<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>'
+  map: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>',
+  clock: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>',
+  phone: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>',
+  star: '<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>'
 };
 
-let deferredPrompt;
-const installBanner = document.getElementById('install-banner');
-const installBtn = document.getElementById('install-btn');
+function render() {
+  const query = document.getElementById('mainSearch').value.toLowerCase();
+  const cat = document.querySelector('.filter-chip.active').dataset.cat;
+  const favs = JSON.parse(localStorage.getItem('favs') || '[]');
+  const grid = document.getElementById('grid');
 
-window.addEventListener('beforeinstallprompt', (e) => {
-  e.preventDefault();
-  deferredPrompt = e;
-  installBanner.style.display = 'flex';
-});
+  const filtered = DATA.filter(i => {
+    const matchSearch = i.name.toLowerCase().includes(query) || i.address.toLowerCase().includes(query) || i.desc.toLowerCase().includes(query);
+    const isFav = favs.includes(i.id);
+    const matchCat = cat === 'all' || 
+                     (cat === 'fav' ? isFav : 
+                     (cat === 'saude' ? (i.cat.includes('saude') || i.cat.includes('tea')) : 
+                     (cat === 'social' ? (i.cat.includes('social') || i.cat.includes('idoso')) : 
+                     i.cat.includes(cat))));
+    return matchSearch && matchCat;
+  });
 
-installBtn.addEventListener('click', async () => {
-  if (deferredPrompt) {
-    deferredPrompt.prompt();
-    const { outcome } = await deferredPrompt.userChoice;
-    if (outcome === 'accepted') installBanner.style.display = 'none';
-    deferredPrompt = null;
-  }
-});
-
-function isOpen(hours) {
-  if (!hours || hours.length === 0) return true;
-  const now = new Date();
-  const day = now.getDay();
-  const time = now.getHours() * 100 + now.getMinutes();
-  return hours.some(h => h.days.includes(day) && time >= parseInt(h.open.replace(':','')) && time <= parseInt(h.close.replace(':','')));
+  document.getElementById('counter').textContent = filtered.length;
+  grid.innerHTML = filtered.map(i => `
+    <div class="tech-card">
+      <div class="card-top">
+        <div style="display:flex; justify-content:space-between; align-items:start;">
+          <h3>${i.name}</h3>
+          <button onclick="toggleFav('${i.id}')" style="background:none; border:none; cursor:pointer; color:${favs.includes(i.id) ? '#F59E0B' : '#CBD5E1'}">${ICONS.star}</button>
+        </div>
+        <span class="subtitle">${i.fullName}</span>
+      </div>
+      <div class="card-body">
+        <div class="info-group">${ICONS.map}<div><span class="label-tech">Localização</span>${i.address}</div></div>
+        <div class="info-group">${ICONS.clock}<div><span class="label-tech">Disponibilidade</span>${i.hours}</div></div>
+        <div class="info-group">${ICONS.phone}<div><span class="label-tech">Contato Técnico</span>${i.phones.join(' · ')}</div></div>
+        <div class="desc-box">
+          <span class="label-tech">Escopo de Atuação</span>
+          ${i.desc}
+          <div style="margin-top:0.5rem; font-weight:600; color:var(--brand-primary); font-size:0.75rem;">SERVIÇOS: ${Array.isArray(i.services) ? i.services.join(', ') : i.services}</div>
+        </div>
+        <textarea class="tech-notes" placeholder="Anotações Técnicas / Conduta..." oninput="localStorage.setItem('note_${i.id}', this.value)">${localStorage.getItem('note_'+i.id) || ''}</textarea>
+      </div>
+      <div class="card-actions">
+        <button class="btn-tech btn-secondary" onclick="share('${i.id}')">Compartilhar</button>
+        <button class="btn-tech btn-primary" onclick="printGuide('${i.id}')">Gerar Guia</button>
+      </div>
+    </div>
+  `).join('');
 }
 
 function toggleFav(id) {
-  const favs = JSON.parse(localStorage.getItem('favs') || '[]');
-  const index = favs.indexOf(id);
-  if (index > -1) favs.splice(index, 1);
-  else favs.push(id);
-  localStorage.setItem('favs', JSON.stringify(favs));
-  renderEquipment();
+  let f = JSON.parse(localStorage.getItem('favs') || '[]');
+  f = f.includes(id) ? f.filter(x => x !== id) : [...f, id];
+  localStorage.setItem('favs', JSON.stringify(f));
+  render();
 }
 
-function renderEquipment() {
-  const searchTerm = document.getElementById('search').value.toLowerCase();
-  const activeCat = document.querySelector('.filter-btn.active').dataset.cat;
-  const favs = JSON.parse(localStorage.getItem('favs') || '[]');
-  const list = document.getElementById('equipment-list');
-  const countEl = document.getElementById('result-count');
+function share(id) {
+  const i = DATA.find(x => x.id === id);
+  const t = `*UNIDADE:* ${i.fullName}\n*ENDEREÇO:* ${i.address}\n*CONTATO:* ${i.phones.join(' / ')}`;
+  window.open(`https://wa.me/?text=${encodeURIComponent(t)}`);
+}
 
-  const filtered = DATA.filter(item => {
-    const matchesSearch = item.name.toLowerCase().includes(searchTerm) || item.address.toLowerCase().includes(searchTerm) || item.tags.some(t => t.toLowerCase().includes(searchTerm));
-    const isFav = favs.includes(item.id);
-    const matchesCat = activeCat === 'all' || (activeCat === 'fav' ? isFav : item.cat.includes(activeCat));
-    return matchesSearch && matchesCat;
-  });
-
-  countEl.textContent = filtered.length;
-  list.innerHTML = filtered.map(item => {
-    const open = isOpen(item.hours);
-    const isFav = favs.includes(item.id);
-    return `
-      <div class="card">
-        <div class="card-header">
-          <div class="card-title">
-            <h3>${item.name}</h3>
-            <p>${item.fullName}</p>
-          </div>
-          <button class="fav-btn ${isFav ? 'active' : ''}" onclick="toggleFav('${item.id}')">${ICONS.star}</button>
-        </div>
-        <div class="status-dot ${open ? 'open' : 'closed'}">${open ? 'Aberto Agora' : 'Fechado'}</div>
-        <div class="info-stack">
-          <div class="info-row">${ICONS.map}<span>${item.address}</span></div>
-          <div class="info-row">${ICONS.clock}<span>${item.hoursText}</span></div>
-          <div class="info-row">${ICONS.phone}<span>${item.phones.join(' · ')}</span></div>
-        </div>
-        <div class="notes-box">
-          <textarea class="notes-textarea" placeholder="Minhas anotações..." oninput="localStorage.setItem('note_${item.id}', this.value)">${localStorage.getItem('note_' + item.id) || ''}</textarea>
-        </div>
-        <div class="card-footer">
-          <button class="btn btn-outline" onclick="shareUnit('${item.id}')">Compartilhar</button>
-          <button class="btn btn-solid" onclick="printCard('${item.id}')">Encaminhar</button>
-        </div>
+function printGuide(id) {
+  const i = DATA.find(x => x.id === id);
+  const note = localStorage.getItem('note_'+id) || 'Encaminhamento para avaliação e conduta especializada.';
+  const date = new Date().toLocaleDateString('pt-BR', {day:'numeric', month:'long', year:'numeric'});
+  
+  document.getElementById('print-area').innerHTML = `
+    <div style="padding:40px; background:white; color:#0F172A; font-family:sans-serif; min-height:20cm; position:relative;">
+      <div style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); opacity:0.04; z-index:0;">
+        <svg width="600" height="600" viewBox="0 0 24 24" fill="#115E59"><path d="M12,2C6.48,2,2,6.48,2,12s4.48,10,10,10s10-4.48,10-10S17.52,2,12,2z M17,13h-4v4h-2v-4H7v-2h4V7h2v4h4V13z"/></svg>
       </div>
-    `;
-  }).join('');
-  document.getElementById('empty-state').style.display = filtered.length ? 'none' : 'block';
-}
-
-function shareUnit(id) {
-  const item = DATA.find(d => d.id === id);
-  const text = `*Rede de Apoio BV*\n\n*Unidade:* ${item.fullName}\n*Endereço:* ${item.address}\n*Horário:* ${item.hoursText}\n*Contato:* ${item.phones.join(' / ')}`;
-  window.open(`https://wa.me/?text=${encodeURIComponent(text)}`);
-}
-
-function printCard(id) {
-  const item = DATA.find(d => d.id === id);
-  const note = localStorage.getItem('note_' + id) || '';
-  const date = new Date().toLocaleDateString('pt-BR', { day: 'numeric', month: 'long', year: 'numeric' });
-  document.getElementById('print-section').innerHTML = `
-    <div style="padding: 40px; font-family: sans-serif; position: relative; min-height: 18cm; background: white; color: #1E293B;">
-      <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); opacity: 0.05; z-index: 0;"><svg width="500" height="500" viewBox="0 0 24 24" fill="#115E59"><path d="M12,2C6.48,2,2,6.48,2,12s4.48,10,10,10s10-4.48,10-10S17.52,2,12,2z M17,13h-4v4h-2v-4H7v-2h4V7h2v4h4V13z"/></svg></div>
-      <div style="position: relative; z-index: 1;">
-        <div style="display: flex; justify-content: space-between; border-bottom: 2px solid #115E59; padding-bottom: 20px; margin-bottom: 30px;">
-          <div><h1 style="margin: 0; color: #115E59;">Guia de Encaminhamento</h1><p style="margin: 5px 0 0; color: #64748B;">Rede de Proteção Social e Apoio TEA</p></div>
-          <div style="text-align: right;"><p style="margin: 0; font-weight: 800;">Paulo Xavier</p><p style="margin: 2px 0; color: #115E59;">Psicólogo</p><p style="margin: 0; font-size: 12px; color: #64748B;">CRP-20/09816</p></div>
-        </div>
-        <div style="display: grid; grid-template-columns: 1fr 350px; gap: 30px;">
+      <div style="position:relative; z-index:1;">
+        <div style="display:flex; justify-content:space-between; border-bottom:3px solid #115E59; padding-bottom:20px; margin-bottom:40px;">
           <div>
-            <p><strong>Ao Serviço:</strong><br><span style="font-size: 24px; color: #115E59; font-weight: 800;">${item.fullName}</span></p>
-            <div style="margin-top: 20px;"><strong>Conduta:</strong><div style="margin-top: 10px; padding: 20px; border: 1.5px solid #115E59; border-radius: 8px; min-height: 150px; background: white; white-space: pre-wrap;">${note || 'Encaminhamento para avaliação e acompanhamento especializado.'}</div></div>
+            <h1 style="margin:0; font-family:serif; font-size:2.5rem; color:#115E59;">Guia de Encaminhamento</h1>
+            <p style="margin:5px 0; color:#64748B; font-weight:700; text-transform:uppercase; letter-spacing:1px;">Rede de Proteção e Apoio RAPS/TEA</p>
           </div>
-          <div style="background: #F1F5F9; padding: 25px; border-radius: 12px; border: 2px solid #115E59;">
-            <h3 style="margin-top: 0; color: #115E59;">Dados da Unidade</h3>
-            <p><strong>Endereço:</strong><br>${item.address}</p>
-            <p><strong>Contato:</strong><br>${item.phones.join(' · ')}</p>
+          <div style="text-align:right;">
+            <p style="margin:0; font-size:1.2rem; font-weight:800;">Paulo Xavier</p>
+            <p style="margin:2px 0; color:#115E59; font-weight:700;">Psicólogo</p>
+            <p style="margin:0; font-size:0.8rem; color:#64748B;">CRP-20/09816</p>
           </div>
         </div>
-        <div style="margin-top: 80px; display: flex; justify-content: space-between; align-items: flex-end;">
-          <p>Boa Vista - RR, ${date}.</p>
-          <div style="text-align: center; width: 250px;"><div style="border-top: 1px solid #000; margin-bottom: 5px;"></div><p>Paulo Xavier</p><p style="font-size: 12px;">Psicólogo · CRP-20/09816</p></div>
+        <div style="display:grid; grid-template-columns:1fr 350px; gap:40px;">
+          <div>
+            <p style="font-size:0.9rem; font-weight:800; text-transform:uppercase; color:#64748B; margin-bottom:10px;">Destino:</p>
+            <h2 style="margin:0; font-size:1.8rem; color:#115E59;">${i.fullName}</h2>
+            <div style="margin-top:30px;">
+              <p style="font-size:0.9rem; font-weight:800; text-transform:uppercase; color:#64748B; margin-bottom:10px;">Conduta e Orientações:</p>
+              <div style="padding:25px; border:2px solid #115E59; border-radius:12px; min-height:250px; font-size:1.1rem; line-height:1.6; white-space:pre-wrap; background:rgba(17,94,89,0.01);">${note}</div>
+            </div>
+          </div>
+          <div style="background:#F8FAFC; padding:30px; border-radius:12px; border:1px solid #E2E8F0;">
+            <h3 style="margin:0 0 20px 0; color:#115E59; border-bottom:1px solid #CBD5E1; padding-bottom:10px;">Informações da Unidade</h3>
+            <p style="margin-bottom:20px;"><strong>ENDEREÇO:</strong><br>${i.address}</p>
+            <p style="margin-bottom:20px;"><strong>HORÁRIO:</strong><br>${i.hours}</p>
+            <p><strong>CONTATO:</strong><br><span style="font-size:1.2rem; color:#115E59; font-weight:800;">${i.phones.join(' · ')}</span></p>
+          </div>
+        </div>
+        <div style="margin-top:100px; display:flex; justify-content:space-between; align-items:flex-end;">
+          <p style="font-weight:600;">Boa Vista - RR, ${date}.</p>
+          <div style="text-align:center; width:300px;">
+            <div style="border-top:2px solid #0F172A; margin-bottom:8px;"></div>
+            <p style="margin:0; font-weight:800;">Paulo Xavier</p>
+            <p style="margin:0; font-size:0.8rem;">Psicólogo · CRP-20/09816</p>
+          </div>
         </div>
       </div>
     </div>
@@ -887,29 +734,30 @@ function printCard(id) {
   window.print();
 }
 
-function exportNotes() {
+function exportData() {
   const notes = {};
   DATA.forEach(i => { const n = localStorage.getItem('note_'+i.id); if(n) notes[i.name] = n; });
+  const b = new Blob([JSON.stringify(notes,null,2)], {type:'application/json'});
   const a = document.createElement('a');
-  a.href = URL.createObjectURL(new Blob([JSON.stringify(notes, null, 2)], {type: 'application/json'}));
-  a.download = `backup_notas_${new Date().toISOString().split('T')[0]}.json`;
+  a.href = URL.createObjectURL(b);
+  a.download = `rede_apoio_backup_${new Date().toISOString().split('T')[0]}.json`;
   a.click();
 }
 
-document.getElementById('search').addEventListener('input', renderEquipment);
-document.querySelectorAll('.filter-btn').forEach(btn => btn.addEventListener('click', () => {
-  document.querySelector('.filter-btn.active').classList.remove('active');
-  btn.classList.add('active');
-  renderEquipment();
+document.getElementById('mainSearch').addEventListener('input', render);
+document.querySelectorAll('.filter-chip').forEach(c => c.addEventListener('click', () => {
+  document.querySelector('.filter-chip.active').classList.remove('active');
+  c.classList.add('active');
+  render();
 }));
 
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('./sw.js').then(reg => console.log('SW OK')).catch(err => console.log('SW ERR', err));
+    navigator.serviceWorker.register('./sw.js').then(() => console.log('PWA Active'));
   });
 }
 
-renderEquipment();
+render();
 </script>
 </body>
 </html>
