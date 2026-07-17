@@ -287,10 +287,18 @@
   /* Impressão Técnica */
   #print-area { display: none; }
   @media print {
-    @page { size: landscape; margin: 1cm; }
+    @page { size: landscape; margin: 0.5cm; }
     body * { visibility: hidden; }
     #print-area, #print-area * { visibility: visible; }
-    #print-area { display: block; position: absolute; left: 0; top: 0; width: 100%; }
+    #print-area { 
+      display: block; 
+      position: absolute; 
+      left: 0; 
+      top: 0; 
+      width: 100%; 
+      max-width: 29.7cm; /* Largura exata do A4 paisagem */
+      overflow: hidden;
+    }
   }
 
   @media (max-width: 640px) {
@@ -688,15 +696,15 @@ function printGuide(id) {
   const date = new Date().toLocaleDateString('pt-BR', {day:'numeric', month:'long', year:'numeric'});
   
   document.getElementById('print-area').innerHTML = `
-    <div style="padding:40px; background:white; color:#0F172A; font-family:sans-serif; min-height:20cm; position:relative;">
+    <div style="padding:30px; background:white; color:#0F172A; font-family:sans-serif; min-height:19cm; width:100%; max-width:28cm; margin:0 auto; position:relative; box-sizing:border-box; overflow:hidden;">
       <div style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); opacity:0.04; z-index:0;">
-        <svg width="600" height="600" viewBox="0 0 24 24" fill="#115E59"><path d="M12,2C6.48,2,2,6.48,2,12s4.48,10,10,10s10-4.48,10-10S17.52,2,12,2z M17,13h-4v4h-2v-4H7v-2h4V7h2v4h4V13z"/></svg>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/S%C3%ADmbolo_da_Psicologia.svg/1200px-S%C3%ADmbolo_da_Psicologia.svg.png" style="width:500px; height:auto;">
       </div>
       <div style="position:relative; z-index:1;">
         <div style="display:flex; justify-content:space-between; border-bottom:3px solid #115E59; padding-bottom:20px; margin-bottom:40px;">
           <div>
             <h1 style="margin:0; font-family:serif; font-size:2.5rem; color:#115E59;">Guia de Encaminhamento</h1>
-            <p style="margin:5px 0; color:#64748B; font-weight:700; text-transform:uppercase; letter-spacing:1px;">Rede de Proteção e Apoio RAPS/TEA</p>
+            <p style="margin:5px 0; color:#64748B; font-weight:700; text-transform:uppercase; letter-spacing:1px;">Rede de Políticas Públicas</p>
           </div>
           <div style="text-align:right;">
             <p style="margin:0; font-size:1.2rem; font-weight:800;">Paulo Xavier</p>
@@ -704,13 +712,13 @@ function printGuide(id) {
             <p style="margin:0; font-size:0.8rem; color:#64748B;">CRP-20/09816</p>
           </div>
         </div>
-        <div style="display:grid; grid-template-columns:1fr 350px; gap:40px;">
+        <div style="display:grid; grid-template-columns:1fr 300px; gap:30px;">
           <div>
             <p style="font-size:0.9rem; font-weight:800; text-transform:uppercase; color:#64748B; margin-bottom:10px;">Destino:</p>
             <h2 style="margin:0; font-size:1.8rem; color:#115E59;">${i.fullName}</h2>
             <div style="margin-top:30px;">
               <p style="font-size:0.9rem; font-weight:800; text-transform:uppercase; color:#64748B; margin-bottom:10px;">Conduta e Orientações:</p>
-              <div style="padding:25px; border:2px solid #115E59; border-radius:12px; min-height:250px; font-size:1.1rem; line-height:1.6; white-space:pre-wrap; background:rgba(17,94,89,0.01);">${note}</div>
+              <div style="padding:20px; border:2px solid #115E59; border-radius:12px; min-height:250px; font-size:1.05rem; line-height:1.5; white-space:pre-wrap; background:rgba(17,94,89,0.01); word-break:break-word; overflow-wrap:break-word;">${note}</div>
             </div>
           </div>
           <div style="background:#F8FAFC; padding:30px; border-radius:12px; border:1px solid #E2E8F0;">
@@ -761,5 +769,6 @@ render();
 </script>
 </body>
 </html>
+
 
 
