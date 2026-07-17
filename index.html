@@ -432,6 +432,7 @@
       <button class="filter-btn" data-cat="tea">Apoio ao TEA</button>
       <button class="filter-btn" data-cat="idoso">Pessoa Idosa</button>
       <button class="filter-btn" data-cat="social">Assistência Social</button>
+      <button class="filter-btn" data-cat="conselho">Conselho Tutelar</button>
     </div>
   </div>
 </div>
@@ -538,32 +539,88 @@ const DATA = [
     coords: [2.8452, -60.7018]
   },
   {
-    id: "cras-uniao",
-    name: "CRAS União",
-    fullName: "Centro de Referência de Assistência Social",
-    cat: ["social"],
-    tags: ["CadÚnico", "Bolsa Família", "Proteção Básica"],
-    address: "Rua Hilda Sobral Guedes, 81 – União, Boa Vista-RR",
-    hours: [{ days:[1,2,3,4,5], open:"08:00", close:"18:00" }],
-    hoursText: "Segunda a sexta, 08:00 às 18:00",
-    phones: ["(95) 98400-5452"],
-    services: ["Cadastro Único", "Acompanhamento Familiar", "Programas Sociais"],
-    description: "Unidade de proteção social básica que oferece acesso a benefícios, programas e projetos sociais. Realiza cadastramento no Cadastro Único, acompanhamento de famílias em situação de vulnerabilidade e orientação sobre programas governamentais como Bolsa Família.",
-    coords: [2.8368, -60.7132]
-  },
-  {
     id: "cras-pintolandia",
     name: "CRAS Pintolândia",
     fullName: "Centro de Referência de Assistência Social",
     cat: ["social"],
     tags: ["CadÚnico", "Assistência", "Comunitário"],
-    address: "Rua Delman Veras, S/N – Pintolândia, Boa Vista-RR",
+    address: "R. Sólon Rodrigues Pessoa, 615 - Nova Canaã (Sede do FQA), Boa Vista-RR",
     hours: [{ days:[1,2,3,4,5], open:"08:00", close:"18:00" }],
     hoursText: "Segunda a sexta, 08:00 às 18:00",
-    phones: ["(95) 98400-8881"],
-    services: ["Atendimento Social", "CadÚnico", "Serviço de Convivência"],
-    description: "Unidade de proteção social básica localizada no bairro Pintolândia. Oferece atendimento social, cadastramento no Cadastro Único e serviços de convivência comunitária para famílias em situação de vulnerabilidade social.",
+    phones: ["(95) 98407-3680"],
+    services: ["Cadastro Único", "Acompanhamento Familiar", "Serviço de Convivência"],
+    description: "Área de Cobertura: Dr. Silvio Botelho, Jardim Tropical, Pintolândia, Santa Luzia, Senador Hélio Campos.",
     coords: [2.8125, -60.7408]
+  },
+  {
+    id: "cras-silvio-leite",
+    name: "CRAS Dr. Silvio Leite",
+    fullName: "Centro de Referência de Assistência Social",
+    cat: ["social"],
+    tags: ["CadÚnico", "Assistência", "Comunitário"],
+    address: "R. Marieta de Mello Marquês, 869 - Dr. Silvio Leite, Boa Vista-RR",
+    hours: [{ days:[1,2,3,4,5], open:"08:00", close:"18:00" }],
+    hoursText: "Segunda a sexta, 08:00 às 18:00",
+    phones: ["(95) 98403-1682"],
+    services: ["Cadastro Único", "Acompanhamento Familiar", "Serviço de Convivência"],
+    description: "Bairros Atendidos: Alvorada, Dr. Silvio Leite, Equatorial, Nova Esperança, Conjunto Cruviana, Jardim Primavera, Laura Moreira, Conjunto Cidadão, Conjunto Manaíra.",
+    coords: [2.8055, -60.7285]
+  },
+  {
+    id: "cras-cauame",
+    name: "CRAS Cauamé",
+    fullName: "Centro de Referência de Assistência Social",
+    cat: ["social"],
+    tags: ["CadÚnico", "Assistência", "Comunitário"],
+    address: "Av. Carlos Pereira de Melo, 207 - Jardim Floresta, Boa Vista-RR",
+    hours: [{ days:[1,2,3,4,5], open:"08:00", close:"18:00" }],
+    hoursText: "Segunda a sexta, 08:00 às 18:00",
+    phones: ["(95) 98410-1337"],
+    services: ["Cadastro Único", "Acompanhamento Familiar", "Serviço de Convivência"],
+    description: "Bairros Atendidos: Aeroporto, Monte das Oliveiras, Cauamé, Caranã, Jardim Floresta, Said Salomão, Pedra Pintada.",
+    coords: [2.8485, -60.6985]
+  },
+  {
+    id: "cras-itinerante",
+    name: "CRAS Itinerante",
+    fullName: "Centro de Referência de Assistência Social",
+    cat: ["social"],
+    tags: ["Itinerante", "Zona Rural", "Indígena"],
+    address: "R. Maj. Manoel Corrêa, 620 - São Francisco, Boa Vista-RR",
+    hours: [{ days:[1,2,3,4,5], open:"08:00", close:"18:00" }],
+    hoursText: "Segunda a sexta, 08:00 às 18:00",
+    phones: ["N/A"],
+    services: ["Atendimento Itinerante", "CadÚnico", "Proteção Básica"],
+    description: "Bairros Atendidos: Comunidades Indígenas e Zona Rural de Boa Vista.",
+    coords: [2.8285, -60.6685]
+  },
+  {
+    id: "cras-sao-francisco",
+    name: "CRAS São Francisco",
+    fullName: "Centro de Referência de Assistência Social",
+    cat: ["social"],
+    tags: ["CadÚnico", "Assistência", "Comunitário"],
+    address: "R. Floriano Peixoto, 140 - Centro, Boa Vista-RR",
+    hours: [{ days:[1,2,3,4,5], open:"08:00", close:"18:00" }],
+    hoursText: "Segunda a sexta, 08:00 às 18:00",
+    phones: ["(95) 98410-4092"],
+    services: ["Cadastro Único", "Acompanhamento Familiar", "Serviço de Convivência"],
+    description: "Bairros Atendidos: 31 de Março, Caçari, Calungá, Canarinho, Centro, Dos Estados, Mecejana, Nossa Senhora de Aparecida, Paraviana, São Francisco, São Pedro, São Vicente.",
+    coords: [2.8212, -60.6762]
+  },
+  {
+    id: "cras-cristiana",
+    name: "CRAS Cristiana Vicente Nunes",
+    fullName: "Centro de Referência de Assistência Social",
+    cat: ["social"],
+    tags: ["CadÚnico", "Assistência", "Comunitário"],
+    address: "Rua Santo Agostinho, 193 - Centenário, Boa Vista-RR",
+    hours: [{ days:[1,2,3,4,5], open:"08:00", close:"18:00" }],
+    hoursText: "Segunda a sexta, 08:00 às 18:00",
+    phones: ["(95) 98402-6617"],
+    services: ["Cadastro Único", "Acompanhamento Familiar", "Serviço de Convivência"],
+    description: "Bairros Atendidos: 13 de Setembro, Asa Branca, Buritis, Caimbé, Cambará, Centenário, Cinturão Verde, Jóquei Clube, Liberdade, Marechal Rondon, Nova Canaã, Olímpico, Pricumã, Professora Araceli Souto Maior, Tancredo Neves.",
+    coords: [2.8185, -60.7182]
   },
   {
     id: "creas-centro",
@@ -576,8 +633,64 @@ const DATA = [
     hoursText: "Segunda a sexta, 08:00 às 18:00",
     phones: ["(95) 98405-5704"],
     services: ["Acompanhamento Especializado", "Denúncias", "Proteção de Direitos"],
-    description: "Unidade de proteção social especial para casos de violação de direitos. Oferece atendimento psicológico, orientação jurídica, apoio familiar e acompanhamento especializado de crianças, adolescentes e famílias vítimas de violência, abandono e exploração. Equipe multidisciplinar composta por assistentes sociais, psicólogos, psiquiatras e educadores sociais.",
+    description: "Unidade de proteção social especial para casos de violação de direitos. Oferece atendimento psicológico, orientação jurídica, apoio familiar e acompanhamento especializado de crianças, adolescentes e famílias vítimas de violência, abandono e exploração.",
     coords: [2.8212, -60.6762]
+  },
+  {
+    id: "creas-centenario",
+    name: "CREAS Centenário",
+    fullName: "Centro de Referência Especializado de Assistência Social",
+    cat: ["social"],
+    tags: ["Proteção Especial", "Direitos", "Vulnerabilidade"],
+    address: "R. Turin, 282 - Centenário, Boa Vista-RR",
+    hours: [{ days:[1,2,3,4,5], open:"08:00", close:"18:00" }],
+    hoursText: "Segunda a sexta, 08:00 às 18:00",
+    phones: ["(95) 98412-1829"],
+    services: ["Acompanhamento Especializado", "Proteção de Direitos", "Apoio Familiar"],
+    description: "Área de Abrangência: Alvorada; Cambará; Centenário; Cinturão Verde; Cruviana; Dr. Airton Rocha; Dr. Sílvio Botelho; Dr. Sílvio Leite; Equatorial; Governador Aquilo da Mota Duarte; Jardim Bela Vista; Jardim das Copaíbas; Jóquei Clube; Nova Canaã; Olímpico; Araceli; Equatorial; Jardim Primavera; Tropical; Laura Moreira; Rondon; Manaíra; Murilo Teixeira; Operário; Pintolândia; Piscicultura; Raiar do Sol; São Bento; Santa Luzia; Hélio Campos.",
+    coords: [2.8185, -60.7182]
+  },
+  {
+    id: "ct-territorio-1",
+    name: "Conselho Tutelar - Território I",
+    fullName: "Órgão Permanente e Autônomo de Proteção à Criança e Adolescente",
+    cat: ["conselho", "social"],
+    tags: ["Proteção", "Direitos", "Criança e Adolescente"],
+    address: "R. Bento Brasil, 835 - Centro, Boa Vista-RR",
+    hours: [{ days:[1,2,3,4,5], open:"08:00", close:"18:00" }],
+    hoursText: "Segunda a sexta, 08:00 às 18:00 (Plantão 24h via telefone)",
+    phones: ["(95) 98410-4003"],
+    services: ["Zelar pelo cumprimento dos direitos da criança e do adolescente", "Aplicação de medidas de proteção"],
+    description: "Bairros Atendidos: Aeroporto; Cauamé; Calungá; Liberdade; Jardim Floresta; Pricumã; 13 de Setembro; São Vicente; Centro; São Pedro; Aparecida; Canarinho; Paraviana; Caçari; Bairro dos Estados; 31 de Março; São Francisco; Mecejana; Monte Cristo; Said Salomão; Áreas Indígenas.",
+    coords: [2.8212, -60.6762]
+  },
+  {
+    id: "ct-territorio-2",
+    name: "Conselho Tutelar - Território II",
+    fullName: "Órgão Permanente e Autônomo de Proteção à Criança e Adolescente",
+    cat: ["conselho", "social"],
+    tags: ["Proteção", "Direitos", "Criança e Adolescente"],
+    address: "R. Dico Viêira, 1497 - Caimbé, Boa Vista-RR",
+    hours: [{ days:[1,2,3,4,5], open:"08:00", close:"18:00" }],
+    hoursText: "Segunda a sexta, 08:00 às 18:00 (Plantão 24h via telefone)",
+    phones: ["(95) 98403-7780"],
+    services: ["Zelar pelo cumprimento dos direitos da criança e do adolescente", "Aplicação de medidas de proteção"],
+    description: "Bairros Atendidos: Jardim Caranã; Caranã; Tancredo Neves; Caimbé; Asa Branca; Buritis; Jóquei Clube; União; Cinturão Verde; Centenário; Araceli; São Bento; Raiar do Sol; Bela Vista; Operário; Nova Cidade; Brigadeiro; Distrito Industrial; Pérola.",
+    coords: [2.8315, -60.7035]
+  },
+  {
+    id: "ct-territorio-3",
+    name: "Conselho Tutelar - Território III",
+    fullName: "Órgão Permanente e Autônomo de Proteção à Criança e Adolescente",
+    cat: ["conselho", "social"],
+    tags: ["Proteção", "Direitos", "Criança e Adolescente"],
+    address: "R. Pedro Aldemar Bantim, 1337 - Dr. Silvio Botelho, Boa Vista-RR",
+    hours: [{ days:[1,2,3,4,5], open:"08:00", close:"18:00" }],
+    hoursText: "Segunda a sexta, 08:00 às 18:00 (Plantão 24h via telefone)",
+    phones: ["(95) 98411-6943"],
+    services: ["Zelar pelo cumprimento dos direitos da criança e do adolescente", "Aplicação de medidas de proteção"],
+    description: "Bairros Atendidos: Cidade Satélite; Piscicultura; Jardim Primavera; Santa Tereza; Dr. Silvio Botelho; Dr. Silvio Leite; Alvorada; Pintolândia; Jardim Olímpico; Jardim Tropical; Hélio Campos; Equatorial; Santa Luzia; Nova Canaã; Cambará; Cruviana; Laura Moreira.",
+    coords: [2.8125, -60.7385]
   },
   {
     id: "cas-vilajardim",
@@ -706,7 +819,7 @@ function render() {
 
   const filtered = DATA.filter(item => {
     const matchCat = category === "all" || item.cat.includes(category);
-    const haystack = (item.name + " " + item.fullName + " " + item.address + " " + item.services.join(" ")).toLowerCase();
+    const haystack = (item.name + " " + item.fullName + " " + item.address + " " + item.services.join(" ") + " " + item.description).toLowerCase();
     const matchSearch = haystack.includes(query);
     return matchCat && matchSearch;
   });
