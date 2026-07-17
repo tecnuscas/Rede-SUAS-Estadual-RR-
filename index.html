@@ -430,7 +430,7 @@
     <div class="filter-group" id="filters">
       <button class="filter-btn active" data-cat="all">Todos os Equipamentos</button>
       <button class="filter-btn" data-cat="tea">Apoio ao TEA</button>
-      <button class="filter-btn" data-cat="saude">Saúde / CAPS</button>
+      <button class="filter-btn" data-cat="saude">Saúde / RAPS</button>
       <button class="filter-btn" data-cat="juridico">Jurídico</button>
       <button class="filter-btn" data-cat="idoso">Pessoa Idosa</button>
       <button class="filter-btn" data-cat="social">Assistência Social</button>
@@ -479,7 +479,7 @@ const DATA = [
     address: "Av. Sebastião Diniz, 1165 - Centro, Boa Vista-RR",
     hours: [{ days:[1,2,3,4,5], open:"08:00", close:"14:00" }],
     hoursText: "Segunda a sexta, 08:00 às 14:00",
-    phones: ["N/A"],
+    phones: ["(95) 2121-4777"],
     services: ["Causas cíveis", "Pedidos de guarda", "Tutela", "Curatela", "Divórcio", "Família", "Pensão Alimentícia"],
     description: "Órgão estadual que oferece assistência jurídica gratuita para cidadãos em vulnerabilidade. Atende demandas de direito de família, registros públicos e outras causas cíveis.",
     coords: [2.8212, -60.6762]
@@ -493,7 +493,7 @@ const DATA = [
     address: "R. Gen. Penha Brasil, 1262 - São Francisco, Boa Vista-RR",
     hours: [{ days:[1,2,3,4,5], open:"08:00", close:"14:00" }],
     hoursText: "Segunda a sexta, 08:00 às 14:00",
-    phones: ["N/A"],
+    phones: ["(95) 3212-3000"],
     services: ["Demandas judiciais federais", "BPC", "Benefícios", "INSS", "LOAS"],
     description: "Instituição que presta assistência jurídica gratuita em matérias de competência da União. Referência para pedidos de benefícios previdenciários e assistenciais (BPC/LOAS) negados pelo INSS.",
     coords: [2.8285, -60.6685]
@@ -507,7 +507,7 @@ const DATA = [
     address: "R. Soldado-Polícia Militar Arineu Ferreira Lima, 1415 - Caranã, Boa Vista-RR",
     hours: [{ days:[1,2,3,4,5], open:"08:00", close:"14:00" }],
     hoursText: "Segunda a sexta, 08:00 às 14:00",
-    phones: ["N/A"],
+    phones: ["(95) 2121-4777"],
     services: ["Área criminal", "Defesa criminal", "Processos penais", "Execução Penal"],
     description: "Unidade da Defensoria Pública voltada para a defesa de cidadãos em processos criminais e acompanhamento de execução penal.",
     coords: [2.8315, -60.7035]
@@ -535,7 +535,7 @@ const DATA = [
     address: "R. José Bonifácio, 630 - Aparecida, Boa Vista-RR",
     hours: [{ days:[1,2,3,4,5,6,7], open:"00:00", close:"23:59" }],
     hoursText: "Atendimento 24 horas",
-    phones: ["N/A"],
+    phones: ["(95) 98407-2238"],
     services: ["Tratamento de Dependência Química", "Apoio Psicossocial"],
     description: "Responsabilidade Geral (Álcool e Drogas) - Macroáreas 1 a 8.",
     coords: [2.8255, -60.6712]
@@ -839,13 +839,13 @@ const DATA = [
     name: "SEED",
     fullName: "Secretaria de Estado da Educação e Desporto",
     cat: ["social"],
-    tags: ["Educação", "Estadual", "Gestão"],
+    tags: ["Educação", "Estadual", "Gestão", "Matrícula"],
     address: "Praça do Centro Cívico, 550 - Centro, Boa Vista - RR, 69301-069",
     hours: [{ days:[1,2,3,4,5], open:"08:00", close:"14:00" }],
     hoursText: "Segunda a sexta, 08:00 às 14:00",
-    phones: ["N/A"],
-    services: ["Gestão da Rede Estadual de Ensino", "Políticas Educacionais"],
-    description: "Órgão responsável pela gestão do sistema estadual de ensino de Roraima.",
+    phones: ["(95) 2121-7930"],
+    services: ["Matrícula Rede Estadual", "Suporte Pedagógico", "Educação Especial", "Cursos Técnicos", "Programa Roraima Alfabetizando"],
+    description: "DOCUMENTOS PARA MATRÍCULA: RG/Certidão do aluno, CPF, Cartão de Vacina, Comprovante de Residência, Cartão do Bolsa Família, RG/CPF do responsável, Laudo Médico (se PcD) e Histórico Escolar. SETORES: Ceforr (Formação), DIE (Educação Especial), Matrícula (ccm.rr.gov.br).",
     coords: [2.8212, -60.6762]
   },
   {
@@ -853,13 +853,13 @@ const DATA = [
     name: "SMEC",
     fullName: "Secretaria Municipal de Educação e Cultura",
     cat: ["social"],
-    tags: ["Educação", "Municipal", "Cultura"],
+    tags: ["Educação", "Municipal", "Creche", "Matrícula"],
     address: "R. Gen. Penha Brasil, 705 - São Francisco, Boa Vista - RR, 69305-130",
     hours: [{ days:[1,2,3,4,5], open:"08:00", close:"14:00" }],
     hoursText: "Segunda a sexta, 08:00 às 14:00",
-    phones: ["N/A"],
-    services: ["Gestão da Rede Municipal de Ensino", "Cultura", "Educação Básica"],
-    description: "Órgão responsável pela gestão da educação municipal e fomento à cultura em Boa Vista.",
+    phones: ["(95) 98411-1108", "0800 280 3536"],
+    services: ["Matrícula Online", "Creches (2 e 3 anos)", "Ensino Fundamental I", "Transporte Escolar", "Cardápio Escolar"],
+    description: "MATRÍCULA CRECHES: Processo online (matriculaonline.boavista.rr.gov.br). DOCUMENTOS: Certidão/RG/CPF da criança, Cartão SUS, Cartão Vacina, Comprovante de Residência, 2 fotos 3x4. PRIORIDADES: PcD, TEA, Vulnerabilidade Social, Vítimas de Violência.",
     coords: [2.8285, -60.6685]
   },
   {
@@ -867,13 +867,13 @@ const DATA = [
     name: "SESAU",
     fullName: "Secretaria de Estado da Saúde de Roraima",
     cat: ["saude"],
-    tags: ["Saúde", "Estadual", "Gestão"],
+    tags: ["Saúde", "Estadual", "Especialidades", "Exames"],
     address: "R. Madrid, 180 - Aeroporto, Boa Vista - RR",
     hours: [{ days:[1,2,3,4,5], open:"07:30", close:"18:00" }],
     hoursText: "Segunda a sexta, 07:30 às 12:00 e 14:00 às 18:00",
     phones: ["N/A"],
-    services: ["Gestão da Saúde Estadual", "Políticas de Saúde Pública"],
-    description: "Órgão responsável pela gestão do sistema estadual de saúde de Roraima.",
+    services: ["Regulação (SISREG)", "Marcação de Exames", "Hospitais de Referência", "Medicamentos de Alto Custo", "Tratamento Fora de Domicílio (TFD)"],
+    description: "FLUXO: Atendimento via encaminhamento da UBS para o SISREG. DOCUMENTOS: Cartão SUS, Documento com foto, Pedido médico carimbado, Comprovante de residência. SETORES: Coordenadoria de Regulação, Departamento de Assistência Farmacêutica.",
     coords: [2.8485, -60.6985]
   },
   {
@@ -881,13 +881,13 @@ const DATA = [
     name: "SMSA",
     fullName: "Secretaria Municipal de Saúde de Boa Vista",
     cat: ["saude"],
-    tags: ["Saúde", "Municipal", "Gestão"],
-    address: "R. Cel. Mota, 356 - Centro, Boa Vista - RR, 69301-120",
+    tags: ["Saúde", "Municipal", "Atenção Primária", "HCSA"],
+    address: "R. Cel. Mota, 418 - Centro, Boa Vista - RR, 69301-120",
     hours: [{ days:[1,2,3,4,5], open:"08:00", close:"14:00" }],
     hoursText: "Segunda a sexta, 08:00 às 14:00",
-    phones: ["N/A"],
-    services: ["Gestão da Saúde Municipal", "Atenção Básica"],
-    description: "Órgão responsável pela gestão da saúde municipal em Boa Vista.",
+    phones: ["(95) 99174-0804", "156"],
+    services: ["UBS (Postos de Saúde)", "Hospital da Criança (HCSA)", "SAMU 192", "Vigilância Sanitária", "Imunização"],
+    description: "ATENÇÃO BÁSICA: Primeiro nível de atendimento. DOCUMENTOS: Cartão SUS Municipal, RG/Certidão, Comprovante de Residência. SETORES: Departamento de Atenção Básica, Vigilância em Saúde, Central de Imunização.",
     coords: [2.8212, -60.6762]
   }
 ];
