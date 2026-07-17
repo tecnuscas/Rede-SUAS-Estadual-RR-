@@ -33,7 +33,6 @@
     --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
     --shadow-lg: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
 
-    /* Fontes 100% locais — nenhuma dependência de rede */
     --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     --font-serif: Georgia, "Times New Roman", serif;
     --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
@@ -367,14 +366,16 @@
   #print-section { display: none; }
 
   @media print {
-    @page { size: landscape; margin: 0.5cm; }
-    /* Remove todo o app do fluxo (display:none tira o espaço ocupado,
-       diferente de visibility:hidden, que deixava páginas em branco) */
+    @page { size: portrait; margin: 1cm; }
     #app-content { display: none !important; }
     #print-section {
       display: block !important;
       width: 100%;
       background: white;
+    }
+    .print-container {
+        padding: 0 !important;
+        margin: 0 !important;
     }
   }
 
@@ -488,16 +489,16 @@ const DATA = [
     tags: ["Gratuito", "TEA", "Multidisciplinar"],
     address: "Avenida Santos Dumont, 1193 – São Francisco, Boa Vista-RR",
     hours: [{ days:[1,2,3,4,5], open:"08:00", close:"18:00" }],
-    hoursText: "Segunda a sexta, 08:00 às 12:00 e 14:00 às 18:00",
-    phones: ["(95) 99164-1475"],
-    services: ["Psicologia", "Pedagogia", "Fisioterapia", "Método ABA"],
-    description: "Projeto da Assembleia Legislativa de Roraima reconhecido nacionalmente (Prêmio Nacional do Turismo 2025). Atende mais de 1.000 crianças e adolescentes com TEA e aproximadamente 800 famílias. Oferece cursos de estratégias de reconhecimento e prevenção de crises em autistas para familiares e profissionais.",
-    coords: [2.8302, -60.6628]
+    hoursText: "Segunda a sexta, 08:00 às 18:00",
+    phones: ["(95) 98402-2000"],
+    services: ["Acolhimento", "Orientação Familiar", "Triagem Multidisciplinar"],
+    description: "Programa da Assembleia Legislativa de Roraima que oferece suporte e orientação para famílias e pessoas com autismo. Realiza acolhimento, triagem e encaminhamentos, além de promover cursos e palestras sobre o TEA.",
+    coords: [2.8285, -60.6685]
   },
   {
-    id: "cea-prefeitura",
-    name: "CEA Boa Vista",
-    fullName: "Centro Especializado em Autismo (Prefeitura)",
+    id: "cmae",
+    name: "CMAE",
+    fullName: "Centro Municipal de Atendimento Especializado",
     cat: ["tea"],
     tags: ["Municipal", "Educação Inclusiva", "TEA"],
     address: "Rua Sólon Rodrigues Pessoa, s/n - Pintolândia, Boa Vista-RR",
@@ -588,13 +589,12 @@ const DATA = [
     hours: [{ days:[1,2,3,4,5], open:"08:00", close:"14:00" }],
     hoursText: "Segunda a sexta, 08:00 às 12:00 e 14:00 às 22:00",
     phones: ["(95) 3621-1718"],
-    services: ["Serviço de Convivência", "Oficinas Diversas", "Ações Comunitárias", "Atividades Culturais"],
+    services: ["Serviço de Convivência", "Oficinas Diversas", "Ações Comunitárias", "Atividades Cultural"],
     description: "Espaço de integração de políticas públicas da Secretaria do Trabalho e Bem-Estar Social (SETRABES).",
     coords: [2.8185, -60.7582]
   }
 ];
 
-/* Ícones SVG embutidos — nenhuma chamada de rede necessária */
 const ICONS = {
   mapPin: '<svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>',
   clock: '<svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>',
@@ -723,7 +723,7 @@ function printReport(id) {
   const printSection = document.getElementById("print-section");
 
   printSection.innerHTML = `
-    <div style="padding: 30px 40px; font-family: sans-serif; color: #0F172A; background: white; box-sizing: border-box;">
+    <div class="print-container" style="padding: 40px; font-family: sans-serif; color: #0F172A; background: white; box-sizing: border-box; width: 100%; min-height: 100vh;">
       <div style="display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 3px solid #115E59; padding-bottom: 16px; margin-bottom: 24px;">
         <div style="display: flex; align-items: center; gap: 15px;">
           <div style="background: #115E59; color: white; padding: 10px; border-radius: 8px;">
@@ -742,8 +742,8 @@ function printReport(id) {
         </div>
       </div>
 
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
-        <div>
+      <div style="display: flex; gap: 40px; align-items: stretch;">
+        <div style="flex: 1;">
           <h2 style="font-size: 22px; margin: 0 0 10px; color: #0F172A;">${item.name}</h2>
           <p style="font-size: 14px; color: #64748B; margin: 0 0 20px;">${item.fullName}</p>
 
@@ -763,9 +763,9 @@ function printReport(id) {
           </div>
         </div>
 
-        <div style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 12px; padding: 25px; display: flex; flex-direction: column;">
-          <h3 style="font-size: 14px; text-transform: uppercase; color: #115E59; margin: 0 0 15px;">Observações e Encaminhamentos</h3>
-          <div style="font-size: 14px; line-height: 1.8; color: #1E293B; white-space: pre-wrap; word-wrap: break-word; overflow-wrap: break-word; min-height: 220px;">${note ? escapeHtml(note) : "Nenhuma observação técnica registrada para este equipamento."}</div>
+        <div style="flex: 1.2; background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 12px; padding: 25px; display: flex; flex-direction: column;">
+          <h3 style="font-size: 14px; text-transform: uppercase; color: #115E59; border-bottom: 1px solid #E2E8F0; padding-bottom: 5px; margin-bottom: 15px;">Observações e Encaminhamentos</h3>
+          <div style="font-size: 14px; line-height: 1.8; color: #1E293B; white-space: pre-wrap; word-wrap: break-word; overflow-wrap: break-word; flex-grow: 1; min-height: 250px;">${note ? escapeHtml(note) : "Nenhuma observação técnica registrada para este equipamento."}</div>
 
           <div style="margin-top: 30px; border-top: 1px solid #CBD5E1; padding-top: 20px; text-align: center;">
             <div style="width: 200px; border-top: 1px solid #0F172A; margin: 30px auto 10px;"></div>
@@ -774,14 +774,12 @@ function printReport(id) {
         </div>
       </div>
 
-      <div style="margin-top: 24px; border-top: 1px solid #E2E8F0; padding-top: 15px; text-align: center; font-size: 10px; color: #94A3B8;">
+      <div style="margin-top: auto; padding-top: 24px; border-top: 1px solid #E2E8F0; text-align: center; font-size: 10px; color: #94A3B8;">
         Este documento é para uso exclusivo da rede de proteção social. As informações aqui contidas são de natureza profissional.
       </div>
     </div>
   `;
 
-  // Espera dois frames de renderização para garantir que o navegador
-  // já aplicou o layout do relatório antes de abrir a caixa de impressão.
   requestAnimationFrame(() => {
     requestAnimationFrame(() => {
       window.print();
@@ -813,3 +811,4 @@ render();
 </script>
 </body>
 </html>
+
