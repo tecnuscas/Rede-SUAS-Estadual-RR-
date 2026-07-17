@@ -304,19 +304,25 @@
   .btn-secondary { background: var(--bg-card); color: var(--text-main); }
   .btn-secondary:hover { background: var(--bg-main); }
 
-  /* Sistema de Impressão Blindado A4 Paisagem */
+  /* Sistema de Impressão Blindado A4 Paisagem - PÁGINA ÚNICA */
   #print-area { display: none; }
   @media print {
     @page { size: landscape; margin: 0.5cm; }
-    body * { visibility: hidden; }
-    #print-area, #print-area * { visibility: visible; }
+
+    /* Em vez de visibility:hidden (que mantém os elementos ocupando espaço
+       no fluxo e gera páginas extras em branco, sobre as quais o
+       #print-area, por ser "fixed", acaba se repetindo), removemos tudo
+       do fluxo com display:none. Assim só existe UM elemento visível
+       durante a impressão. */
+    body > *:not(#print-area) {
+      display: none !important;
+    }
+
     #print-area {
       display: block !important;
-      position: fixed;
-      left: 0;
-      top: 0;
-      width: 28.7cm; /* A4 Paisagem menos margens */
-      height: 20cm;
+      position: static;
+      width: 100%;
+      height: auto;
       background: white;
       z-index: 9999;
       padding: 0;
@@ -811,11 +817,11 @@ function printGuide(id) {
   const date = new Date().toLocaleDateString('pt-BR', {day:'numeric', month:'long', year:'numeric'});
   
   document.getElementById('print-area').innerHTML = `
-    <div style="width:28.7cm; height:20cm; padding:0.8cm; position:relative; font-family:sans-serif; color:#0F172A; box-sizing:border-box; display:flex; flex-direction:column; background:white;">
-      <!-- Marca d'água Psi -->
-      <div style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); opacity:0.04; z-index:0;">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/S%C3%ADmbolo_da_Psicologia.svg/1200px-S%C3%ADmbolo_da_Psicologia.svg.png" style="width:450px; height:auto;">
-      </div>
+    <div style="width:28.7cm; height:20cm; padding:0.8cm; position:relative; font-family:sans-serif; color:#0F172A; box-sizing:border-box; display:flex; flex-direction:column; background:white; overflow:hidden;">
+      <!-- Marca d'água: letra grega Psi (Ψ), renderizada como texto para
+           garantir que sempre apareça na impressão (independe de imagem
+           externa carregar). -->
+      <div style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%) rotate(-8deg); opacity:0.06; z-index:0; font-size:22rem; line-height:1; font-family:'Lora', serif; color:#115E59; user-select:none; pointer-events:none; white-space:nowrap;">Ψ</div>
 
       <div style="position:relative; z-index:1; display:flex; flex-direction:column; height:100%;">
         <!-- Cabeçalho Compacto -->
