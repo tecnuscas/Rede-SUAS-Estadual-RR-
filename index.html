@@ -1065,7 +1065,7 @@ function printGuide(id) {
     [10, 82], [37, 86], [64, 82], [91, 86]
   ];
   const watermark = wmPositions.map(([x, y]) => `
-    <div style="position:absolute; top:${y}%; left:${x}%; transform:translate(-50%,-50%) rotate(-18deg); opacity:0.16; z-index:0; font-size:6.5rem; line-height:1; font-family:'Lora', serif; font-weight:700; color:#115E59; user-select:none; pointer-events:none;">Ψ</div>
+    <div style="position:absolute; top:${y}%; left:${x}%; transform:translate(-50%,-50%) rotate(-18deg); opacity:0.055; z-index:0; font-size:6.5rem; line-height:1; font-family:'Lora', serif; font-weight:700; color:#115E59; user-select:none; pointer-events:none;">Ψ</div>
   `).join('');
 
   document.getElementById('print-area').innerHTML = `
@@ -1081,12 +1081,9 @@ function printGuide(id) {
         <table style="width:100%; border-collapse:collapse; margin-bottom:8px; table-layout:fixed;">
           <tr>
             <td style="border:1.5px solid #0F172A; padding:8px 14px; vertical-align:middle;">
-              <div style="display:flex; align-items:center; gap:12px;">
-                <div style="width:42px; height:42px; border-radius:8px; background:#115E59; color:white; display:flex; align-items:center; justify-content:center; font-family:'Lora', serif; font-weight:700; font-size:1.2rem; flex-shrink:0;">RA</div>
-                <div>
-                  <div style="font-size:1.25rem; font-weight:800; letter-spacing:0.02em; color:#0F172A;">FICHA DE ENCAMINHAMENTO TÉCNICO</div>
-                  <div style="font-size:0.68rem; font-weight:700; color:#475569; text-transform:uppercase; letter-spacing:0.04em; margin-top:2px;">Sistema Único de Assistência Social do Estado de Roraima</div>
-                </div>
+              <div>
+                <div style="font-size:1.25rem; font-weight:800; letter-spacing:0.02em; color:#0F172A;">FICHA DE ENCAMINHAMENTO TÉCNICO</div>
+                <div style="font-size:0.68rem; font-weight:700; color:#475569; text-transform:uppercase; letter-spacing:0.04em; margin-top:2px;">Sistema Único de Assistência Social do Estado de Roraima</div>
               </div>
             </td>
             <td style="border:1.5px solid #0F172A; padding:8px 14px; text-align:center; width:180px;">
@@ -1110,7 +1107,7 @@ function printGuide(id) {
           <!-- Coluna esquerda -->
           <div style="display:flex; flex-direction:column; min-height:0; border-right:1.5px solid #0F172A; padding:14px;">
             <span style="font-size:0.65rem; font-weight:800; color:#475569; text-transform:uppercase; letter-spacing:0.03em;">Unidade de Destino</span>
-            <h2 style="margin:4px 0 12px 0; font-size:1.25rem; color:#115E59; font-family:'Lora', serif; font-weight:600; border-bottom:1px solid #CBD5E1; padding-bottom:10px;">${i.fullName}</h2>
+            <h2 style="margin:4px 0 12px 0; font-size:1.25rem; color:#115E59; font-family:'Lora', serif; font-weight:700; border-bottom:1px solid #CBD5E1; padding-bottom:10px;">${i.fullName}</h2>
 
             <span style="font-size:0.65rem; font-weight:800; color:#475569; text-transform:uppercase; letter-spacing:0.03em; margin-bottom:6px; display:block;">Conduta e Orientações Técnicas</span>
             <div id="printNoteBox" style="flex-grow:1; padding:14px; border:1.5px solid #0F172A; border-radius:4px; font-size:15px; line-height:1.5; white-space:pre-wrap; background:rgba(17,94,89,0.02); overflow:hidden;">${note}</div>
@@ -1119,15 +1116,15 @@ function printGuide(id) {
           <!-- Coluna direita: ficha da unidade em formato tabular -->
           <table style="width:100%; height:100%; border-collapse:collapse; table-layout:fixed;">
             <tr>
-              <td style="background:#F1F5F9; border-bottom:1.5px solid #0F172A; padding:8px 10px; font-size:0.62rem; font-weight:800; text-transform:uppercase; letter-spacing:0.03em; width:76px; vertical-align:top;">Endereço</td>
-              <td style="border-bottom:1.5px solid #0F172A; padding:8px 10px; font-size:${addressFontSize}px; line-height:1.4; vertical-align:top; color:#1E293B;">${i.address}</td>
+              <td style="background:#F1F5F9; border-bottom:1.5px solid #0F172A; padding:8px 8px; font-size:0.6rem; font-weight:800; text-transform:uppercase; letter-spacing:0.02em; width:64px; white-space:nowrap; vertical-align:top;">Endereço</td>
+              <td style="border-bottom:1.5px solid #0F172A; padding:8px 10px; font-size:${addressFontSize}px; line-height:1.4; vertical-align:top; color:#1E293B; font-weight:700;">${i.address}</td>
             </tr>
             <tr>
-              <td style="background:#F1F5F9; border-bottom:1.5px solid #0F172A; padding:8px 10px; font-size:0.62rem; font-weight:800; text-transform:uppercase; letter-spacing:0.03em; vertical-align:top;">Horário</td>
-              <td style="border-bottom:1.5px solid #0F172A; padding:8px 10px; font-size:0.82rem; vertical-align:top; color:#1E293B;">${i.hours}</td>
+              <td style="background:#F1F5F9; border-bottom:1.5px solid #0F172A; padding:8px 8px; font-size:0.6rem; font-weight:800; text-transform:uppercase; letter-spacing:0.02em; white-space:nowrap; vertical-align:top;">Horário</td>
+              <td style="border-bottom:1.5px solid #0F172A; padding:8px 10px; font-size:0.82rem; vertical-align:top; color:#1E293B; font-weight:700;">${i.hours}</td>
             </tr>
             <tr>
-              <td style="background:#F1F5F9; padding:8px 10px; font-size:0.62rem; font-weight:800; text-transform:uppercase; letter-spacing:0.03em; vertical-align:top;">Contato</td>
+              <td style="background:#F1F5F9; padding:8px 8px; font-size:0.6rem; font-weight:800; text-transform:uppercase; letter-spacing:0.02em; white-space:nowrap; vertical-align:top;">Contato</td>
               <td style="padding:8px 10px; font-size:${phoneFontSize}px; line-height:1.4; vertical-align:top; color:#115E59; font-weight:800;">${i.phones.join('<br>')}</td>
             </tr>
           </table>
@@ -1136,12 +1133,12 @@ function printGuide(id) {
         <!-- Rodapé e Assinatura -->
         <div style="margin-top:10px; display:flex; justify-content:space-between; align-items:flex-end; flex-shrink:0;">
           <div>
-            <p style="margin:0; font-size:0.82rem; font-weight:600; color:#334155;">Boa Vista - RR, ${date}.</p>
+            <p style="margin:0; font-size:0.82rem; font-weight:700; color:#334155;">Boa Vista - RR, ${date}.</p>
           </div>
           <div style="text-align:center; width:280px;">
             <div style="border-top:2px solid #0F172A; margin-bottom:6px;"></div>
             <p style="margin:0; font-size:1rem; font-weight:800; color:#0F172A;">Paulo Xavier</p>
-            <p style="margin:0; font-size:0.85rem; color:#475569;">Psicólogo · CRP-20/09816</p>
+            <p style="margin:0; font-size:0.85rem; color:#475569; font-weight:700;">Psicólogo · CRP-20/09816</p>
           </div>
         </div>
       </div>
