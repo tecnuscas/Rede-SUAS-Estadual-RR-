@@ -364,6 +364,7 @@
       <button class="filter-chip" data-cat="educacao">Educação</button>
       <button class="filter-chip" data-cat="juridico">Sistema Judicial</button>
       <button class="filter-chip" data-cat="conselho">Conselho Tutelar</button>
+      <button class="filter-chip" data-cat="bancos">Rede Bancária</button>
       <button class="filter-chip" data-cat="fav">⭐ Favoritos</button>
     </div>
   </div>
@@ -380,6 +381,17 @@
 
 <script>
 const DATA = [
+  {
+    id: "caixa-economica-bv",
+    name: "Caixa Econômica Federal",
+    fullName: "Agências da Caixa Econômica Federal em Boa Vista/RR",
+    cat: ["bancos"],
+    address: "Ag. Centro (0653): R. José Magalhães, 321 - Centro, CEP 69301-360<br>Ag. Ville Roy (3588): Av. Ville Roy, S/N - Qd. 147, Lote 02 - São Pedro, CEP 69306-665<br>Ag. Raiar do Sol (3905): R. Estrela D'Alva, 456 - Raiar do Sol, CEP 69316-002<br>Ag. Cruviana (3906): Av. Gen. Ataíde Teive, 7721 - Alvorada, CEP 69317-182<br>Ag. Asa Branca (3027): Av. Gen. Ataíde Teive, 3997 - Asa Branca, CEP 69309-000",
+    hours: "Segunda a sexta, 10:00 às 16:00 (pode variar por unidade)",
+    phones: ["Centro (0653): (95) 3198-2400<br>Ville Roy (3588): (95) 3212-3650<br>Raiar do Sol (3905): (95) 3621-4272<br>Cruviana (3906): (95) 3621-4201<br>Asa Branca (3027): (95) 3621-8051"],
+    services: "CadÚnico, Bolsa Família, BPC/LOAS, FGTS, PIS, Minha Casa Minha Vida, Auxílio Gás, Caixa Tem, atendimento bancário geral.",
+    desc: "Rede bancária federal com 5 agências em Boa Vista/RR, reunidas neste cartão único para consulta e impressão conjunta de todos os endereços."
+  },
   {
     id: "dpe-civil",
     name: "DPE/Civil",
@@ -414,15 +426,169 @@ const DATA = [
     desc: "Unidade especializada em defesa criminal e acompanhamento de custodiados."
   },
   {
-    id: "ubs-bernardo-alem",
-    name: "UBS Bernardo Além",
-    fullName: "Unidade Básica de Saúde Bernardo Além",
+    id: "ubs-helio-macedo",
+    name: "UBS Dr. Hélio Macedo",
+    fullName: "Unidade Básica de Saúde Dr. Hélio Macedo",
     cat: ["saude"],
-    address: "R. Josemar Batista de Souza - Cidade Satélite, Boa Vista-RR",
-    hours: "Segunda a sexta, 08:00 às 18:00",
+    address: "Jardim Caranã, Boa Vista-RR",
+    hours: "Segunda a sexta, conforme unidade",
     phones: ["N/A"],
-    services: "Atenção Básica, Vacinação, Consultas, Curativos.",
-    desc: "Referência para Cidade Satélite, Alvorada, Silvio Leite e adjacências (Macroárea 04)."
+    services: "Acolhimento em saúde mental, grupos terapêuticos, apoio a grupos operativos, atendimento individual de curto prazo, visita domiciliar, apoio matricial.",
+    desc: "UBS com atendimento psicológico. Bairros de abrangência (Macroárea 1): Cidade Satélite, Murilo Teixeira (Cid. Satélite IV), Piscicultura, Santa Tereza, Jardim Caranã, União."
+  },
+  {
+    id: "ubs-mariano-andrade",
+    name: "UBS Prof. Mariano de Andrade",
+    fullName: "Unidade Básica de Saúde Prof. Mariano de Andrade",
+    cat: ["saude"],
+    address: "Caranã, Boa Vista-RR",
+    hours: "Segunda a sexta, conforme unidade",
+    phones: ["N/A"],
+    services: "Acolhimento em saúde mental, grupos terapêuticos, apoio a grupos operativos, atendimento individual de curto prazo, visita domiciliar, apoio matricial.",
+    desc: "UBS com atendimento psicológico. Bairros de abrangência (Macroárea 1): Cidade Satélite, Murilo Teixeira (Cid. Satélite IV), Piscicultura, Santa Tereza, Jardim Caranã, União."
+  },
+  {
+    id: "ubs-olenka-macellaro",
+    name: "UBS Olenka Macellaro",
+    fullName: "Unidade Básica de Saúde Olenka Macellaro",
+    cat: ["saude"],
+    address: "Caimbé, Boa Vista-RR",
+    hours: "Segunda a sexta, conforme unidade",
+    phones: ["N/A"],
+    services: "Acolhimento em saúde mental, grupos terapêuticos, apoio a grupos operativos, atendimento individual de curto prazo, visita domiciliar, apoio matricial.",
+    desc: "UBS com atendimento psicológico. Bairros de abrangência (Macroárea 2): Aeroporto, Jardim Floresta, Caranã, Cauamé, Said Salomão."
+  },
+  {
+    id: "ubs-edna-diniz",
+    name: "UBS Edna Diniz",
+    fullName: "Unidade Básica de Saúde Edna Diniz",
+    cat: ["saude"],
+    address: "Aeroporto, Boa Vista-RR",
+    hours: "Segunda a sexta, conforme unidade",
+    phones: ["N/A"],
+    services: "Acolhimento em saúde mental, grupos terapêuticos, apoio a grupos operativos, atendimento individual de curto prazo, visita domiciliar, apoio matricial.",
+    desc: "UBS com atendimento psicológico. Bairros de abrangência (Macroárea 2): Aeroporto, Jardim Floresta, Caranã, Cauamé, Said Salomão."
+  },
+  {
+    id: "ubs-sandra-maria",
+    name: "UBS Dra. Sandra Maria",
+    fullName: "Unidade Básica de Saúde Dra. Sandra Maria",
+    cat: ["saude"],
+    address: "31 de Março, Boa Vista-RR",
+    hours: "Segunda a sexta, conforme unidade",
+    phones: ["N/A"],
+    services: "Acolhimento em saúde mental, grupos terapêuticos, apoio a grupos operativos, atendimento individual de curto prazo, visita domiciliar, apoio matricial.",
+    desc: "UBS com atendimento psicológico. Bairros de abrangência (Macroárea 3): 31 de Março, São Francisco, Nossa Sra. Aparecida, Bairro dos Estados, Paraviana, Cacari, São Vicente, Calungá, Canarinho, Centro, São Pedro, Mecejana."
+  },
+  {
+    id: "ubs-silvio-botelho",
+    name: "UBS Dr. Silvio Botelho",
+    fullName: "Unidade Básica de Saúde Dr. Silvio Botelho",
+    cat: ["saude"],
+    address: "Bairro dos Estados, Boa Vista-RR",
+    hours: "Segunda a sexta, conforme unidade",
+    phones: ["N/A"],
+    services: "Acolhimento em saúde mental, grupos terapêuticos, apoio a grupos operativos, atendimento individual de curto prazo, visita domiciliar, apoio matricial.",
+    desc: "UBS com atendimento psicológico. Bairros de abrangência (Macroárea 3): 31 de Março, São Francisco, Nossa Sra. Aparecida, Bairro dos Estados, Paraviana, Cacari, São Vicente, Calungá, Canarinho, Centro, São Pedro, Mecejana."
+  },
+  {
+    id: "ubs-mecejana",
+    name: "UBS Mecejana",
+    fullName: "Unidade Básica de Saúde Mecejana",
+    cat: ["saude"],
+    address: "Mecejana, Boa Vista-RR",
+    hours: "Segunda a sexta, conforme unidade",
+    phones: ["N/A"],
+    services: "Acolhimento em saúde mental, grupos terapêuticos, apoio a grupos operativos, atendimento individual de curto prazo, visita domiciliar, apoio matricial.",
+    desc: "UBS com atendimento psicológico. Bairros de abrangência (Macroárea 3): 31 de Março, São Francisco, Nossa Sra. Aparecida, Bairro dos Estados, Paraviana, Cacari, São Vicente, Calungá, Canarinho, Centro, São Pedro, Mecejana."
+  },
+  {
+    id: "ubs-aygara-motta",
+    name: "UBS Aygara Motta",
+    fullName: "Unidade Básica de Saúde Aygara Motta",
+    cat: ["saude"],
+    address: "Cidade Satélite, Boa Vista-RR",
+    hours: "Segunda a sexta, conforme unidade",
+    phones: ["N/A"],
+    services: "Acolhimento em saúde mental, grupos terapêuticos, apoio a grupos operativos, atendimento individual de curto prazo, visita domiciliar, apoio matricial.",
+    desc: "UBS com atendimento psicológico. Bairros de abrangência (Macroárea 4): Dr. Sílvio Leite, Jardim Primavera, Alvorada, Equatorial, Laura Moreira (Conj. Cidadão)."
+  },
+  {
+    id: "ubs-silvio-leite",
+    name: "UBS Dr. Silvio Leite",
+    fullName: "Unidade Básica de Saúde Dr. Silvio Leite",
+    cat: ["saude"],
+    address: "Silvio Leite, Boa Vista-RR",
+    hours: "Segunda a sexta, conforme unidade",
+    phones: ["N/A"],
+    services: "Acolhimento em saúde mental, grupos terapêuticos, apoio a grupos operativos, atendimento individual de curto prazo, visita domiciliar, apoio matricial.",
+    desc: "UBS com atendimento psicológico. Bairros de abrangência (Macroárea 4): Dr. Sílvio Leite, Jardim Primavera, Alvorada, Equatorial, Laura Moreira (Conj. Cidadão)."
+  },
+  {
+    id: "ubs-jorge-gurjao",
+    name: "UBS Jorge André Gurjão",
+    fullName: "Unidade Básica de Saúde Jorge André Gurjão",
+    cat: ["saude"],
+    address: "Laura Moreita, Boa Vista-RR",
+    hours: "Segunda a sexta, conforme unidade",
+    phones: ["N/A"],
+    services: "Acolhimento em saúde mental, grupos terapêuticos, apoio a grupos operativos, atendimento individual de curto prazo, visita domiciliar, apoio matricial.",
+    desc: "UBS com atendimento psicológico. Bairros de abrangência (Macroárea 4): Dr. Sílvio Leite, Jardim Primavera, Alvorada, Equatorial, Laura Moreira (Conj. Cidadão)."
+  },
+  {
+    id: "ubs-asa-branca",
+    name: "UBS Asa Branca",
+    fullName: "Unidade Básica de Saúde Asa Branca",
+    cat: ["saude"],
+    address: "Asa Branca, Boa Vista-RR",
+    hours: "Segunda a sexta, conforme unidade",
+    phones: ["N/A"],
+    services: "Acolhimento em saúde mental, grupos terapêuticos, apoio a grupos operativos, atendimento individual de curto prazo, visita domiciliar, apoio matricial.",
+    desc: "UBS com atendimento psicológico. Bairros de abrangência (Macroárea 5): Asa Branca, Cambará, Nova Canaã, Olímpico, Jóquei Clube, Prof. Aracelis, Tancredo Neves, Caimbé."
+  },
+  {
+    id: "ubs-buritis",
+    name: "UBS Buritis",
+    fullName: "Unidade Básica de Saúde Buritis",
+    cat: ["saude"],
+    address: "Buritis, Boa Vista-RR",
+    hours: "Segunda a sexta, conforme unidade",
+    phones: ["N/A"],
+    services: "Acolhimento em saúde mental, grupos terapêuticos, apoio a grupos operativos, atendimento individual de curto prazo, visita domiciliar, apoio matricial.",
+    desc: "UBS com atendimento psicológico. Bairros de abrangência (Macroárea 6): 13 de Setembro, Buritis, Centenário, Cinturão Verde, Liberdade, Pricumã."
+  },
+  {
+    id: "ubs-santa-luzia",
+    name: "UBS Santa Luzia",
+    fullName: "Unidade Básica de Saúde Santa Luzia",
+    cat: ["saude"],
+    address: "Santa Luzia, Boa Vista-RR",
+    hours: "Segunda a sexta, conforme unidade",
+    phones: ["N/A"],
+    services: "Acolhimento em saúde mental, grupos terapêuticos, apoio a grupos operativos, atendimento individual de curto prazo, visita domiciliar, apoio matricial.",
+    desc: "UBS com atendimento psicológico. Bairros de abrangência (Macroárea 7): Jardim Tropical, Senador Hélio Campos, Pintolândia, Dr. Sílvio Botelho, Santa Luzia."
+  },
+  {
+    id: "ubs-sayonara",
+    name: "UBS Sayonara",
+    fullName: "Unidade Básica de Saúde Sayonara",
+    cat: ["saude"],
+    address: "Senador Hélio Campos, Boa Vista-RR",
+    hours: "Segunda a sexta, conforme unidade",
+    phones: ["N/A"],
+    services: "Acolhimento em saúde mental, grupos terapêuticos, apoio a grupos operativos, atendimento individual de curto prazo, visita domiciliar, apoio matricial.",
+    desc: "UBS com atendimento psicológico. Bairros de abrangência (Macroárea 7): Jardim Tropical, Senador Hélio Campos, Pintolândia, Dr. Sílvio Botelho, Santa Luzia."
+  },
+  {
+    id: "consultorio-rua",
+    name: "Consultório de Rua",
+    fullName: "Equipe de Atenção Básica para Populações em Situação de Rua",
+    cat: ["saude"],
+    address: "Atendimento itinerante - sem endereço fixo, Boa Vista-RR",
+    hours: "N/A",
+    phones: ["N/A"],
+    services: "Cuidados básicos de saúde, redução de danos, articulação com a rede socioassistencial.",
+    desc: "Componente de Atenção Básica em Saúde da RAPS voltado a populações em situações específicas."
   },
   {
     id: "caps-ad-iii",
@@ -433,7 +599,7 @@ const DATA = [
     hours: "Atendimento 24 horas",
     phones: ["(95) 98407-2238"],
     services: ["Tratamento de Dependência Química", "Apoio Psicossocial"],
-    desc: "Unidade RAPS de acolhimento noturno e tratamento para uso prejudicial de substâncias."
+    desc: "Unidade RAPS de acolhimento noturno e tratamento para pessoas com uso abusivo de álcool e outras drogas. Referência para todas as macroáreas (1 a 8): Cidade Satélite, Murilo Teixeira, Piscicultura, Santa Tereza, Jardim Caranã, União (M1); Aeroporto, Jardim Floresta, Caranã, Cauamé, Said Salomão (M2); 31 de Março, São Francisco, Nossa Sra. Aparecida, Bairro dos Estados, Paraviana, Cacari, São Vicente, Calungá, Canarinho, Centro, São Pedro, Mecejana (M3); Dr. Sílvio Leite, Jardim Primavera, Alvorada, Equatorial, Laura Moreira (M4); Asa Branca, Cambará, Nova Canaã, Olímpico, Jóquei Clube, Prof. Aracelis, Tancredo Neves, Caimbé (M5); 13 de Setembro, Buritis, Centenário, Cinturão Verde, Liberdade, Pricumã (M6); Jardim Tropical, Senador Hélio Campos, Pintolândia, Dr. Sílvio Botelho, Santa Luzia (M7); Nova Cidade, Operário, Airton Rocha, Gov. Aquilino Mota, Raiar do Sol, Bela Vista, São Bento (M8)."
   },
   {
     id: "caps-iii",
@@ -442,9 +608,9 @@ const DATA = [
     cat: ["saude"],
     address: "Av. Cap. Ene Garcês, 497 - Centro, Boa Vista-RR",
     hours: "Atendimento 24 horas",
-    phones: ["N/A"],
+    phones: ["(95) 98404-4219"],
     services: ["Saúde Mental Grave", "Acompanhamento Intensivo"],
-    desc: "Referência RAPS para transtornos mentais graves e persistentes (Macroáreas 4, 5, 7 e 8)."
+    desc: "Referência RAPS para transtornos mentais graves e persistentes (Macroáreas 4, 5, 7 e 8). Bairros: Dr. Sílvio Leite, Jardim Primavera, Alvorada, Equatorial, Laura Moreira (M4); Asa Branca, Cambará, Nova Canaã, Olímpico, Jóquei Clube, Prof. Aracelis, Tancredo Neves, Caimbé (M5); Jardim Tropical, Senador Hélio Campos, Pintolândia, Dr. Sílvio Botelho, Santa Luzia (M7); Nova Cidade, Operário, Airton Rocha, Gov. Aquilino Mota, Raiar do Sol, Bela Vista, São Bento (M8)."
   },
   {
     id: "caps-ii",
@@ -453,9 +619,53 @@ const DATA = [
     cat: ["saude"],
     address: "R. Pavão, 295 - Mecejana, Boa Vista-RR",
     hours: "Segunda a sexta, 08:00 às 18:00",
-    phones: ["N/A"],
+    phones: ["(95) 3624-2384"],
     services: ["Saúde Mental", "Atendimento Multidisciplinar"],
-    desc: "Referência RAPS para transtornos mentais (Macroáreas 1, 2, 3 e 6)."
+    desc: "Referência RAPS para transtornos mentais graves e persistentes (Macroáreas 1, 2, 3 e 6). Bairros: Cidade Satélite, Murilo Teixeira, Piscicultura, Santa Tereza, Jardim Caranã, União (M1); Aeroporto, Jardim Floresta, Caranã, Cauamé, Said Salomão (M2); 31 de Março, São Francisco, Nossa Sra. Aparecida, Bairro dos Estados, Paraviana, Cacari, São Vicente, Calungá, Canarinho, Centro, São Pedro, Mecejana (M3); 13 de Setembro, Buritis, Centenário, Cinturão Verde, Liberdade, Pricumã (M6)."
+  },
+  {
+    id: "samu",
+    name: "SAMU",
+    fullName: "Serviço de Atendimento Móvel de Urgência",
+    cat: ["saude"],
+    address: "Atendimento móvel em toda Boa Vista-RR",
+    hours: "Atendimento 24 horas",
+    phones: ["192"],
+    services: "Atendimento pré-hospitalar móvel de urgência.",
+    desc: "Componente de Atenção de Urgência e Emergência da RAPS."
+  },
+  {
+    id: "uaa",
+    name: "UAA",
+    fullName: "Unidade de Acolhimento Adulto",
+    cat: ["saude"],
+    address: "R. Bahia, 162-277 - Bairro dos Estados, Boa Vista-RR",
+    hours: "Atendimento 24 horas",
+    phones: ["N/A"],
+    services: "Cuidados contínuos de saúde em ambiente residencial.",
+    desc: "Componente de Atenção Residencial de Caráter Transitório da RAPS. Atende pessoas maiores de 18 anos com necessidades decorrentes do uso abusivo de álcool e/ou outras drogas."
+  },
+  {
+    id: "ambulatorio-coronel-mota",
+    name: "Ambulatório Coronel Mota",
+    fullName: "Ambulatório Psiquiátrico e Psicológico do Hospital Coronel Mota",
+    cat: ["saude"],
+    address: "R. Coronel Pinto, 664 - Centro, Boa Vista-RR",
+    hours: "N/A",
+    phones: ["(95) 98414-3741"],
+    services: "Atenção Hospitalar - cuidados psiquiátricos e psicológicos ambulatoriais.",
+    desc: "Garante cuidados aos usuários de baixo e médio risco, sendo o ponto de referência ao trabalho psicoterapêutico."
+  },
+  {
+    id: "hgrr",
+    name: "HGRR",
+    fullName: "Hospital Geral de Roraima",
+    cat: ["saude"],
+    address: "Av. Brigadeiro Eduardo Gomes, 1364 - Aeroporto, Boa Vista-RR",
+    hours: "N/A",
+    phones: ["(95) 92121-0633"],
+    services: "Atenção Hospitalar - atendimento a situações de crise e internação de curta permanência.",
+    desc: "Trabalha com situações de crise, atendimento a usuários de médio e alto risco após esgotados os demais recursos terapêuticos, e internação de curta permanência."
   },
   {
     id: "ciapd",
@@ -631,7 +841,7 @@ const DATA = [
     hours: "08:00 às 18:00 (Plantão 24h)",
     phones: ["(95) 98410-4003"],
     services: "Zelar pelos direitos da Criança e Adolescente.",
-    desc: "Abrangência: Centro, São Vicente, Aparecida, Paraviana, Caçari e áreas indígenas."
+    desc: "Território: Aeroporto; Cauamé; Calungá; Liberdade; Jardim Floresta; Pricumã; 13 de Setembro; São Vicente; Centro; São Pedro; Aparecida; Canarinho; Paraviana; Caçari; Bairro dos Estados; 31 de Março; São Francisco; Mecejana; Monte Cristo; Said Salomão; Áreas Indígenas."
   },
   {
     id: "ct-territorio-2",
@@ -642,7 +852,7 @@ const DATA = [
     hours: "08:00 às 18:00 (Plantão 24h)",
     phones: ["(95) 98403-7780"],
     services: "Medidas de Proteção, Garantia de Direitos.",
-    desc: "Abrangência: Caranã, Tancredo Neves, Caimbé, Asa Branca, União e Nova Cidade."
+    desc: "Território: Jardim Caranã; Caranã; Tancredo Neves; Caimbé; Asa Branca; Buritis; Jóquei Clube; União; Cinturão Verde; Centenário; Araceli; São Bento; Raiar do Sol; Bela Vista; Operário; Nova Cidade; Brigadeiro; Distrito Industrial; Pérola."
   },
   {
     id: "ct-territorio-3",
@@ -653,7 +863,7 @@ const DATA = [
     hours: "08:00 às 18:00 (Plantão 24h)",
     phones: ["(95) 98411-6943"],
     services: "Zelar pelos direitos da Criança e Adolescente.",
-    desc: "Abrangência: Satélite, Silvio Leite, Pintolândia, Hélio Campos e Santa Luzia."
+    desc: "Território: Cidade Satélite; Piscicultura; Jardim Primavera; Santa Tereza; Dr. Silvio Botelho; Dr. Silvio Leite; Alvorada; Pintolândia; Jardim Olímpico; Jardim Tropical; Hélio Campos; Equatorial; Santa Luzia; Nova Canaã; Cambará; Cruviana; Laura Moreira."
   },
   {
     id: "seed-rr",
@@ -815,59 +1025,83 @@ function printGuide(id) {
   const i = DATA.find(x => x.id === id);
   const note = localStorage.getItem('note_'+id) || 'Avaliação técnica e conduta especializada indicadas.';
   const date = new Date().toLocaleDateString('pt-BR', {day:'numeric', month:'long', year:'numeric'});
-  
+
+  // Estima quantas linhas o endereço/telefone ocupam (contando quebras <br>)
+  // para reduzir a fonte proporcionalmente e evitar que conteúdo extenso
+  // (ex.: cartões com múltiplas unidades) estoure a caixa lateral.
+  const countLines = (txt) => (String(txt).match(/<br>/g) || []).length + 1;
+  const addressLines = countLines(i.address);
+  const phoneLines = countLines(i.phones.join('<br>'));
+  const addressFontSize = addressLines <= 2 ? 14 : addressLines <= 4 ? 11.5 : 9.5;
+  const phoneFontSize = phoneLines <= 1 ? 19 : phoneLines <= 3 ? 13 : 10;
+
   document.getElementById('print-area').innerHTML = `
-    <div style="width:28.7cm; height:20cm; padding:0.8cm; position:relative; font-family:sans-serif; color:#0F172A; box-sizing:border-box; display:flex; flex-direction:column; background:white; overflow:hidden;">
+    <div style="width:28.7cm; height:20cm; padding:0; position:relative; font-family:'Inter', sans-serif; color:#0F172A; box-sizing:border-box; display:flex; flex-direction:column; background:white; overflow:hidden; border:1px solid #CBD5E1;">
       <!-- Marca d'água: letra grega Psi (Ψ), renderizada como texto para
            garantir que sempre apareça na impressão (independe de imagem
            externa carregar). -->
-      <div style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%) rotate(-8deg); opacity:0.06; z-index:0; font-size:22rem; line-height:1; font-family:'Lora', serif; color:#115E59; user-select:none; pointer-events:none; white-space:nowrap;">Ψ</div>
+      <div style="position:absolute; top:54%; left:50%; transform:translate(-50%,-50%) rotate(-8deg); opacity:0.05; z-index:0; font-size:20rem; line-height:1; font-family:'Lora', serif; color:#115E59; user-select:none; pointer-events:none; white-space:nowrap;">Ψ</div>
 
-      <div style="position:relative; z-index:1; display:flex; flex-direction:column; height:100%;">
-        <!-- Cabeçalho Compacto -->
-        <div style="display:flex; justify-content:space-between; border-bottom:2px solid #115E59; padding-bottom:10px; margin-bottom:15px;">
-          <div>
-            <h1 style="margin:0; font-size:1.5rem; color:#115E59; font-family:serif;">Guia Técnico de Atendimento</h1>
-            <p style="margin:2px 0; font-size:0.75rem; font-weight:700; color:#64748B; text-transform:uppercase;">Sistema Único de Assistência Social (SUAS) · Roraima</p>
+      <!-- Barra superior de identidade -->
+      <div style="height:8px; background:linear-gradient(90deg, #115E59, #14B8A6); flex-shrink:0;"></div>
+
+      <div style="position:relative; z-index:1; display:flex; flex-direction:column; height:100%; padding:0.9cm 1cm 0.7cm 1cm; box-sizing:border-box;">
+
+        <!-- Cabeçalho -->
+        <div style="display:flex; justify-content:space-between; align-items:flex-end; border-bottom:2px solid #115E59; padding-bottom:12px; margin-bottom:16px; flex-shrink:0;">
+          <div style="display:flex; align-items:center; gap:14px;">
+            <div style="width:46px; height:46px; border-radius:10px; background:#115E59; color:white; display:flex; align-items:center; justify-content:center; font-family:'Lora', serif; font-weight:700; font-size:1.3rem; flex-shrink:0;">RA</div>
+            <div>
+              <h1 style="margin:0; font-size:1.55rem; color:#115E59; font-family:'Lora', serif; font-weight:600; letter-spacing:-0.01em;">Guia Técnico de Atendimento</h1>
+              <p style="margin:3px 0 0 0; font-size:0.72rem; font-weight:700; color:#64748B; text-transform:uppercase; letter-spacing:0.04em;">Rede de Apoio · Sistema Único de Assistência Social (SUAS) · Roraima</p>
+            </div>
           </div>
-          <div style="text-align:right;">
-            <p style="margin:0; font-size:1.2rem; font-weight:800; color:#0F172A;">Paulo Xavier</p>
-            <p style="margin:0; font-size:0.9rem; color:#115E59; font-weight:700;">Psicólogo · CRP-20/09816</p>
+          <div style="text-align:right; line-height:1.35;">
+            <p style="margin:0; font-size:1.15rem; font-weight:800; color:#0F172A;">Paulo Xavier</p>
+            <p style="margin:0; font-size:0.85rem; color:#115E59; font-weight:700;">Psicólogo · CRP-20/09816</p>
           </div>
         </div>
 
-        <!-- Corpo: Esquerda (Notas) / Direita (Endereço) -->
-        <div style="display:grid; grid-template-columns: 1fr 280px; gap:25px; flex-grow:1; min-height:0;">
-          <div style="display:flex; flex-direction:column;">
-            <p style="margin:0 0 5px 0; font-size:0.8rem; font-weight:800; color:#64748B; text-transform:uppercase;">Destino:</p>
-            <h2 style="margin:0 0 15px 0; font-size:1.3rem; color:#115E59;">${i.fullName}</h2>
-            
-            <p style="margin:0 0 5px 0; font-size:0.8rem; font-weight:800; color:#64748B; text-transform:uppercase;">Conduta e Orientações:</p>
-            <div id="printNoteBox" style="flex-grow:1; padding:12px; border:1.5px solid #115E59; border-radius:8px; font-size:15px; line-height:1.4; white-space:pre-wrap; background:rgba(17,94,89,0.01); overflow:hidden;">${note}</div>
+        <!-- Corpo: Esquerda (Destino + Notas) / Direita (Ficha da Unidade) -->
+        <div style="display:grid; grid-template-columns: 1fr 300px; gap:28px; flex-grow:1; min-height:0;">
+
+          <!-- Coluna esquerda -->
+          <div style="display:flex; flex-direction:column; min-height:0;">
+            <span style="font-size:0.72rem; font-weight:800; color:#64748B; text-transform:uppercase; letter-spacing:0.04em;">Destino do Encaminhamento</span>
+            <h2 style="margin:4px 0 16px 0; font-size:1.4rem; color:#115E59; font-family:'Lora', serif; font-weight:600; border-bottom:1px dashed #CBD5E1; padding-bottom:12px;">${i.fullName}</h2>
+
+            <span style="font-size:0.72rem; font-weight:800; color:#64748B; text-transform:uppercase; letter-spacing:0.04em; margin-bottom:6px; display:block;">Conduta e Orientações Técnicas</span>
+            <div id="printNoteBox" style="flex-grow:1; padding:16px; border:1.5px solid #115E59; border-radius:10px; font-size:15px; line-height:1.5; white-space:pre-wrap; background:rgba(17,94,89,0.025); overflow:hidden; box-shadow: inset 0 1px 2px rgba(17,94,89,0.05);">${note}</div>
           </div>
 
-          <div style="background:#F8FAFC; padding:15px; border-radius:8px; border:1px solid #E2E8F0; display:flex; flex-direction:column; gap:12px;">
-            <h3 style="margin:0; font-size:0.9rem; color:#115E59; border-bottom:1px solid #CBD5E1; padding-bottom:5px; text-transform:uppercase;">Informações da Unidade</h3>
-            <div>
-              <span style="font-size:0.7rem; font-weight:800; color:#64748B; display:block;">ENDEREÇO</span>
-              <p style="margin:2px 0; font-size:0.85rem;">${i.address}</p>
-            </div>
-            <div>
-              <span style="font-size:0.7rem; font-weight:800; color:#64748B; display:block;">HORÁRIO</span>
-              <p style="margin:2px 0; font-size:0.85rem;">${i.hours}</p>
-            </div>
-            <div style="margin-top:auto;">
-              <span style="font-size:0.7rem; font-weight:800; color:#64748B; display:block;">CONTATO</span>
-              <p style="margin:2px 0; font-size:1.1rem; color:#115E59; font-weight:800;">${i.phones.join(' · ')}</p>
+          <!-- Coluna direita: ficha da unidade -->
+          <div style="background:#F8FAFC; border-radius:12px; border:1px solid #E2E8F0; display:flex; flex-direction:column; overflow:hidden; min-height:0;">
+            <div style="background:#115E59; color:white; padding:10px 16px; font-size:0.78rem; font-weight:800; text-transform:uppercase; letter-spacing:0.05em;">Informações da Unidade</div>
+            <div style="padding:16px; display:flex; flex-direction:column; gap:14px; flex-grow:1; min-height:0;">
+              <div>
+                <span style="font-size:0.68rem; font-weight:800; color:#64748B; text-transform:uppercase; letter-spacing:0.03em; display:block; margin-bottom:3px;">📍 Endereço</span>
+                <p style="margin:0; font-size:${addressFontSize}px; line-height:1.5; color:#1E293B;">${i.address}</p>
+              </div>
+              <div style="border-top:1px solid #E2E8F0; padding-top:12px;">
+                <span style="font-size:0.68rem; font-weight:800; color:#64748B; text-transform:uppercase; letter-spacing:0.03em; display:block; margin-bottom:3px;">🕒 Horário</span>
+                <p style="margin:0; font-size:0.85rem; color:#1E293B;">${i.hours}</p>
+              </div>
+              <div style="border-top:1px solid #E2E8F0; padding-top:12px; margin-top:auto;">
+                <span style="font-size:0.68rem; font-weight:800; color:#64748B; text-transform:uppercase; letter-spacing:0.03em; display:block; margin-bottom:3px;">📞 Contato</span>
+                <p style="margin:0; font-size:${phoneFontSize}px; line-height:1.45; color:#115E59; font-weight:800;">${i.phones.join('<br>')}</p>
+              </div>
             </div>
           </div>
         </div>
 
         <!-- Rodapé e Assinatura -->
-        <div style="margin-top:15px; display:flex; justify-content:space-between; align-items:flex-end;">
-          <p style="margin:0; font-size:0.85rem; font-weight:600;">Boa Vista - RR, ${date}.</p>
+        <div style="margin-top:16px; padding-top:12px; border-top:1px solid #E2E8F0; display:flex; justify-content:space-between; align-items:flex-end; flex-shrink:0;">
+          <div>
+            <p style="margin:0; font-size:0.85rem; font-weight:600; color:#334155;">Boa Vista - RR, ${date}.</p>
+            <p style="margin:2px 0 0 0; font-size:0.68rem; color:#94A3B8;">Documento gerado pela plataforma Rede de Apoio · uso técnico interno</p>
+          </div>
           <div style="text-align:center; width:280px;">
-            <div style="border-top:2px solid #0F172A; margin-bottom:5px;"></div>
+            <div style="border-top:2px solid #0F172A; margin-bottom:6px;"></div>
             <p style="margin:0; font-size:1rem; font-weight:800; color:#0F172A;">Paulo Xavier</p>
             <p style="margin:0; font-size:0.85rem; color:#475569;">Psicólogo · CRP-20/09816</p>
           </div>
