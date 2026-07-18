@@ -392,6 +392,17 @@
 <script>
 const DATA = [
   {
+    id: "ceac",
+    name: "CEAC",
+    fullName: "Centro de Atendimento ao Cidadão",
+    cat: ["social"],
+    address: "Av. Mário Homem de Melo, 4534 - Caimbé, Boa Vista-RR, 69312-155",
+    hours: "Segunda a sexta, a partir das 07:30",
+    phones: ["N/A"],
+    services: "Colo de Mãe, Cesta da Família, Passe Livre Intermunicipal, Auxílio Funerário, Benefícios Eventuais.",
+    desc: "Repartição pública estadual (SETRABES) que reúne em um único local os principais programas sociais de Roraima. Cesta da Família: entrega mensal de alimentos ou crédito no Cartão Alimentação para famílias em situação de vulnerabilidade (cerca de 50 mil famílias atendidas). Colo de Mãe: voltado a gestantes e famílias com crianças pequenas, oferece kits de enxoval e acompanhamento social como parte da atenção à primeira infância (cerca de 7 mil famílias atendidas). Passe Livre Intermunicipal: concessão da gratuidade no transporte intermunicipal para pessoas com deficiência. Também disponibiliza auxílio funerário, benefícios eventuais e orientação social."
+  },
+  {
     id: "caixa-economica-bv",
     name: "Caixa Econômica Federal",
     fullName: "Agências da Caixa Econômica Federal em Boa Vista/RR",
@@ -1042,72 +1053,90 @@ function printGuide(id) {
   const countLines = (txt) => (String(txt).match(/<br>/g) || []).length + 1;
   const addressLines = countLines(i.address);
   const phoneLines = countLines(i.phones.join('<br>'));
-  const addressFontSize = addressLines <= 2 ? 14 : addressLines <= 4 ? 11.5 : 9.5;
-  const phoneFontSize = phoneLines <= 1 ? 19 : phoneLines <= 3 ? 13 : 10;
+  const addressFontSize = addressLines <= 2 ? 13 : addressLines <= 4 ? 10.5 : 8.5;
+  const phoneFontSize = phoneLines <= 1 ? 16 : phoneLines <= 3 ? 11.5 : 9;
+
+  // Marca d'água: várias letras Psi (Ψ) espalhadas em padrão diagonal,
+  // como em documentos oficiais com marca d'água repetida. Usa texto
+  // (não imagem) para garantir que sempre apareça na impressão.
+  const wmPositions = [
+    [10, 18], [37, 14], [64, 18], [91, 14],
+    [23, 50], [50, 46], [77, 50],
+    [10, 82], [37, 86], [64, 82], [91, 86]
+  ];
+  const watermark = wmPositions.map(([x, y]) => `
+    <div style="position:absolute; top:${y}%; left:${x}%; transform:translate(-50%,-50%) rotate(-18deg); opacity:0.16; z-index:0; font-size:6.5rem; line-height:1; font-family:'Lora', serif; font-weight:700; color:#115E59; user-select:none; pointer-events:none;">Ψ</div>
+  `).join('');
 
   document.getElementById('print-area').innerHTML = `
-    <div style="width:28.7cm; height:20cm; padding:0; position:relative; font-family:'Inter', sans-serif; color:#0F172A; box-sizing:border-box; display:flex; flex-direction:column; background:white; overflow:hidden; border:1px solid #CBD5E1;">
-      <!-- Marca d'água: letra grega Psi (Ψ), renderizada como texto para
-           garantir que sempre apareça na impressão (independe de imagem
-           externa carregar). -->
-      <div style="position:absolute; top:54%; left:50%; transform:translate(-50%,-50%) rotate(-8deg); opacity:0.05; z-index:0; font-size:20rem; line-height:1; font-family:'Lora', serif; color:#115E59; user-select:none; pointer-events:none; white-space:nowrap;">Ψ</div>
+    <div style="width:28.7cm; height:20cm; padding:0; position:relative; font-family:'Inter', sans-serif; color:#0F172A; box-sizing:border-box; display:flex; flex-direction:column; background:white; overflow:hidden; border:2px solid #0F172A;">
+      ${watermark}
 
-      <!-- Barra superior de identidade -->
-      <div style="height:8px; background:linear-gradient(90deg, #115E59, #14B8A6); flex-shrink:0;"></div>
+      <!-- Moldura interna (dupla linha, estilo formulário oficial) -->
+      <div style="position:absolute; inset:0.25cm; border:1px solid #94A3B8; z-index:0; pointer-events:none;"></div>
 
-      <div style="position:relative; z-index:1; display:flex; flex-direction:column; height:100%; padding:0.9cm 1cm 0.7cm 1cm; box-sizing:border-box;">
+      <div style="position:relative; z-index:1; display:flex; flex-direction:column; height:100%; padding:0.7cm 0.9cm; box-sizing:border-box;">
 
-        <!-- Cabeçalho -->
-        <div style="display:flex; justify-content:space-between; align-items:flex-end; border-bottom:2px solid #115E59; padding-bottom:12px; margin-bottom:16px; flex-shrink:0;">
-          <div style="display:flex; align-items:center; gap:14px;">
-            <div style="width:46px; height:46px; border-radius:10px; background:#115E59; color:white; display:flex; align-items:center; justify-content:center; font-family:'Lora', serif; font-weight:700; font-size:1.3rem; flex-shrink:0;">RA</div>
-            <div>
-              <h1 style="margin:0; font-size:1.55rem; color:#115E59; font-family:'Lora', serif; font-weight:600; letter-spacing:-0.01em;">Guia Técnico de Atendimento</h1>
-              <p style="margin:3px 0 0 0; font-size:0.72rem; font-weight:700; color:#64748B; text-transform:uppercase; letter-spacing:0.04em;">Rede de Apoio · Sistema Único de Assistência Social (SUAS) · Roraima</p>
-            </div>
-          </div>
-          <div style="text-align:right; line-height:1.35;">
-            <p style="margin:0; font-size:1.15rem; font-weight:800; color:#0F172A;">Paulo Xavier</p>
-            <p style="margin:0; font-size:0.85rem; color:#115E59; font-weight:700;">Psicólogo · CRP-20/09816</p>
-          </div>
-        </div>
+        <!-- Cabeçalho: identidade + data -->
+        <table style="width:100%; border-collapse:collapse; margin-bottom:8px; table-layout:fixed;">
+          <tr>
+            <td style="border:1.5px solid #0F172A; padding:8px 14px; vertical-align:middle;">
+              <div style="display:flex; align-items:center; gap:12px;">
+                <div style="width:42px; height:42px; border-radius:8px; background:#115E59; color:white; display:flex; align-items:center; justify-content:center; font-family:'Lora', serif; font-weight:700; font-size:1.2rem; flex-shrink:0;">RA</div>
+                <div>
+                  <div style="font-size:1.25rem; font-weight:800; letter-spacing:0.02em; color:#0F172A;">FICHA DE ENCAMINHAMENTO TÉCNICO</div>
+                  <div style="font-size:0.68rem; font-weight:700; color:#475569; text-transform:uppercase; letter-spacing:0.04em; margin-top:2px;">Sistema Único de Assistência Social do Estado de Roraima</div>
+                </div>
+              </div>
+            </td>
+            <td style="border:1.5px solid #0F172A; padding:8px 14px; text-align:center; width:180px;">
+              <div style="font-size:0.65rem; font-weight:800; color:#475569; text-transform:uppercase; letter-spacing:0.03em;">Data de Emissão</div>
+              <div style="font-size:1.05rem; font-weight:800; color:#0F172A;">${date}</div>
+            </td>
+          </tr>
+        </table>
 
-        <!-- Corpo: Esquerda (Destino + Notas) / Direita (Ficha da Unidade) -->
-        <div style="display:grid; grid-template-columns: 1fr 300px; gap:28px; flex-grow:1; min-height:0;">
+        <!-- Profissional responsável -->
+        <table style="width:100%; border-collapse:collapse; margin-bottom:8px; table-layout:fixed;">
+          <tr>
+            <td style="border:1.5px solid #0F172A; background:#F1F5F9; padding:6px 12px; font-size:0.65rem; font-weight:800; text-transform:uppercase; letter-spacing:0.03em; width:220px;">Profissional Responsável</td>
+            <td style="border:1.5px solid #0F172A; padding:6px 12px; font-size:0.92rem; font-weight:700; color:#0F172A;">Paulo Xavier — Psicólogo, CRP-20/09816</td>
+          </tr>
+        </table>
+
+        <!-- Corpo: Esquerda (Destino + Conduta) / Direita (Dados da Unidade, em formato de tabela) -->
+        <div style="display:grid; grid-template-columns: 1fr 300px; flex-grow:1; min-height:0; border:1.5px solid #0F172A; border-top:none;">
 
           <!-- Coluna esquerda -->
-          <div style="display:flex; flex-direction:column; min-height:0;">
-            <span style="font-size:0.72rem; font-weight:800; color:#64748B; text-transform:uppercase; letter-spacing:0.04em;">Destino do Encaminhamento</span>
-            <h2 style="margin:4px 0 16px 0; font-size:1.4rem; color:#115E59; font-family:'Lora', serif; font-weight:600; border-bottom:1px dashed #CBD5E1; padding-bottom:12px;">${i.fullName}</h2>
+          <div style="display:flex; flex-direction:column; min-height:0; border-right:1.5px solid #0F172A; padding:14px;">
+            <span style="font-size:0.65rem; font-weight:800; color:#475569; text-transform:uppercase; letter-spacing:0.03em;">Unidade de Destino</span>
+            <h2 style="margin:4px 0 12px 0; font-size:1.25rem; color:#115E59; font-family:'Lora', serif; font-weight:600; border-bottom:1px solid #CBD5E1; padding-bottom:10px;">${i.fullName}</h2>
 
-            <span style="font-size:0.72rem; font-weight:800; color:#64748B; text-transform:uppercase; letter-spacing:0.04em; margin-bottom:6px; display:block;">Conduta e Orientações Técnicas</span>
-            <div id="printNoteBox" style="flex-grow:1; padding:16px; border:1.5px solid #115E59; border-radius:10px; font-size:15px; line-height:1.5; white-space:pre-wrap; background:rgba(17,94,89,0.025); overflow:hidden; box-shadow: inset 0 1px 2px rgba(17,94,89,0.05);">${note}</div>
+            <span style="font-size:0.65rem; font-weight:800; color:#475569; text-transform:uppercase; letter-spacing:0.03em; margin-bottom:6px; display:block;">Conduta e Orientações Técnicas</span>
+            <div id="printNoteBox" style="flex-grow:1; padding:14px; border:1.5px solid #0F172A; border-radius:4px; font-size:15px; line-height:1.5; white-space:pre-wrap; background:rgba(17,94,89,0.02); overflow:hidden;">${note}</div>
           </div>
 
-          <!-- Coluna direita: ficha da unidade -->
-          <div style="background:#F8FAFC; border-radius:12px; border:1px solid #E2E8F0; display:flex; flex-direction:column; overflow:hidden; min-height:0;">
-            <div style="background:#115E59; color:white; padding:10px 16px; font-size:0.78rem; font-weight:800; text-transform:uppercase; letter-spacing:0.05em;">Informações da Unidade</div>
-            <div style="padding:16px; display:flex; flex-direction:column; gap:14px; flex-grow:1; min-height:0;">
-              <div>
-                <span style="font-size:0.68rem; font-weight:800; color:#64748B; text-transform:uppercase; letter-spacing:0.03em; display:block; margin-bottom:3px;">📍 Endereço</span>
-                <p style="margin:0; font-size:${addressFontSize}px; line-height:1.5; color:#1E293B;">${i.address}</p>
-              </div>
-              <div style="border-top:1px solid #E2E8F0; padding-top:12px;">
-                <span style="font-size:0.68rem; font-weight:800; color:#64748B; text-transform:uppercase; letter-spacing:0.03em; display:block; margin-bottom:3px;">🕒 Horário</span>
-                <p style="margin:0; font-size:0.85rem; color:#1E293B;">${i.hours}</p>
-              </div>
-              <div style="border-top:1px solid #E2E8F0; padding-top:12px; margin-top:auto;">
-                <span style="font-size:0.68rem; font-weight:800; color:#64748B; text-transform:uppercase; letter-spacing:0.03em; display:block; margin-bottom:3px;">📞 Contato</span>
-                <p style="margin:0; font-size:${phoneFontSize}px; line-height:1.45; color:#115E59; font-weight:800;">${i.phones.join('<br>')}</p>
-              </div>
-            </div>
-          </div>
+          <!-- Coluna direita: ficha da unidade em formato tabular -->
+          <table style="width:100%; height:100%; border-collapse:collapse; table-layout:fixed;">
+            <tr>
+              <td style="background:#F1F5F9; border-bottom:1.5px solid #0F172A; padding:8px 10px; font-size:0.62rem; font-weight:800; text-transform:uppercase; letter-spacing:0.03em; width:76px; vertical-align:top;">Endereço</td>
+              <td style="border-bottom:1.5px solid #0F172A; padding:8px 10px; font-size:${addressFontSize}px; line-height:1.4; vertical-align:top; color:#1E293B;">${i.address}</td>
+            </tr>
+            <tr>
+              <td style="background:#F1F5F9; border-bottom:1.5px solid #0F172A; padding:8px 10px; font-size:0.62rem; font-weight:800; text-transform:uppercase; letter-spacing:0.03em; vertical-align:top;">Horário</td>
+              <td style="border-bottom:1.5px solid #0F172A; padding:8px 10px; font-size:0.82rem; vertical-align:top; color:#1E293B;">${i.hours}</td>
+            </tr>
+            <tr>
+              <td style="background:#F1F5F9; padding:8px 10px; font-size:0.62rem; font-weight:800; text-transform:uppercase; letter-spacing:0.03em; vertical-align:top;">Contato</td>
+              <td style="padding:8px 10px; font-size:${phoneFontSize}px; line-height:1.4; vertical-align:top; color:#115E59; font-weight:800;">${i.phones.join('<br>')}</td>
+            </tr>
+          </table>
         </div>
 
         <!-- Rodapé e Assinatura -->
-        <div style="margin-top:16px; padding-top:12px; border-top:1px solid #E2E8F0; display:flex; justify-content:space-between; align-items:flex-end; flex-shrink:0;">
+        <div style="margin-top:10px; display:flex; justify-content:space-between; align-items:flex-end; flex-shrink:0;">
           <div>
-            <p style="margin:0; font-size:0.85rem; font-weight:600; color:#334155;">Boa Vista - RR, ${date}.</p>
+            <p style="margin:0; font-size:0.82rem; font-weight:600; color:#334155;">Boa Vista - RR, ${date}.</p>
           </div>
           <div style="text-align:center; width:280px;">
             <div style="border-top:2px solid #0F172A; margin-bottom:6px;"></div>
