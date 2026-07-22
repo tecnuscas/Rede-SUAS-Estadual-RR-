@@ -371,6 +371,40 @@
   .btn-secondary { background: var(--bg-card); color: var(--text-main); }
   .btn-secondary:hover { background: var(--bg-main); }
 
+  /* Bloco informativo (não é equipamento clicável, é card fixo de referência) */
+  .info-banner {
+    grid-column: 1 / -1;
+    background: linear-gradient(180deg, rgba(17, 94, 89, 0.06), rgba(17, 94, 89, 0) 60%);
+    border: 1.5px dashed var(--brand-primary);
+    border-radius: var(--radius-ui);
+    padding: 1.5rem;
+  }
+
+  .info-banner h3 {
+    margin: 0 0 0.75rem 0;
+    color: var(--brand-primary);
+    font-size: 1.1rem;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .info-banner ul {
+    margin: 0;
+    padding-left: 1.2rem;
+    font-size: 0.88rem;
+    color: var(--text-main);
+  }
+
+  .info-banner li { margin-bottom: 0.4rem; }
+  .info-banner .info-note {
+    margin-top: 0.75rem;
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    font-style: italic;
+  }
+
   /* Sistema de Impressão Blindado A4 Paisagem - MULTI-PÁGINA CONTROLADA */
   #print-area { display: none; }
   @media print {
@@ -1053,6 +1087,72 @@ const DATA = [
     desc: "Escola pública municipal localizada no bairro Professora Araceli Souto Maior."
   },
   {
+    id: "escola-ioladio-batista",
+    name: "E.M. Ioládio Batista Da Silva",
+    fullName: "Escola Municipal Ioládio Batista Da Silva - Educ. Infantil, Ens. Fundamental e EJA",
+    cat: ["educacao"],
+    address: "R. Antônio Ferreira de Souza, 1056 - São Bento, Boa Vista-RR, 69316-054",
+    hours: "N/A",
+    phones: ["(95) 3628-3048"],
+    services: "Educação Infantil, Ensino Fundamental, EJA.",
+    desc: "Escola pública municipal localizada no bairro São Bento."
+  },
+  {
+    id: "escola-maria-de-fatima-faria-andrade",
+    name: "E.M. Maria De Fátima Faria Andrade",
+    fullName: "Escola Municipal Maria De Fátima Faria Andrade - Educ. Infantil e Ens. Fundamental",
+    cat: ["educacao"],
+    address: "Rua Milão, 173 - Centenário, Boa Vista-RR, 69312-665",
+    hours: "N/A",
+    phones: ["(95) 3628-7901"],
+    services: "Educação Infantil, Ensino Fundamental.",
+    desc: "Escola pública municipal localizada no bairro Centenário."
+  },
+  {
+    id: "escola-delacir-de-melo-lima",
+    name: "E.M. Delacir De Melo Lima",
+    fullName: "Escola Municipal Delacir De Melo Lima - Ensino Fundamental",
+    cat: ["educacao"],
+    address: "Rua Santo Agostinho, 173 - Centenário, Boa Vista-RR, 69312-490",
+    hours: "N/A",
+    phones: ["(95) 3626-5770"],
+    services: "Ensino Fundamental.",
+    desc: "Escola pública municipal localizada no bairro Centenário."
+  },
+  {
+    id: "escola-james-macelaro-thome",
+    name: "E.M. James Macelaro Thomé",
+    fullName: "Escola Municipal James Macelaro Thomé",
+    cat: ["educacao"],
+    address: "R. PS-4, 02 - s/n - Centenário, Boa Vista-RR, 69312-606",
+    hours: "N/A",
+    phones: ["N/A"],
+    services: "Educação Municipal - Ensino Geral.",
+    desc: "Escola pública municipal localizada no bairro Centenário."
+  },
+  {
+    id: "escola-proinfancia-lidia-coelho-tavares",
+    name: "E.M. Proinfância Profa. Lídia Coelho Tavares",
+    fullName: "Escola Municipal Proinfância Professora Lídia Coelho Tavares",
+    cat: ["educacao"],
+    address: "R. Bréscia, nº 526 - Centenário, Boa Vista-RR, 69312-673",
+    hours: "N/A",
+    phones: ["N/A"],
+    services: "Educação Infantil (Pré-escola).",
+    desc: "Escola pública municipal de Educação Infantil localizada no bairro Centenário."
+  },
+  {
+    id: "cem-wanda-david-aguiar",
+    name: "CEM Profa. Wanda David Aguiar",
+    fullName: "Colégio Estadual Militarizado Professora Wanda David Aguiar - CEM",
+    cat: ["educacao"],
+    address: "Rua Estrela D'Alva, 736 - Raiar do Sol, Boa Vista-RR",
+    hours: "N/A",
+    phones: ["N/A"],
+    services: "Educação Estadual Militarizada - Ensino Fundamental e Médio.",
+    desc: "Colégio estadual em regime de gestão compartilhada militarizada, localizado no bairro Raiar do Sol."
+  },
+  {
     id: "sesau-rr",
     name: "SESAU",
     fullName: "Secretaria de Estado da Saúde de Roraima",
@@ -1125,10 +1225,21 @@ const ICONS = {
   clock: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>',
   phone: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>',
   star: '<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>',
-  image: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>'
+  image: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>',
+  info: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>'
 };
 
 const MAX_IMAGE_BYTES = 5 * 1024 * 1024; // 5 MB
+
+// Destaque curto sobre as condicionalidades do Bolsa Família, exibido
+// dentro do "Escopo de Atuação" de cada equipamento de Educação.
+const BF_HIGHLIGHT_HTML = `
+  <div style="margin-top:0.75rem; padding:0.75rem; border-left:3px solid var(--brand-primary); background:rgba(17,94,89,0.06); border-radius:6px; font-size:0.8rem;">
+    <strong style="color:var(--brand-primary);">Condicionalidades do Bolsa Família:</strong>
+    Frequência escolar: crianças e adolescentes entre 6 e 18 anos incompletos devem ter, no mínimo, 75% de presença nas aulas.
+    Educação infantil: para crianças de 4 a 6 anos, a exigência mínima de frequência é de 60%.
+  </div>
+`;
 
 function render() {
   const query = document.getElementById('mainSearch').value.toLowerCase();
@@ -1148,6 +1259,7 @@ function render() {
   });
 
   document.getElementById('counter').textContent = filtered.length;
+
   grid.innerHTML = filtered.map(i => {
     const imgData = localStorage.getItem('img_'+i.id);
     const imageBlock = imgData
@@ -1178,6 +1290,7 @@ function render() {
           <span class="label-tech">Escopo de Atuação</span>
           ${i.desc}
           <div style="margin-top:0.5rem; font-weight:600; color:var(--brand-primary); font-size:0.75rem;">SERVIÇOS: ${Array.isArray(i.services) ? i.services.join(', ') : i.services}</div>
+          ${i.cat.includes('educacao') ? BF_HIGHLIGHT_HTML : ''}
         </div>
         <textarea class="tech-notes" placeholder="Anotações Técnicas / Conduta..." oninput="localStorage.setItem('note_${i.id}', this.value)">${localStorage.getItem('note_'+i.id) || ''}</textarea>
         <div class="image-attach-wrapper" id="img-wrap-${i.id}">
