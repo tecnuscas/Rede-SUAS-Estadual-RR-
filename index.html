@@ -455,15 +455,24 @@
 
 <header class="hero">
   <div class="container">
-    <h1 style="display:flex; align-items:center; gap:16px;">
-      <svg viewBox="0 0 400 280" width="46" height="32" xmlns="http://www.w3.org/2000/svg" style="border-radius:3px; box-shadow:0 2px 8px rgba(0,0,0,0.35); display:block; flex-shrink:0;">
-        <rect x="0" y="0" width="400" height="280" fill="#FFFFFF"/>
-        <polygon points="0,280 0,0 240,0 120,280" fill="#0091C2"/>
-        <polygon points="120,280 240,0 360,0 240,280" fill="#FFFFFF"/>
-        <polygon points="240,280 360,0 400,0 400,280" fill="#009739"/>
-        <rect x="0" y="242" width="400" height="14" fill="#ED1C24"/>
-        <polygon points="200,212 208.82,235.86 234.24,236.88 214.27,252.64 221.16,277.12 200,263 178.84,277.12 185.73,252.64 165.76,236.88 191.18,235.86" fill="#FEDD00"/>
-      </svg>
+    <h1 style="display:flex; align-items:center; gap:16px; flex-wrap:wrap;">
+      <span style="display:flex; align-items:center; gap:10px; flex-shrink:0;">
+        <svg viewBox="0 0 400 280" width="46" height="32" xmlns="http://www.w3.org/2000/svg" style="border-radius:3px; box-shadow:0 2px 8px rgba(0,0,0,0.35); display:block; flex-shrink:0;" title="Bandeira de Roraima">
+          <rect x="0" y="0" width="400" height="280" fill="#FFFFFF"/>
+          <polygon points="0,280 0,0 240,0 120,280" fill="#0091C2"/>
+          <polygon points="120,280 240,0 360,0 240,280" fill="#FFFFFF"/>
+          <polygon points="240,280 360,0 400,0 400,280" fill="#009739"/>
+          <rect x="0" y="242" width="400" height="14" fill="#ED1C24"/>
+          <polygon points="200,212 208.82,235.86 234.24,236.88 214.27,252.64 221.16,277.12 200,263 178.84,277.12 185.73,252.64 165.76,236.88 191.18,235.86" fill="#FEDD00"/>
+        </svg>
+        <img src="https://www.simbolosmunicipais.com.br/multimidia/rr/rr-boa-vista-bandeira-VvpTlaUS.jpg" alt="Bandeira de Boa Vista" title="Bandeira de Boa Vista" width="46" height="32" style="border-radius:3px; box-shadow:0 2px 8px rgba(0,0,0,0.35); display:block; flex-shrink:0; object-fit:cover; background:white;">
+        <span style="width:34px; height:34px; border-radius:50%; background:white; display:flex; align-items:center; justify-content:center; box-shadow:0 2px 8px rgba(0,0,0,0.35); flex-shrink:0; overflow:hidden;">
+          <img src="https://seeklogo.com/images/S/suas-logo-A78B0E8D10-seeklogo.com.png" alt="Símbolo do SUAS" title="SUAS - Sistema Único de Assistência Social" style="width:26px; height:26px; object-fit:contain;">
+        </span>
+        <span style="width:34px; height:34px; border-radius:50%; background:white; display:flex; align-items:center; justify-content:center; box-shadow:0 2px 8px rgba(0,0,0,0.35); flex-shrink:0; overflow:hidden;">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/S%C3%ADmbolo_da_Psicologia.svg/1200px-S%C3%ADmbolo_da_Psicologia.svg.png" alt="Símbolo da Psicologia" title="Símbolo da Psicologia" style="width:24px; height:24px; object-fit:contain;">
+        </span>
+      </span>
       <span>Rede de Políticas Públicas de Roraima</span>
     </h1>
     <p>Diretório técnico de equipamentos socioassistenciais e suporte à rede RAPS de Boa Vista, Roraima. Gestão centralizada para profissionais de saúde e assistência.</p>
@@ -487,6 +496,7 @@
       <button class="filter-chip" data-cat="juridico">Sistema Judicial</button>
       <button class="filter-chip" data-cat="conselho">Conselho Tutelar</button>
       <button class="filter-chip" data-cat="bancos">Rede Bancária</button>
+      <button class="filter-chip" data-cat="previdencia">Previdência</button>
       <button class="filter-chip" data-cat="fav">⭐ Favoritos</button>
     </div>
   </div>
@@ -826,7 +836,7 @@ const DATA = [
     id: "apae-bv",
     name: "APAE Boa Vista",
     fullName: "Associação de Pais e Amigos dos Excepcionais",
-    cat: ["tea", "social"],
+    cat: ["tea"],
     address: "Av. Surumu, nº 71 - Calungá, Boa Vista-RR",
     hours: "08:00 às 12:00 / 14:00 às 18:00",
     phones: ["(95) 3224-2755"],
@@ -1208,10 +1218,21 @@ const DATA = [
     desc: "Órgão gestor estadual responsável pela política de assistência social, trabalho e bem-estar social em Roraima."
   },
   {
+    id: "cas-cidade-satelite",
+    name: "CAS",
+    fullName: "Centro de Atendimento Social",
+    cat: ["social"],
+    address: "R. James Meirelles Sobreiro Júnior, 1876 - Cidade Satélite, Boa Vista-RR, 69317-530",
+    hours: "Segunda a sábado, 08:00 às 22:00",
+    phones: ["N/A"],
+    services: "Atividades Esportivas e Culturais, Cursos (parceria SINE), Grupos de Convivência.",
+    desc: "Equipamento de assistência social com atividades de natureza esportiva e cultural: desenho e pintura, balé, ginástica rítmica, capoeira, jiu-jitsu, ritbox, futsal e forró. Oferece também cursos em parceria com o SINE, além de Grupos de Convivência e Fortalecimento de Vínculo."
+  },
+  {
     id: "inss-boa-vista",
     name: "INSS",
     fullName: "Instituto Nacional do Seguro Social",
-    cat: ["social"],
+    cat: ["previdencia"],
     address: "Av. Glaycon de Paiva, 86 - Mecejana, Boa Vista-RR, 69301-250",
     hours: "Segunda a sexta, 07:00 às 13:00 (mediante agendamento)",
     phones: ["135"],
