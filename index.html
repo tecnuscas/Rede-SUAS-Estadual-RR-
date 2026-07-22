@@ -371,16 +371,14 @@
   .btn-secondary { background: var(--bg-card); color: var(--text-main); }
   .btn-secondary:hover { background: var(--bg-main); }
 
-  /* Sistema de Impressão Blindado A4 Paisagem - PÁGINA ÚNICA */
+  /* Sistema de Impressão Blindado A4 Paisagem - MULTI-PÁGINA CONTROLADA */
   #print-area { display: none; }
   @media print {
     @page { size: landscape; margin: 0.5cm; }
 
     /* Em vez de visibility:hidden (que mantém os elementos ocupando espaço
-       no fluxo e gera páginas extras em branco, sobre as quais o
-       #print-area, por ser "fixed", acaba se repetindo), removemos tudo
-       do fluxo com display:none. Assim só existe UM elemento visível
-       durante a impressão. */
+       no fluxo e gera páginas extras em branco), removemos tudo do fluxo
+       com display:none. Assim só o #print-area fica visível na impressão. */
     body > *:not(#print-area) {
       display: none !important;
     }
@@ -389,13 +387,26 @@
       display: block !important;
       position: static;
       width: 100%;
-      height: auto;
       background: white;
       z-index: 9999;
       padding: 0;
       margin: 0;
-      overflow: hidden; /* Garante página única */
     }
+
+    /* Cada .print-page é uma folha A4 paisagem própria. page-break-after
+       força a quebra entre a ficha técnica e o anexo fotográfico (quando
+       existir). O :last-child evita uma folha em branco extra quando só
+       há uma página (sem imagem anexada). */
+    #print-area .print-page {
+      width: 28.7cm;
+      height: 20cm;
+      overflow: hidden;
+      page-break-after: always;
+    }
+    #print-area .print-page:last-child {
+      page-break-after: auto;
+    }
+
     /* Força quebra de palavras em qualquer lugar no print */
     #print-area * { word-break: break-word !important; overflow-wrap: break-word !important; }
   }
@@ -1271,15 +1282,9 @@ function printGuide(id) {
     <div style="position:absolute; top:${y}%; left:${x}%; transform:translate(-50%,-50%) rotate(-18deg); opacity:0.055; z-index:0; font-size:6.5rem; line-height:1; font-family:'Lora', serif; font-weight:700; color:#115E59; user-select:none; pointer-events:none;">Ψ</div>
   `).join('');
 
-  const imageAnexo = imgData ? `
-    <div style="display:flex; flex-direction:column; align-items:center; gap:4px; margin-top:8px;">
-      <span style="font-size:0.6rem; font-weight:800; color:#475569; text-transform:uppercase; letter-spacing:0.03em;">Anexo</span>
-      <img src="${imgData}" style="max-width:100%; max-height:110px; object-fit:contain; border:1px solid #94A3B8; border-radius:4px;">
-    </div>
-  ` : '';
-
-  document.getElementById('print-area').innerHTML = `
-    <div style="width:28.7cm; height:20cm; padding:0; position:relative; font-family:'Inter', sans-serif; color:#0F172A; box-sizing:border-box; display:flex; flex-direction:column; background:white; overflow:hidden; border:2px solid #0F172A;">
+  // --- PÁGINA 1: Ficha de Encaminhamento Técnico (sem imagem) ---
+  const firstPage = `
+    <div class="print-page" style="padding:0; position:relative; font-family:'Inter', sans-serif; color:#0F172A; box-sizing:border-box; display:flex; flex-direction:column; background:white; border:2px solid #0F172A;">
       ${watermark}
 
       <!-- Moldura interna (dupla linha, estilo formulário oficial) -->
@@ -1335,11 +1340,10 @@ function printGuide(id) {
                 <td style="border-bottom:1.5px solid #0F172A; padding:8px 10px; font-size:0.82rem; vertical-align:top; color:#1E293B; font-weight:700;">${i.hours}</td>
               </tr>
               <tr>
-                <td style="background:#F1F5F9; padding:8px 8px; font-size:0.6rem; font-weight:800; text-transform:uppercase; letter-spacing:0.02em; white-space:nowrap; vertical-align:top; ${imgData ? 'border-bottom:1.5px solid #0F172A;' : ''}">Contato</td>
-                <td style="padding:8px 10px; font-size:${phoneFontSize}px; line-height:1.4; vertical-align:top; color:#115E59; font-weight:800; ${imgData ? 'border-bottom:1.5px solid #0F172A;' : ''}">${i.phones.join('<br>')}</td>
+                <td style="background:#F1F5F9; padding:8px 8px; font-size:0.6rem; font-weight:800; text-transform:uppercase; letter-spacing:0.02em; white-space:nowrap; vertical-align:top;">Contato</td>
+                <td style="padding:8px 10px; font-size:${phoneFontSize}px; line-height:1.4; vertical-align:top; color:#115E59; font-weight:800;">${i.phones.join('<br>')}</td>
               </tr>
             </table>
-            ${imgData ? `<div style="flex-grow:1; display:flex; align-items:center; justify-content:center; padding:6px;">${imageAnexo}</div>` : ''}
           </div>
         </div>
 
@@ -1357,6 +1361,28 @@ function printGuide(id) {
       </div>
     </div>
   `;
+
+  // --- PÁGINA 2: Anexo fotográfico (só existe se houver imagem) ---
+  const secondPage = imgData ? `
+    <div class="print-page" style="position:relative; padding:0.9cm 1.1cm; box-sizing:border-box; display:flex; flex-direction:column; background:white; border:2px solid #0F172A;">
+      <div style="position:absolute; inset:0.25cm; border:1px solid #94A3B8; pointer-events:none;"></div>
+      <div style="position:relative; z-index:1; display:flex; flex-direction:column; height:100%;">
+        <table style="width:100%; border-collapse:collapse; margin-bottom:10px; table-layout:fixed;">
+          <tr>
+            <td style="border:1.5px solid #0F172A; padding:8px 14px;">
+              <div style="font-size:1rem; font-weight:800; color:#0F172A;">ANEXO FOTOGRÁFICO</div>
+              <div style="font-size:0.68rem; font-weight:700; color:#475569; text-transform:uppercase;">${i.fullName}</div>
+            </td>
+          </tr>
+        </table>
+        <div style="flex-grow:1; display:flex; align-items:center; justify-content:center; border:1.5px solid #0F172A; border-radius:4px; overflow:hidden; background:#F8FAFC;">
+          <img src="${imgData}" style="max-width:100%; max-height:100%; object-fit:contain;">
+        </div>
+      </div>
+    </div>
+  ` : '';
+
+  document.getElementById('print-area').innerHTML = firstPage + secondPage;
 
   // Ajuste automático do texto de "Conduta e Orientações" para caber em uma
   // única página sem cortar conteúdo. Reduz a fonte progressivamente até o
