@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Rede de Apoio · Gestão Técnica de Equipamentos</title>
+<title>Argo · Gestão Técnica de Equipamentos</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
@@ -38,11 +38,11 @@
   }
 
   * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-  
+
   body {
     margin: 0;
     background: var(--bg-main);
-    background-image: 
+    background-image:
       url('https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/S%C3%ADmbolo_da_Psicologia.svg/1200px-S%C3%ADmbolo_da_Psicologia.svg.png'),
       url('https://seeklogo.com/images/S/suas-logo-A78B0E8D10-seeklogo.com.png');
     background-repeat: no-repeat, no-repeat;
@@ -57,7 +57,7 @@
 
   @media (prefers-color-scheme: dark) {
     body {
-      background-image: 
+      background-image:
         linear-gradient(rgba(2, 6, 23, 0.9), rgba(2, 6, 23, 0.9)),
         url('https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/S%C3%ADmbolo_da_Psicologia.svg/1200px-S%C3%ADmbolo_da_Psicologia.svg.png'),
         url('https://seeklogo.com/images/S/suas-logo-A78B0E8D10-seeklogo.com.png');
@@ -65,16 +65,26 @@
     }
   }
 
-  /* Ajuste para não atrapalhar a leitura nos cartões */
   .tech-card {
     position: relative;
     z-index: 1;
     background: var(--bg-card);
+    border: 1px solid var(--border-ui);
+    border-top: 3px solid var(--brand-primary);
+    border-radius: var(--radius-ui);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .tech-card:hover {
+    box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1);
+    transform: translateY(-2px);
   }
 
   .container { max-width: 1400px; margin: 0 auto; padding: 0 1.5rem; }
 
-  /* Header Técnico */
   header.hero {
     background: var(--brand-secondary);
     color: white;
@@ -100,12 +110,31 @@
     vertical-align: middle;
   }
 
+  .brand-mark {
+    font-family: var(--font-serif);
+    font-weight: 700;
+    font-style: italic;
+    color: var(--brand-primary-light);
+    letter-spacing: 0.01em;
+  }
+
   .hero h1 {
     font-family: var(--font-serif);
     font-size: 3rem;
     margin: 0;
     font-weight: 500;
     letter-spacing: -0.02em;
+  }
+
+  .hero .brand-sub {
+    display: block;
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #94A3B8;
+    margin-top: 0.5rem;
   }
 
   .hero p {
@@ -115,7 +144,6 @@
     margin-top: 1rem;
   }
 
-  /* Controles de Navegação */
   .controls {
     position: sticky;
     top: 0;
@@ -178,28 +206,11 @@
     border-color: var(--brand-primary);
   }
 
-  /* Grid de Equipamentos */
   .equipment-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
     gap: 1.5rem;
     padding: 2rem 0;
-  }
-
-  .tech-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border-ui);
-    border-top: 3px solid var(--brand-primary);
-    border-radius: var(--radius-ui);
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    transition: transform 0.2s, box-shadow 0.2s;
-  }
-
-  .tech-card:hover {
-    box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1);
-    transform: translateY(-2px);
   }
 
   .card-top {
@@ -277,7 +288,6 @@
     min-height: 100px;
   }
 
-  /* Anexo de imagem nas anotações */
   .image-attach-wrapper {
     display: flex;
     flex-direction: column;
@@ -375,7 +385,6 @@
     text-decoration: none;
   }
 
-  /* Bloco informativo (não é equipamento clicável, é card fixo de referência) */
   .info-banner {
     grid-column: 1 / -1;
     background: linear-gradient(180deg, rgba(17, 94, 89, 0.06), rgba(17, 94, 89, 0) 60%);
@@ -409,7 +418,6 @@
     font-style: italic;
   }
 
-  /* Cartão de recurso externo (ex.: Mapa Social MDS) */
   .external-resource-card {
     display: flex;
     align-items: center;
@@ -442,14 +450,10 @@
     white-space: nowrap;
   }
 
-  /* Sistema de Impressão Blindado A4 Paisagem - MULTI-PÁGINA CONTROLADA */
   #print-area { display: none; }
   @media print {
     @page { size: landscape; margin: 0.5cm; }
 
-    /* Em vez de visibility:hidden (que mantém os elementos ocupando espaço
-       no fluxo e gera páginas extras em branco), removemos tudo do fluxo
-       com display:none. Assim só o #print-area fica visível na impressão. */
     body > *:not(#print-area) {
       display: none !important;
     }
@@ -464,10 +468,6 @@
       margin: 0;
     }
 
-    /* Cada .print-page é uma folha A4 paisagem própria. page-break-after
-       força a quebra entre a ficha técnica e o anexo fotográfico (quando
-       existir). O :last-child evita uma folha em branco extra quando só
-       há uma página (sem imagem anexada). */
     #print-area .print-page {
       width: 28.7cm;
       height: 20cm;
@@ -478,7 +478,6 @@
       page-break-after: auto;
     }
 
-    /* Força quebra de palavras em qualquer lugar no print */
     #print-area * { word-break: break-word !important; overflow-wrap: break-word !important; }
   }
 
@@ -511,7 +510,10 @@
           <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/S%C3%ADmbolo_da_Psicologia.svg/1200px-S%C3%ADmbolo_da_Psicologia.svg.png" alt="Símbolo da Psicologia" title="Símbolo da Psicologia" style="width:24px; height:24px; object-fit:contain;">
         </span>
       </span>
-      <span>Rede de Políticas Públicas de Roraima</span>
+      <span>
+        <span class="brand-mark">Argo</span>
+        <span class="brand-sub">Rede de Políticas Públicas de Roraima</span>
+      </span>
     </h1>
     <p>Diretório técnico de equipamentos socioassistenciais e suporte à rede RAPS de Boa Vista, Roraima. Gestão centralizada para profissionais de saúde e assistência.</p>
   </div>
@@ -533,6 +535,7 @@
     <div class="filter-bar" id="filterBar">
       <button class="filter-chip active" data-cat="all">Todos os Equipamentos</button>
       <button class="filter-chip" data-cat="saude">RAPS</button>
+      <button class="filter-chip" data-cat="tea">TEA / PcD</button>
       <button class="filter-chip" data-cat="social">Assistência Social</button>
       <button class="filter-chip" data-cat="educacao">Educação</button>
       <button class="filter-chip" data-cat="juridico">Sistema Judicial</button>
@@ -1326,6 +1329,14 @@ const BF_HIGHLIGHT_HTML = `
   </div>
 `;
 
+// Remove marcação HTML (ex.: <br>) de um texto, convertendo quebras de
+// linha em \n. Usado antes de montar mensagens de texto puro (WhatsApp),
+// já que alguns registros (ex.: agências da Caixa) guardam múltiplas
+// linhas com <br> para exibição na tela/impressão.
+function stripHtml(html) {
+  return String(html).replace(/<br\s*\/?>/gi, '\n').replace(/<[^>]+>/g, '');
+}
+
 function render() {
   const query = document.getElementById('mainSearch').value.toLowerCase();
   const cat = document.querySelector('.filter-chip.active').dataset.cat;
@@ -1335,11 +1346,10 @@ function render() {
   const filtered = DATA.filter(i => {
     const matchSearch = i.name.toLowerCase().includes(query) || i.address.toLowerCase().includes(query) || i.desc.toLowerCase().includes(query);
     const isFav = favs.includes(i.id);
-    const matchCat = cat === 'all' || 
-                     (cat === 'fav' ? isFav : 
-                     (cat === 'saude' ? (i.cat.includes('saude') || i.cat.includes('tea')) : 
-                     (cat === 'social' ? (i.cat.includes('social') || i.cat.includes('idoso')) : 
-                     i.cat.includes(cat))));
+    const matchCat = cat === 'all' ||
+                     (cat === 'fav' ? isFav :
+                     (cat === 'social' ? (i.cat.includes('social') || i.cat.includes('idoso')) :
+                     i.cat.includes(cat)));
     return matchSearch && matchCat;
   });
 
@@ -1449,7 +1459,7 @@ function toggleFav(id) {
 
 function share(id) {
   const i = DATA.find(x => x.id === id);
-  const t = `*UNIDADE:* ${i.fullName}\n*ENDEREÇO:* ${i.address}\n*CONTATO:* ${i.phones.join(' / ')}`;
+  const t = `*UNIDADE:* ${i.fullName}\n*ENDEREÇO:* ${stripHtml(i.address)}\n*CONTATO:* ${stripHtml(i.phones.join(' / '))}`;
   window.open(`https://wa.me/?text=${encodeURIComponent(t)}`);
 }
 
@@ -1496,7 +1506,7 @@ function printGuide(id) {
             <td style="border:1.5px solid #0F172A; padding:8px 14px; vertical-align:middle;">
               <div>
                 <div style="font-size:1.25rem; font-weight:800; letter-spacing:0.02em; color:#0F172A;">FICHA DE ENCAMINHAMENTO TÉCNICO</div>
-                <div style="font-size:0.68rem; font-weight:700; color:#475569; text-transform:uppercase; letter-spacing:0.04em; margin-top:2px;">Sistema Único de Assistência Social do Estado de Roraima</div>
+                <div style="font-size:0.68rem; font-weight:700; color:#475569; text-transform:uppercase; letter-spacing:0.04em; margin-top:2px;">Argo · Sistema Único de Assistência Social do Estado de Roraima</div>
               </div>
             </td>
             <td style="border:1.5px solid #0F172A; padding:8px 14px; text-align:center; width:180px;">
