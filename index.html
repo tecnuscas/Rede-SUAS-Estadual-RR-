@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Argo SUAS · Gestão Técnica de Equipamentos</title>
+<title>Argo do SUAS · Gestão Técnica de Equipamentos</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
@@ -17,6 +17,8 @@
     --brand-primary: #0091C2;
     --brand-primary-light: #29ABE2;
     --brand-secondary: #0F172A;
+    --brand-info: #B45309;
+    --brand-info-light: #D97706;
     --text-main: #1E293B;
     --text-muted: #475569;
     --bg-main: #F8FAFC;
@@ -84,15 +86,6 @@
     font-family: var(--font-sans);
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
-  }
-
-  /* Fix: background-attachment: fixed is unreliable on iOS Safari and can
-     cause the background to jump/flicker while scrolling on mobile. Fall
-     back to normal scrolling backgrounds on small screens. */
-  @media (max-width: 768px) {
-    body {
-      background-attachment: scroll, scroll;
-    }
   }
 
   @media (prefers-color-scheme: dark) {
@@ -642,6 +635,67 @@
     font-style: italic;
   }
 
+  /* Cartões da categoria "Informes" — visual de aviso/notícia informativa,
+     usando o acento âmbar (--brand-info) para diferenciar de unidades físicas. */
+  .informe-card {
+    border-top: 3px solid var(--brand-info);
+  }
+
+  .informe-card .card-top {
+    background: linear-gradient(180deg, rgba(180, 83, 9, 0.08), rgba(180, 83, 9, 0) 80%);
+  }
+
+  .informe-card .card-top h3 {
+    color: var(--brand-info-light);
+  }
+
+  .informe-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--brand-info);
+    flex-shrink: 0;
+  }
+
+  .informe-box {
+    font-size: 0.85rem;
+    color: var(--text-main);
+    background: linear-gradient(180deg, rgba(180, 83, 9, 0.06), rgba(180, 83, 9, 0) 60%);
+    border: 1.5px dashed var(--brand-info);
+    border-radius: 8px;
+    padding: 1rem;
+    line-height: 1.55;
+  }
+
+  .informe-box strong {
+    display: block;
+    margin-top: 0.7rem;
+    margin-bottom: 0.15rem;
+    color: var(--brand-info-light);
+    font-size: 0.78rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+
+  .informe-box strong:first-child { margin-top: 0; }
+
+  .informe-box a {
+    color: var(--brand-info-light);
+    font-weight: 700;
+    word-break: break-all;
+  }
+
+  .informe-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.25rem;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+  }
+
+  .informe-meta span { color: var(--text-main); font-weight: 600; }
+
   .external-resource-card {
     display: flex;
     align-items: center;
@@ -784,7 +838,7 @@
         <img src="https://www.simbolosmunicipais.com.br/multimidia/rr/rr-boa-vista-bandeira-VvpTlaUS.jpg" alt="Bandeira de Boa Vista" title="Bandeira de Boa Vista" width="52" height="36" style="object-fit:cover; background:white;">
       </div>
       <h1>
-        <span class="brand-mark">Argo</span><span class="brand-mark" style="font-size:0.55em; font-style:normal; font-weight:600; color:#94A3B8; vertical-align:middle; margin-left:0.3em;">SUAS</span>
+        <span class="brand-mark">Argo</span><span class="brand-mark" style="font-size:0.55em; font-style:normal; font-weight:600; color:#94A3B8; vertical-align:middle; margin-left:0.3em;">do SUAS</span>
         <span class="brand-sub">Rede de Políticas Públicas de Roraima</span>
       </h1>
     </div>
@@ -804,22 +858,22 @@
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
         Mapa Social (MDS)
       </a>
-      <button type="button" class="btn-tech btn-secondary" onclick="exportData()" title="Backup de Dados">
+      <button class="btn-tech btn-secondary" onclick="exportData()" title="Backup de Dados">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
       </button>
     </div>
     <div class="filter-bar" id="filterBar">
-      <button type="button" class="filter-chip active" data-cat="all" aria-pressed="true">Todos os Equipamentos</button>
-      <button type="button" class="filter-chip" data-cat="saude" aria-pressed="false">RAPS</button>
-      <button type="button" class="filter-chip" data-cat="tea" aria-pressed="false">TEA / PcD</button>
-      <button type="button" class="filter-chip" data-cat="social" aria-pressed="false">Assistência Social</button>
-      <button type="button" class="filter-chip" data-cat="educacao" aria-pressed="false">Educação</button>
-      <button type="button" class="filter-chip" data-cat="juridico" aria-pressed="false">Sistema Judicial</button>
-      <button type="button" class="filter-chip" data-cat="conselho" aria-pressed="false">Conselho Tutelar</button>
-      <button type="button" class="filter-chip" data-cat="bancos" aria-pressed="false">Rede Bancária</button>
-      <button type="button" class="filter-chip" data-cat="previdencia" aria-pressed="false">Previdência</button>
-      <button type="button" class="filter-chip" data-cat="mobilidade" aria-pressed="false">Mobilidade</button>
-      <button type="button" class="filter-chip" data-cat="fav" aria-pressed="false">⭐ Favoritos</button>
+      <button class="filter-chip active" data-cat="all" aria-pressed="true">Todos os Equipamentos</button>
+      <button class="filter-chip" data-cat="saude" aria-pressed="false">RAPS</button>
+      <button class="filter-chip" data-cat="tea" aria-pressed="false">TEA / PcD</button>
+      <button class="filter-chip" data-cat="social" aria-pressed="false">Assistência Social</button>
+      <button class="filter-chip" data-cat="educacao" aria-pressed="false">Educação</button>
+      <button class="filter-chip" data-cat="juridico" aria-pressed="false">Sistema Judicial</button>
+      <button class="filter-chip" data-cat="conselho" aria-pressed="false">Conselho Tutelar</button>
+      <button class="filter-chip" data-cat="bancos" aria-pressed="false">Rede Bancária</button>
+      <button class="filter-chip" data-cat="previdencia" aria-pressed="false">Previdência</button>
+      <button class="filter-chip" data-cat="informes" aria-pressed="false">📋 Informes</button>
+      <button class="filter-chip" data-cat="fav" aria-pressed="false">⭐ Favoritos</button>
     </div>
   </div>
 </div>
@@ -856,7 +910,7 @@
   </div>
 </footer>
 
-<button type="button" id="backToTop" class="back-to-top" title="Voltar ao topo" aria-label="Voltar ao topo">
+<button id="backToTop" class="back-to-top" title="Voltar ao topo" aria-label="Voltar ao topo">
   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
 </button>
 
@@ -1602,26 +1656,125 @@ const DATA = [
     desc: "Agência federal de previdência social; atendimento presencial exclusivamente mediante agendamento pela Central 135 ou Meu INSS."
   },
   {
-    id: "terminal-onibus-jose-campanha-wanderley",
-    name: "Terminal de Ônibus Urbano",
-    fullName: "Terminal de Ônibus Urbano – José Campanha Wanderley",
-    cat: ["mobilidade"],
-    address: "R. Barreto Leite, 202-A - Centro, Boa Vista-RR, 69301-330",
+    id: "siga-antenado",
+    name: "Siga Antenado",
+    fullName: "Kit de Antena Parabólica Digital – Siga Antenado",
+    cat: ["informes"],
+    address: "N/A - Solicitação remota",
     hours: "N/A",
-    phones: ["N/A"],
-    services: "Rotas de Transporte Coletivo Urbano.",
-    desc: "Terminal central de integração do transporte coletivo urbano de Boa Vista, ponto de referência para embarque e conexão entre as linhas de ônibus da cidade."
+    phones: ["0800 729 2404"],
+    services: "Kit de Antena Parabólica Digital.",
+    desc: "Programa de substituição gratuita de antenas parabólicas convencionais por kits digitais. Requisitos: • Estar inscrito no Cadastro Único (CadÚnico); • Estar usando antenas parabólicas convencionais.<br>Site: https://www.sigaantenado.com.br/"
   },
   {
-    id: "smtran",
-    name: "SMTRAN",
-    fullName: "Superintendência Municipal de Trânsito",
-    cat: ["mobilidade"],
-    address: "Av. Cap. Júlio Bezerra, 1481 - Trinta e Um de Março, Boa Vista-RR, 69305-025",
+    id: "bpc-idoso",
+    name: "BPC Idoso",
+    fullName: "Benefício de Prestação Continuada (BPC) – Idoso",
+    cat: ["informes"],
+    address: "N/A - Solicitação pelo Meu INSS",
     hours: "N/A",
-    phones: ["(95) 4009-9333"],
-    services: "Gestão do Trânsito, Transporte Coletivo, Fiscalização Viária.",
-    desc: "Órgão municipal responsável pela gestão do trânsito e do transporte coletivo urbano de Boa Vista."
+    phones: ["135"],
+    services: "Benefício de Prestação Continuada (BPC) – Idoso.",
+    desc: "Requisitos: • Estar inscrito e com dados atualizados no Cadastro Único (CadÚnico); • Possuir 65 anos completos ou mais; • Ter renda familiar per capita de até ¼ do salário mínimo; • Comprovar situação de vulnerabilidade social.<br>Canais para solicitação: • Site: https://meu.inss.gov.br/#/login • Telefone: 135 • Aplicativo: Meu INSS"
+  },
+  {
+    id: "bpc-pcd",
+    name: "BPC Pessoa com Deficiência",
+    fullName: "Benefício de Prestação Continuada (BPC) – Pessoa com Deficiência",
+    cat: ["informes"],
+    address: "N/A - Solicitação pelo Meu INSS",
+    hours: "N/A",
+    phones: ["135"],
+    services: "Benefício de Prestação Continuada (BPC) – Pessoa com Deficiência.",
+    desc: "Requisitos: • Estar inscrito e com dados atualizados no Cadastro Único (CadÚnico); • Possuir deficiência de longo prazo (física, mental, intelectual ou sensorial) que cause impedimentos para a participação plena na sociedade; • Não há idade mínima; • Ter renda familiar per capita de até ¼ do salário mínimo; • Passar por avaliação médica e social do INSS; • Comprovar situação de vulnerabilidade social.<br>Canais para solicitação: • Site: https://meu.inss.gov.br/#/login • Telefone: 135 • Aplicativo: Meu INSS<br>⚠️ Observações técnicas: a deficiência deve ter duração mínima de 2 anos (caráter de longo prazo); pode haver mais de um BPC na mesma família, desde que atendidos os critérios; o benefício não paga 13º salário; não exige contribuição ao INSS."
+  },
+  {
+    id: "recuperacao-senha-inss",
+    name: "Recuperação de Senha – Meu INSS",
+    fullName: "Recuperação de senha – Meu INSS / gov.br",
+    cat: ["informes"],
+    address: "N/A - Procedimento online",
+    hours: "N/A",
+    phones: ["N/A"],
+    services: "Recuperação de senha gov.br / Meu INSS.",
+    desc: "A recuperação de senha deve ser realizada diretamente pelo sistema gov.br: 1) Acesse o Meu INSS (https://meu.inss.gov.br); 2) Clique em 'Entrar com gov.br'; 3) Digite o CPF; 4) Clique em 'Esqueci minha senha'; 5) Escolha uma forma de recuperação: e-mail, SMS, aplicativo gov.br (reconhecimento facial) ou bancos credenciados; 6) Siga as instruções para criar uma nova senha.<br>📌 Caso não consiga recuperar online: utilizar formulário de atendimento ou comparecer a uma agência com documento com foto."
+  },
+  {
+    id: "id-jovem",
+    name: "ID Jovem",
+    fullName: "Identidade Jovem (ID Jovem)",
+    cat: ["informes"],
+    address: "N/A - Solicitação online",
+    hours: "N/A",
+    phones: ["N/A"],
+    services: "Meia-entrada e Passe Livre interestadual para jovens de baixa renda.",
+    desc: "Requisitos: • Ter entre 15 e 29 anos de idade; • Não precisa ser estudante; • Estar inscrito no Cadastro Único (CadÚnico); • Cadastro atualizado (nos últimos 24 meses); • Renda familiar de até 2 salários mínimos.<br>Gerar ID Jovem e mais informações: https://idjovem.juventude.gov.br/"
+  },
+  {
+    id: "passe-livre-antt",
+    name: "Passe Livre (ANTT)",
+    fullName: "Passe Livre Interestadual para Pessoas com Deficiência (ANTT)",
+    cat: ["informes"],
+    address: "N/A - Solicitação manual ou eletrônica",
+    hours: "N/A",
+    phones: ["N/A"],
+    services: "Passe Livre interestadual para pessoas com deficiência.",
+    desc: "Duas formas de solicitação: manual (envio da documentação pelos Correios) ou eletrônica. Documentos necessários: • Formulário de requerimento do benefício; • Atestado médico padrão do Passe Livre; • 1 foto 3x4 colorida, com fundo branco; • Documento de identificação com CPF; • Caso possua acompanhante: documento de identificação com CPF.<br>Link para solicitação: https://passelivre.antt.gov.br/"
+  },
+  {
+    id: "projeto-artcanto",
+    name: "Projeto ArtCanto",
+    fullName: "Projeto ArtCanto",
+    cat: ["informes"],
+    address: "Av. Raimundo Rodrigues Coelho, nº 80 - Dr. Silvio Botelho, Boa Vista-RR",
+    hours: "Segunda, quarta e sexta-feira (Manhã: 08h às 11h | Tarde: 14h às 17h)",
+    phones: ["N/A"],
+    services: "Acompanhamento social, pedagógico e musical de crianças e adolescentes.",
+    desc: "Promove a educação por meio de acompanhamento social, pedagógico e musical de crianças e adolescentes em situação de vulnerabilidade social. Requisitos: • Ter entre 7 e 17 anos completos; • Estar regularmente matriculado e frequentando a rede pública de ensino (estadual ou municipal); • Responsável legal inscrito no CadÚnico; • Renda familiar igual ou inferior a dois salários mínimos; • Não é permitida a participação de irmãos da mesma família, salvo gêmeos.<br>Atividades: prática de canto; ensino de teoria musical e instrumentos.<br>Benefícios: bolsa de estudos; camiseta, vale-transporte e lanche."
+  },
+  {
+    id: "programa-dedo-verde",
+    name: "Programa Dedo Verde",
+    fullName: "Programa Dedo Verde",
+    cat: ["informes"],
+    address: "Av. Brigadeiro Eduardo Gomes, nº 100 - Bairro dos Estados, Boa Vista-RR",
+    hours: "Segunda, terça, quinta e sexta-feira (Manhã: 08h às 11h | Tarde: 14h às 17h)",
+    phones: ["N/A"],
+    services: "Educação ambiental e acompanhamento social e pedagógico de adolescentes.",
+    desc: "Promove a educação com acompanhamento social e pedagógico, com ênfase na cidadania ambiental de adolescentes em situação de vulnerabilidade social. Requisitos: • Ter entre 14 e 17 anos completos; • Estar regularmente matriculado e frequentando a rede pública de ensino; • Responsável legal inscrito no CadÚnico; • Renda per capita igual ou inferior a meio salário mínimo; • Não é permitida a participação de irmãos da mesma família, salvo gêmeos.<br>Atividades por idade: 14 a 15 anos - produção de plantas; 16 anos - compostagem e produção de mudas medicinais; 17 anos - produção de mudas ornamentais.<br>Benefícios: bolsa de estudos; camiseta, vale-transporte e lanche."
+  },
+  {
+    id: "programa-rumo-certo",
+    name: "Programa Rumo Certo",
+    fullName: "Programa Rumo Certo",
+    cat: ["informes"],
+    address: "Atuação em órgãos públicos e instituições conveniadas, Boa Vista-RR",
+    hours: "Turno oposto ao escolar (Manhã: 08h às 11h30 | Tarde: 14h às 17h30)",
+    phones: ["N/A"],
+    services: "Formação educacional continuada com preparação profissional.",
+    desc: "Promove formação educacional continuada com preparação profissional para o mercado de trabalho, especialmente em áreas administrativas. Requisitos: • Ter entre 15 e 16 anos completos; • Estar regularmente matriculado e frequentando a rede pública de ensino; • Responsável legal inscrito no CadÚnico; • Renda familiar per capita igual ou inferior a meio salário mínimo.<br>Atividades: atuação em áreas administrativas de órgãos públicos e instituições conveniadas.<br>Benefícios: bolsa de estudos; camiseta, vale-transporte e seguro de vida."
+  },
+  {
+    id: "scfv-cristiana",
+    name: "SCFV",
+    fullName: "Serviço de Convivência e Fortalecimento de Vínculos (SCFV)",
+    cat: ["informes"],
+    address: "CRAS Cristiana Vicente Nunes, Boa Vista-RR",
+    hours: "Segunda a quinta-feira (Manhã: 08h às 10h30 | Tarde: 14h30 às 16h30)",
+    phones: ["N/A"],
+    services: "Prevenção de risco social e fortalecimento de vínculos familiares e comunitários.",
+    desc: "Tem como objetivo prevenir situações de risco social e fortalecer vínculos familiares e comunitários. Requisitos: • Ter entre 6 e 17 anos completos; • Estar regularmente matriculado e frequentando a rede pública de ensino; • Responsável legal inscrito no CadÚnico.<br>Atividades: oficinas e palestras; esporte e lazer; orientação psicológica, social e pedagógica.<br>Benefícios: camiseta e lanche."
+  },
+  {
+    id: "projeto-cabelos-de-prata",
+    name: "Projeto Cabelos de Prata",
+    fullName: "Projeto Cabelos de Prata",
+    cat: ["informes"],
+    address: "CRAS Cristiana Vicente Nunes, Boa Vista-RR",
+    hours: "Segunda a quinta-feira, das 08h às 10h",
+    phones: ["N/A"],
+    services: "Atividades para o envelhecimento saudável.",
+    desc: "Desenvolve atividades que contribuem para o envelhecimento saudável. Requisitos: • Ter 60 anos ou mais; • Estar inscrito no CadÚnico.<br>Atividades: atividades recreativas; acesso a informações e orientações; orientação psicológica, social e pedagógica.<br>Benefícios: bolsa; camiseta e lanche."
   }
 ];
 
@@ -1661,23 +1814,61 @@ function escapeHtml(str) {
     .replace(/'/g, '&#39;');
 }
 
-// Normaliza texto para busca: minúsculas e sem acentos/diacríticos, para que
-// "sao francisco" encontre "São Francisco" e não exija digitar acento.
-function normalizeSearch(str) {
-  return String(str)
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .toLowerCase();
+// Formata a descrição dos "Informes" (avisos/programas) num estilo de
+// aviso informativo: destaca rótulos de seção (Requisitos, Atividades,
+// Benefícios etc.), transforma marcadores "•" em itens de linha própria,
+// numerações "1) 2) 3)" em passos, e converte URLs soltas em links clicáveis.
+function formatInformeDesc(desc) {
+  let html = String(desc);
+
+  const labels = [
+    '⚠️ Observações técnicas:',
+    'Atividades por idade:',
+    'Requisitos:',
+    'Atividades:',
+    'Benefícios:',
+    'Canais para solicitação:',
+    'Documentos necessários:',
+    'Duas formas de solicitação:',
+    'Gerar ID Jovem e mais informações:',
+    'Link para solicitação:',
+    'Site:'
+  ];
+  labels.forEach(l => {
+    html = html.split(l).join('<br><strong>' + l + '</strong>');
+  });
+
+  // Marcadores "•" viram itens em linha própria
+  html = html.replace(/\s*•\s*/g, '<br>• ');
+
+  // Passos numerados "1) texto" viram itens em linha própria
+  html = html.replace(/(\d+\))\s+/g, '<br>$1 ');
+
+  // Autolink de URLs soltas no texto
+  html = html.replace(/(https?:\/\/[^\s<]+)/g, '<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>');
+
+  // Limpeza de quebras de linha redundantes no início/meio
+  html = html.replace(/^(<br>)+/, '').replace(/(<br>){2,}/g, '<br>');
+
+  return html;
+}
+
+// Retorna uma linha de metadado (endereço/horário/contato) apenas quando
+// há valor útil — evita mostrar "N/A" nos cartões de Informes.
+function informeMetaRow(icon, label, value) {
+  const clean = stripHtml(value || '').trim();
+  if (!clean || clean === 'N/A' || clean.toUpperCase().startsWith('N/A')) return '';
+  return `<div class="info-group">${icon}<div><span class="label-tech">${label}</span>${value}</div></div>`;
 }
 
 function render() {
-  const query = normalizeSearch(document.getElementById('mainSearch').value.trim());
+  const query = document.getElementById('mainSearch').value.toLowerCase();
   const cat = document.querySelector('.filter-chip.active').dataset.cat;
   const favs = JSON.parse(localStorage.getItem('favs') || '[]');
   const grid = document.getElementById('grid');
 
   const filtered = DATA.filter(i => {
-    const matchSearch = normalizeSearch(i.name).includes(query) || normalizeSearch(i.address).includes(query) || normalizeSearch(i.desc).includes(query);
+    const matchSearch = i.name.toLowerCase().includes(query) || i.address.toLowerCase().includes(query) || i.desc.toLowerCase().includes(query);
     const isFav = favs.includes(i.id);
     const matchCat = cat === 'all' ||
                      (cat === 'fav' ? isFav :
@@ -1713,12 +1904,54 @@ function render() {
          </label>
          <div class="image-attach-hint">Formatos de imagem, até 5MB</div>`;
 
+    const isInforme = i.cat.includes('informes');
+
+    if (isInforme) {
+      const metaRows = [
+        informeMetaRow(ICONS.map, 'Localização', i.address),
+        informeMetaRow(ICONS.clock, 'Disponibilidade', i.hours),
+        informeMetaRow(ICONS.phone, 'Contato Técnico', i.phones.join(' · '))
+      ].filter(Boolean).join('');
+
+      return `
+      <div class="tech-card informe-card">
+        <div class="card-top">
+          <div style="display:flex; justify-content:space-between; align-items:start;">
+            <div style="display:flex; align-items:center; gap:0.55rem;">
+              <span class="informe-badge">${ICONS.info}</span>
+              <h3 style="margin:0;">${i.name}</h3>
+            </div>
+            <button onclick="toggleFav('${i.id}')" aria-label="${favs.includes(i.id) ? 'Remover ' + i.name + ' dos favoritos' : 'Adicionar ' + i.name + ' aos favoritos'}" aria-pressed="${favs.includes(i.id)}" style="background:none; border:none; cursor:pointer; color:${favs.includes(i.id) ? '#FEDD00' : '#CBD5E1'}">${ICONS.star}</button>
+          </div>
+          <span class="subtitle">📋 Informe · ${i.fullName}</span>
+        </div>
+        <div class="card-body">
+          ${metaRows}
+          <div class="informe-box">
+            <span class="label-tech" style="color:var(--brand-info-light);">O que é</span>
+            ${i.services}
+            ${formatInformeDesc(i.desc)}
+          </div>
+          <textarea class="tech-notes" placeholder="Anotações Técnicas / Conduta..." oninput="saveNote('${i.id}', this.value)">${escapeHtml(localStorage.getItem('note_'+i.id) || '')}</textarea>
+          <div class="image-attach-wrapper" id="img-wrap-${i.id}">
+            ${imageBlock}
+            <div class="image-error-msg" id="img-error-${i.id}" style="display:none;"></div>
+          </div>
+        </div>
+        <div class="card-actions">
+          <button class="btn-tech btn-secondary" onclick="share('${i.id}')">Compartilhar</button>
+          <button class="btn-tech btn-primary" onclick="printGuide('${i.id}')">Gerar Guia</button>
+        </div>
+      </div>
+    `;
+    }
+
     return `
     <div class="tech-card">
       <div class="card-top">
         <div style="display:flex; justify-content:space-between; align-items:start;">
           <h3>${i.name}</h3>
-          <button type="button" onclick="toggleFav('${i.id}')" aria-label="${favs.includes(i.id) ? 'Remover ' + i.name + ' dos favoritos' : 'Adicionar ' + i.name + ' aos favoritos'}" aria-pressed="${favs.includes(i.id)}" style="background:none; border:none; cursor:pointer; color:${favs.includes(i.id) ? '#FEDD00' : '#CBD5E1'}">${ICONS.star}</button>
+          <button onclick="toggleFav('${i.id}')" aria-label="${favs.includes(i.id) ? 'Remover ' + i.name + ' dos favoritos' : 'Adicionar ' + i.name + ' aos favoritos'}" aria-pressed="${favs.includes(i.id)}" style="background:none; border:none; cursor:pointer; color:${favs.includes(i.id) ? '#FEDD00' : '#CBD5E1'}">${ICONS.star}</button>
         </div>
         <span class="subtitle">${i.fullName}</span>
       </div>
@@ -1739,8 +1972,8 @@ function render() {
         </div>
       </div>
       <div class="card-actions">
-        <button type="button" class="btn-tech btn-secondary" onclick="share('${i.id}')">Compartilhar</button>
-        <button type="button" class="btn-tech btn-primary" onclick="printGuide('${i.id}')">Gerar Guia</button>
+        <button class="btn-tech btn-secondary" onclick="share('${i.id}')">Compartilhar</button>
+        <button class="btn-tech btn-primary" onclick="printGuide('${i.id}')">Gerar Guia</button>
       </div>
     </div>
   `;
@@ -1850,7 +2083,7 @@ function printGuide(id) {
             <td style="border:1.5px solid #0F172A; padding:8px 14px; vertical-align:middle;">
               <div>
                 <div style="font-size:1.25rem; font-weight:800; letter-spacing:0.02em; color:#0F172A;">FICHA DE ENCAMINHAMENTO TÉCNICO</div>
-                <div style="font-size:0.68rem; font-weight:700; color:#475569; text-transform:uppercase; letter-spacing:0.04em; margin-top:2px;">Argo SUAS · Sistema Único de Assistência Social do Estado de Roraima</div>
+                <div style="font-size:0.68rem; font-weight:700; color:#475569; text-transform:uppercase; letter-spacing:0.04em; margin-top:2px;">Argo do SUAS · Sistema Único de Assistência Social do Estado de Roraima</div>
               </div>
             </td>
             <td style="border:1.5px solid #0F172A; padding:8px 14px; text-align:center; width:180px;">
@@ -1972,7 +2205,7 @@ document.querySelectorAll('.filter-chip').forEach(c => c.addEventListener('click
   const controlsEl = document.querySelector('.controls');
   const controlsBottom = controlsEl.getBoundingClientRect().bottom;
   if (controlsBottom < 0 || window.scrollY > controlsEl.offsetTop + 400) {
-    controlsEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    document.querySelector('.controls').scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 }));
 
@@ -1987,9 +2220,7 @@ backToTopBtn.addEventListener('click', () => {
 
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('./sw.js')
-      .then(() => console.log('PWA Active'))
-      .catch(err => console.warn('Falha ao registrar o Service Worker:', err));
+    navigator.serviceWorker.register('./sw.js').then(() => console.log('PWA Active'));
   });
 }
 
