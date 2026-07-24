@@ -2,20 +2,20 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Argo · Gestão Técnica de Equipamentos</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Argo SUAS · Gestão Técnica de Equipamentos</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
-<meta name="theme-color" content="#115E59">
+<meta name="theme-color" content="#0091C2">
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="icon" href="favicon.ico">
 
 <style>
   :root {
-    --brand-primary: #115E59;
-    --brand-primary-light: #14B8A6;
+    --brand-primary: #0091C2;
+    --brand-primary-light: #29ABE2;
     --brand-secondary: #0F172A;
     --text-main: #1E293B;
     --text-muted: #475569;
@@ -37,7 +37,38 @@
     }
   }
 
+  html {
+    scroll-behavior: smooth;
+  }
+
   * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+  a:focus-visible,
+  button:focus-visible,
+  input:focus-visible,
+  textarea:focus-visible {
+    outline: 3px solid var(--brand-primary-light);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  .skip-link {
+    position: absolute;
+    top: -60px;
+    left: 1rem;
+    background: var(--brand-primary);
+    color: white;
+    padding: 0.75rem 1.25rem;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    z-index: 1000;
+    transition: top 0.2s;
+  }
+
+  .skip-link:focus {
+    top: 1rem;
+  }
 
   body {
     margin: 0;
@@ -53,6 +84,15 @@
     font-family: var(--font-sans);
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
+  }
+
+  /* Fix: background-attachment: fixed is unreliable on iOS Safari and can
+     cause the background to jump/flicker while scrolling on mobile. Fall
+     back to normal scrolling backgrounds on small screens. */
+  @media (max-width: 768px) {
+    body {
+      background-attachment: scroll, scroll;
+    }
   }
 
   @media (prefers-color-scheme: dark) {
@@ -88,7 +128,103 @@
   header.hero {
     background: var(--brand-secondary);
     color: white;
-    padding: 4rem 0;
+    padding: 3.5rem 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .argo-emblem {
+    position: absolute;
+    top: 50%;
+    right: 4%;
+    transform: translateY(-50%);
+    width: 320px;
+    height: 230px;
+    opacity: 0.9;
+    pointer-events: none;
+  }
+
+  .argo-emblem .river-wave {
+    fill: none;
+    stroke-linecap: round;
+  }
+
+  .argo-emblem .river-wave.wave-blue {
+    stroke: #0091C2;
+    stroke-width: 2.5;
+    opacity: 0.35;
+  }
+
+  .argo-emblem .river-wave.wave-green {
+    stroke: #009739;
+    stroke-width: 2.5;
+    opacity: 0.3;
+  }
+
+  .argo-emblem .embrace-hull {
+    fill: none;
+    stroke: url(#argoHullGradient);
+    stroke-width: 7;
+    stroke-linecap: round;
+  }
+
+  .argo-emblem .embrace-hull.inner {
+    stroke-width: 2.5;
+    opacity: 0.55;
+  }
+
+  .argo-emblem .hand-hint {
+    fill: none;
+    stroke: url(#argoHullGradient);
+    stroke-width: 3;
+    stroke-linecap: round;
+    opacity: 0.75;
+  }
+
+  .argo-emblem .sun-core {
+    fill: #FEDD00;
+    opacity: 0.95;
+  }
+
+  .argo-emblem .sun-ray {
+    stroke: #FEDD00;
+    stroke-width: 2;
+    stroke-linecap: round;
+    opacity: 0.55;
+  }
+
+  @media (max-width: 900px) {
+    .argo-emblem { display: none; }
+  }
+
+  .hero-top {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  .flag-group {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+    padding-right: 24px;
+    border-right: 1px solid rgba(148, 163, 184, 0.25);
+  }
+
+  @media (max-width: 560px) {
+    .flag-group {
+      padding-right: 0;
+      border-right: none;
+    }
+  }
+
+  .flag-group img,
+  .flag-group svg {
+    border-radius: 4px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.08);
+    display: block;
   }
 
   .flag-stripe {
@@ -124,6 +260,7 @@
     margin: 0;
     font-weight: 500;
     letter-spacing: -0.02em;
+    line-height: 1.1;
   }
 
   .hero .brand-sub {
@@ -141,7 +278,7 @@
     color: #94A3B8;
     max-width: 700px;
     font-size: 1.1rem;
-    margin-top: 1rem;
+    margin-top: 1.25rem;
   }
 
   .controls {
@@ -175,7 +312,7 @@
 
   .search-input:focus {
     border-color: var(--brand-primary);
-    box-shadow: 0 0 0 3px rgba(17, 94, 89, 0.1);
+    box-shadow: 0 0 0 3px rgba(0, 145, 194, 0.1);
   }
 
   .filter-bar {
@@ -200,10 +337,97 @@
     transition: all 0.2s;
   }
 
-  .filter-chip.active {
+  .search-input-wrapper {
+    position: relative;
+    flex: 1;
+    display: flex;
+    align-items: center;
+  }
+
+  .search-input-wrapper .search-input {
+    width: 100%;
+    padding-right: 2.6rem;
+  }
+
+  .search-clear-btn {
+    position: absolute;
+    right: 0.6rem;
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    line-height: 1;
+  }
+
+  .search-clear-btn:hover {
+    background: var(--bg-main);
+    color: var(--text-main);
+  }
+
+  .search-clear-btn.visible {
+    display: flex;
+  }
+
+  .filter-chip[aria-pressed="true"] {
     background: var(--brand-primary);
     color: white;
     border-color: var(--brand-primary);
+  }
+
+  .empty-state {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 3rem 1.5rem;
+    color: var(--text-muted);
+    border: 1.5px dashed var(--border-ui);
+    border-radius: var(--radius-ui);
+    background: var(--bg-card);
+  }
+
+  .empty-state strong {
+    display: block;
+    color: var(--text-main);
+    font-size: 1.05rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .back-to-top {
+    position: fixed;
+    right: 1.25rem;
+    bottom: 1.25rem;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--brand-primary);
+    color: white;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 20px -4px rgba(0,0,0,0.35);
+    opacity: 0;
+    transform: translateY(12px);
+    pointer-events: none;
+    transition: opacity 0.2s, transform 0.2s, background 0.2s;
+    z-index: 200;
+  }
+
+  .back-to-top.visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  .back-to-top:hover {
+    background: var(--brand-primary-light);
   }
 
   .equipment-grid {
@@ -216,7 +440,7 @@
   .card-top {
     padding: 1.5rem;
     border-bottom: 1px solid var(--border-ui);
-    background: linear-gradient(180deg, rgba(17, 94, 89, 0.05), rgba(17, 94, 89, 0) 80%);
+    background: linear-gradient(180deg, rgba(0, 145, 194, 0.05), rgba(0, 145, 194, 0) 80%);
   }
 
   .card-top h3 {
@@ -387,7 +611,7 @@
 
   .info-banner {
     grid-column: 1 / -1;
-    background: linear-gradient(180deg, rgba(17, 94, 89, 0.06), rgba(17, 94, 89, 0) 60%);
+    background: linear-gradient(180deg, rgba(0, 145, 194, 0.06), rgba(0, 145, 194, 0) 60%);
     border: 1.5px dashed var(--brand-primary);
     border-radius: var(--radius-ui);
     padding: 1.5rem;
@@ -450,6 +674,33 @@
     white-space: nowrap;
   }
 
+  footer.site-footer {
+    margin-top: 3rem;
+    padding: 2rem 0 2.5rem;
+    background: var(--brand-secondary);
+    color: #94A3B8;
+    text-align: center;
+  }
+
+  footer.site-footer p {
+    margin: 0;
+    font-size: 0.85rem;
+    letter-spacing: 0.02em;
+  }
+
+  footer.site-footer .footer-name {
+    font-family: var(--font-serif);
+    font-weight: 700;
+    font-style: italic;
+    color: var(--brand-primary-light);
+    font-size: 1rem;
+  }
+
+  footer.site-footer .footer-sep {
+    color: #475569;
+    margin: 0 0.5rem;
+  }
+
   #print-area { display: none; }
   @media print {
     @page { size: landscape; margin: 0.5cm; }
@@ -490,11 +741,39 @@
 </head>
 <body>
 
+<a href="#mainContent" class="skip-link">Pular para o conteúdo</a>
+
 <header class="hero">
+  <svg class="argo-emblem" viewBox="0 0 320 230" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <linearGradient id="argoHullGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%" stop-color="#0091C2"/>
+        <stop offset="50%" stop-color="#29ABE2"/>
+        <stop offset="100%" stop-color="#009739"/>
+      </linearGradient>
+    </defs>
+
+    <path class="river-wave wave-blue" d="M0,178 C40,164 70,192 110,178 C150,164 180,192 220,178 C250,167 285,186 320,175"/>
+    <path class="river-wave wave-green" d="M0,196 C45,183 80,208 125,195 C165,183 200,208 240,196 C270,186 300,202 320,193"/>
+    <path class="river-wave wave-blue" d="M0,212 C50,200 90,222 135,210 C175,199 215,222 255,211 C280,203 305,215 320,209" style="opacity:0.2;"/>
+
+    <path class="embrace-hull" d="M42,86 C58,132 100,178 152,190 C165,193 175,193 168,193 C205,193 250,150 278,86"/>
+    <path class="embrace-hull inner" d="M60,92 C76,128 112,164 160,174 C204,164 240,128 260,92"/>
+
+    <path class="hand-hint" d="M42,86 C36,72 34,58 40,44"/>
+    <path class="hand-hint" d="M55,74 C51,60 51,48 58,36" style="opacity:0.5;"/>
+    <path class="hand-hint" d="M278,86 C284,72 286,58 280,44"/>
+    <path class="hand-hint" d="M265,74 C269,60 269,48 262,36" style="opacity:0.5;"/>
+
+    <circle class="sun-core" cx="160" cy="46" r="11"/>
+    <line class="sun-ray" x1="160" y1="18" x2="160" y2="6"/>
+    <line class="sun-ray" x1="136" y1="28" x2="126" y2="18"/>
+    <line class="sun-ray" x1="184" y1="28" x2="194" y2="18"/>
+  </svg>
   <div class="container">
-    <h1 style="display:flex; align-items:center; gap:16px; flex-wrap:wrap;">
-      <span style="display:flex; align-items:center; gap:10px; flex-shrink:0;">
-        <svg viewBox="0 0 400 280" width="46" height="32" xmlns="http://www.w3.org/2000/svg" style="border-radius:3px; box-shadow:0 2px 8px rgba(0,0,0,0.35); display:block; flex-shrink:0;" title="Bandeira de Roraima">
+    <div class="hero-top">
+      <div class="flag-group">
+        <svg viewBox="0 0 400 280" width="52" height="36" xmlns="http://www.w3.org/2000/svg" title="Bandeira de Roraima">
           <rect x="0" y="0" width="400" height="280" fill="#FFFFFF"/>
           <polygon points="0,280 0,0 240,0 120,280" fill="#0091C2"/>
           <polygon points="120,280 240,0 360,0 240,280" fill="#FFFFFF"/>
@@ -502,19 +781,13 @@
           <rect x="0" y="242" width="400" height="14" fill="#ED1C24"/>
           <polygon points="200,212 208.82,235.86 234.24,236.88 214.27,252.64 221.16,277.12 200,263 178.84,277.12 185.73,252.64 165.76,236.88 191.18,235.86" fill="#FEDD00"/>
         </svg>
-        <img src="https://www.simbolosmunicipais.com.br/multimidia/rr/rr-boa-vista-bandeira-VvpTlaUS.jpg" alt="Bandeira de Boa Vista" title="Bandeira de Boa Vista" width="46" height="32" style="border-radius:3px; box-shadow:0 2px 8px rgba(0,0,0,0.35); display:block; flex-shrink:0; object-fit:cover; background:white;">
-        <span style="width:34px; height:34px; border-radius:50%; background:white; display:flex; align-items:center; justify-content:center; box-shadow:0 2px 8px rgba(0,0,0,0.35); flex-shrink:0; overflow:hidden;">
-          <img src="https://seeklogo.com/images/S/suas-logo-A78B0E8D10-seeklogo.com.png" alt="Símbolo do SUAS" title="SUAS - Sistema Único de Assistência Social" style="width:26px; height:26px; object-fit:contain;">
-        </span>
-        <span style="width:34px; height:34px; border-radius:50%; background:white; display:flex; align-items:center; justify-content:center; box-shadow:0 2px 8px rgba(0,0,0,0.35); flex-shrink:0; overflow:hidden;">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/S%C3%ADmbolo_da_Psicologia.svg/1200px-S%C3%ADmbolo_da_Psicologia.svg.png" alt="Símbolo da Psicologia" title="Símbolo da Psicologia" style="width:24px; height:24px; object-fit:contain;">
-        </span>
-      </span>
-      <span>
-        <span class="brand-mark">Argo</span>
+        <img src="https://www.simbolosmunicipais.com.br/multimidia/rr/rr-boa-vista-bandeira-VvpTlaUS.jpg" alt="Bandeira de Boa Vista" title="Bandeira de Boa Vista" width="52" height="36" style="object-fit:cover; background:white;">
+      </div>
+      <h1>
+        <span class="brand-mark">Argo</span><span class="brand-mark" style="font-size:0.55em; font-style:normal; font-weight:600; color:#94A3B8; vertical-align:middle; margin-left:0.3em;">SUAS</span>
         <span class="brand-sub">Rede de Políticas Públicas de Roraima</span>
-      </span>
-    </h1>
+      </h1>
+    </div>
     <p>Diretório técnico de equipamentos socioassistenciais e suporte à rede RAPS de Boa Vista, Roraima. Gestão centralizada para profissionais de saúde e assistência.</p>
   </div>
 </header>
@@ -523,32 +796,36 @@
 <div class="controls">
   <div class="container">
     <div class="search-wrapper">
-      <input type="text" id="mainSearch" class="search-input" placeholder="Pesquisar por unidade, bairro ou serviço técnico...">
+      <div class="search-input-wrapper">
+        <input type="text" id="mainSearch" class="search-input" placeholder="Pesquisar por unidade, bairro ou serviço técnico..." aria-label="Pesquisar unidade, bairro ou serviço">
+        <button type="button" id="searchClearBtn" class="search-clear-btn" title="Limpar busca" aria-label="Limpar busca">✕</button>
+      </div>
       <a class="btn-tech btn-secondary btn-link" href="https://mapa-social.mds.gov.br/" target="_blank" rel="noopener noreferrer" title="Abrir Mapa Social (MDS) em nova aba">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
         Mapa Social (MDS)
       </a>
-      <button class="btn-tech btn-secondary" onclick="exportData()" title="Backup de Dados">
+      <button type="button" class="btn-tech btn-secondary" onclick="exportData()" title="Backup de Dados">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
       </button>
     </div>
     <div class="filter-bar" id="filterBar">
-      <button class="filter-chip active" data-cat="all">Todos os Equipamentos</button>
-      <button class="filter-chip" data-cat="saude">RAPS</button>
-      <button class="filter-chip" data-cat="tea">TEA / PcD</button>
-      <button class="filter-chip" data-cat="social">Assistência Social</button>
-      <button class="filter-chip" data-cat="educacao">Educação</button>
-      <button class="filter-chip" data-cat="juridico">Sistema Judicial</button>
-      <button class="filter-chip" data-cat="conselho">Conselho Tutelar</button>
-      <button class="filter-chip" data-cat="bancos">Rede Bancária</button>
-      <button class="filter-chip" data-cat="previdencia">Previdência</button>
-      <button class="filter-chip" data-cat="fav">⭐ Favoritos</button>
+      <button type="button" class="filter-chip active" data-cat="all" aria-pressed="true">Todos os Equipamentos</button>
+      <button type="button" class="filter-chip" data-cat="saude" aria-pressed="false">RAPS</button>
+      <button type="button" class="filter-chip" data-cat="tea" aria-pressed="false">TEA / PcD</button>
+      <button type="button" class="filter-chip" data-cat="social" aria-pressed="false">Assistência Social</button>
+      <button type="button" class="filter-chip" data-cat="educacao" aria-pressed="false">Educação</button>
+      <button type="button" class="filter-chip" data-cat="juridico" aria-pressed="false">Sistema Judicial</button>
+      <button type="button" class="filter-chip" data-cat="conselho" aria-pressed="false">Conselho Tutelar</button>
+      <button type="button" class="filter-chip" data-cat="bancos" aria-pressed="false">Rede Bancária</button>
+      <button type="button" class="filter-chip" data-cat="previdencia" aria-pressed="false">Previdência</button>
+      <button type="button" class="filter-chip" data-cat="mobilidade" aria-pressed="false">Mobilidade</button>
+      <button type="button" class="filter-chip" data-cat="fav" aria-pressed="false">⭐ Favoritos</button>
     </div>
   </div>
 </div>
 
-<main class="container">
-  <div id="resultsInfo" style="margin-top: 1.5rem; display:inline-flex; align-items:center; gap:0.4rem; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; color: var(--brand-primary); background: rgba(17, 94, 89, 0.08); padding: 0.4rem 0.9rem; border-radius: 999px;">
+<main class="container" id="mainContent">
+  <div id="resultsInfo" style="margin-top: 1.5rem; display:inline-flex; align-items:center; gap:0.4rem; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; color: var(--brand-primary); background: rgba(0, 145, 194, 0.08); padding: 0.4rem 0.9rem; border-radius: 999px;">
     <span id="counter">0</span> registros localizados
   </div>
 
@@ -564,6 +841,24 @@
 
   <div class="equipment-grid" id="grid"></div>
 </main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>
+      <span class="footer-name">Paulo Xavier</span>
+      <span class="footer-sep">·</span>
+      <span>CRP-20/09816</span>
+      <span class="footer-sep">·</span>
+      <span>Psicólogo</span>
+      <span class="footer-sep">·</span>
+      <span>Boa Vista, RR</span>
+    </p>
+  </div>
+</footer>
+
+<button type="button" id="backToTop" class="back-to-top" title="Voltar ao topo" aria-label="Voltar ao topo">
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+</button>
 
 <div id="print-area"></div>
 
@@ -728,7 +1023,7 @@ const DATA = [
     name: "UBS Jorge André Gurjão",
     fullName: "Unidade Básica de Saúde Jorge André Gurjão",
     cat: ["saude"],
-    address: "Laura Moreita, Boa Vista-RR",
+    address: "Laura Moreira, Boa Vista-RR",
     hours: "Segunda a sexta, conforme unidade",
     phones: ["N/A"],
     services: "Acolhimento em saúde mental, grupos terapêuticos, apoio a grupos operativos, atendimento individual de curto prazo, visita domiciliar, apoio matricial.",
@@ -1305,6 +1600,28 @@ const DATA = [
     phones: ["135"],
     services: "Aposentadoria, Auxílio-doença, BPC/LOAS, Pensão por Morte, Perícia Médica.",
     desc: "Agência federal de previdência social; atendimento presencial exclusivamente mediante agendamento pela Central 135 ou Meu INSS."
+  },
+  {
+    id: "terminal-onibus-jose-campanha-wanderley",
+    name: "Terminal de Ônibus Urbano",
+    fullName: "Terminal de Ônibus Urbano – José Campanha Wanderley",
+    cat: ["mobilidade"],
+    address: "R. Barreto Leite, 202-A - Centro, Boa Vista-RR, 69301-330",
+    hours: "N/A",
+    phones: ["N/A"],
+    services: "Rotas de Transporte Coletivo Urbano.",
+    desc: "Terminal central de integração do transporte coletivo urbano de Boa Vista, ponto de referência para embarque e conexão entre as linhas de ônibus da cidade."
+  },
+  {
+    id: "smtran",
+    name: "SMTRAN",
+    fullName: "Superintendência Municipal de Trânsito",
+    cat: ["mobilidade"],
+    address: "Av. Cap. Júlio Bezerra, 1481 - Trinta e Um de Março, Boa Vista-RR, 69305-025",
+    hours: "N/A",
+    phones: ["(95) 4009-9333"],
+    services: "Gestão do Trânsito, Transporte Coletivo, Fiscalização Viária.",
+    desc: "Órgão municipal responsável pela gestão do trânsito e do transporte coletivo urbano de Boa Vista."
   }
 ];
 
@@ -1319,8 +1636,6 @@ const ICONS = {
 
 const MAX_IMAGE_BYTES = 5 * 1024 * 1024; // 5 MB
 
-// Destaque curto sobre as condicionalidades do Bolsa Família, exibido
-// dentro do "Escopo de Atuação" de cada equipamento de Educação.
 const BF_HIGHLIGHT_HTML = `
   <div style="margin-top:0.75rem; padding:0.75rem; border-left:3px solid var(--brand-primary); background:rgba(17,94,89,0.06); border-radius:6px; font-size:0.8rem;">
     <strong style="color:var(--brand-primary);">Condicionalidades do Bolsa Família:</strong>
@@ -1329,22 +1644,40 @@ const BF_HIGHLIGHT_HTML = `
   </div>
 `;
 
-// Remove marcação HTML (ex.: <br>) de um texto, convertendo quebras de
-// linha em \n. Usado antes de montar mensagens de texto puro (WhatsApp),
-// já que alguns registros (ex.: agências da Caixa) guardam múltiplas
-// linhas com <br> para exibição na tela/impressão.
 function stripHtml(html) {
   return String(html).replace(/<br\s*\/?>/gi, '\n').replace(/<[^>]+>/g, '');
 }
 
+// Escapa HTML nas anotações digitadas pelo usuário antes de inserir no DOM
+// via innerHTML/template literal. Sem isso, um texto como "</textarea><img
+// src=x onerror=...>" digitado numa anotação quebraria a estrutura da
+// página e poderia executar script (armazenado no localStorage).
+function escapeHtml(str) {
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+// Normaliza texto para busca: minúsculas e sem acentos/diacríticos, para que
+// "sao francisco" encontre "São Francisco" e não exija digitar acento.
+function normalizeSearch(str) {
+  return String(str)
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase();
+}
+
 function render() {
-  const query = document.getElementById('mainSearch').value.toLowerCase();
+  const query = normalizeSearch(document.getElementById('mainSearch').value.trim());
   const cat = document.querySelector('.filter-chip.active').dataset.cat;
   const favs = JSON.parse(localStorage.getItem('favs') || '[]');
   const grid = document.getElementById('grid');
 
   const filtered = DATA.filter(i => {
-    const matchSearch = i.name.toLowerCase().includes(query) || i.address.toLowerCase().includes(query) || i.desc.toLowerCase().includes(query);
+    const matchSearch = normalizeSearch(i.name).includes(query) || normalizeSearch(i.address).includes(query) || normalizeSearch(i.desc).includes(query);
     const isFav = favs.includes(i.id);
     const matchCat = cat === 'all' ||
                      (cat === 'fav' ? isFav :
@@ -1354,6 +1687,18 @@ function render() {
   });
 
   document.getElementById('counter').textContent = filtered.length;
+
+  const clearBtn = document.getElementById('searchClearBtn');
+  if (clearBtn) clearBtn.classList.toggle('visible', query.length > 0);
+
+  if (filtered.length === 0) {
+    grid.innerHTML = `
+      <div class="empty-state">
+        <strong>Nenhum registro encontrado</strong>
+        Tente ajustar os termos da busca ou selecionar outra categoria.
+      </div>`;
+    return;
+  }
 
   grid.innerHTML = filtered.map(i => {
     const imgData = localStorage.getItem('img_'+i.id);
@@ -1373,7 +1718,7 @@ function render() {
       <div class="card-top">
         <div style="display:flex; justify-content:space-between; align-items:start;">
           <h3>${i.name}</h3>
-          <button onclick="toggleFav('${i.id}')" style="background:none; border:none; cursor:pointer; color:${favs.includes(i.id) ? '#F59E0B' : '#CBD5E1'}">${ICONS.star}</button>
+          <button type="button" onclick="toggleFav('${i.id}')" aria-label="${favs.includes(i.id) ? 'Remover ' + i.name + ' dos favoritos' : 'Adicionar ' + i.name + ' aos favoritos'}" aria-pressed="${favs.includes(i.id)}" style="background:none; border:none; cursor:pointer; color:${favs.includes(i.id) ? '#FEDD00' : '#CBD5E1'}">${ICONS.star}</button>
         </div>
         <span class="subtitle">${i.fullName}</span>
       </div>
@@ -1387,15 +1732,15 @@ function render() {
           <div style="margin-top:0.5rem; font-weight:600; color:var(--brand-primary); font-size:0.75rem;">SERVIÇOS: ${Array.isArray(i.services) ? i.services.join(', ') : i.services}</div>
           ${i.cat.includes('educacao') ? BF_HIGHLIGHT_HTML : ''}
         </div>
-        <textarea class="tech-notes" placeholder="Anotações Técnicas / Conduta..." oninput="localStorage.setItem('note_${i.id}', this.value)">${localStorage.getItem('note_'+i.id) || ''}</textarea>
+        <textarea class="tech-notes" placeholder="Anotações Técnicas / Conduta..." oninput="saveNote('${i.id}', this.value)">${escapeHtml(localStorage.getItem('note_'+i.id) || '')}</textarea>
         <div class="image-attach-wrapper" id="img-wrap-${i.id}">
           ${imageBlock}
           <div class="image-error-msg" id="img-error-${i.id}" style="display:none;"></div>
         </div>
       </div>
       <div class="card-actions">
-        <button class="btn-tech btn-secondary" onclick="share('${i.id}')">Compartilhar</button>
-        <button class="btn-tech btn-primary" onclick="printGuide('${i.id}')">Gerar Guia</button>
+        <button type="button" class="btn-tech btn-secondary" onclick="share('${i.id}')">Compartilhar</button>
+        <button type="button" class="btn-tech btn-primary" onclick="printGuide('${i.id}')">Gerar Guia</button>
       </div>
     </div>
   `;
@@ -1450,6 +1795,14 @@ function removeImage(id) {
   render();
 }
 
+function saveNote(id, value) {
+  try {
+    localStorage.setItem('note_'+id, value);
+  } catch (e) {
+    showImageError(id, 'Não foi possível salvar a anotação (armazenamento indisponível ou cheio).');
+  }
+}
+
 function toggleFav(id) {
   let f = JSON.parse(localStorage.getItem('favs') || '[]');
   f = f.includes(id) ? f.filter(x => x !== id) : [...f, id];
@@ -1460,7 +1813,7 @@ function toggleFav(id) {
 function share(id) {
   const i = DATA.find(x => x.id === id);
   const t = `*UNIDADE:* ${i.fullName}\n*ENDEREÇO:* ${stripHtml(i.address)}\n*CONTATO:* ${stripHtml(i.phones.join(' / '))}`;
-  window.open(`https://wa.me/?text=${encodeURIComponent(t)}`);
+  window.open(`https://wa.me/?text=${encodeURIComponent(t)}`, '_blank', 'noopener,noreferrer');
 }
 
 function printGuide(id) {
@@ -1469,44 +1822,35 @@ function printGuide(id) {
   const imgData = localStorage.getItem('img_'+id);
   const date = new Date().toLocaleDateString('pt-BR', {day:'numeric', month:'long', year:'numeric'});
 
-  // Estima quantas linhas o endereço/telefone ocupam (contando quebras <br>)
-  // para reduzir a fonte proporcionalmente e evitar que conteúdo extenso
-  // (ex.: cartões com múltiplas unidades) estoure a caixa lateral.
   const countLines = (txt) => (String(txt).match(/<br>/g) || []).length + 1;
   const addressLines = countLines(i.address);
   const phoneLines = countLines(i.phones.join('<br>'));
   const addressFontSize = addressLines <= 2 ? 13 : addressLines <= 4 ? 10.5 : 8.5;
   const phoneFontSize = phoneLines <= 1 ? 16 : phoneLines <= 3 ? 11.5 : 9;
 
-  // Marca d'água: várias letras Psi (Ψ) espalhadas em padrão diagonal,
-  // como em documentos oficiais com marca d'água repetida. Usa texto
-  // (não imagem) para garantir que sempre apareça na impressão.
   const wmPositions = [
     [10, 18], [37, 14], [64, 18], [91, 14],
     [23, 50], [50, 46], [77, 50],
     [10, 82], [37, 86], [64, 82], [91, 86]
   ];
   const watermark = wmPositions.map(([x, y]) => `
-    <div style="position:absolute; top:${y}%; left:${x}%; transform:translate(-50%,-50%) rotate(-18deg); opacity:0.055; z-index:0; font-size:6.5rem; line-height:1; font-family:'Lora', serif; font-weight:700; color:#115E59; user-select:none; pointer-events:none;">Ψ</div>
+    <div style="position:absolute; top:${y}%; left:${x}%; transform:translate(-50%,-50%) rotate(-18deg); opacity:0.055; z-index:0; font-size:6.5rem; line-height:1; font-family:'Lora', serif; font-weight:700; color:#0091C2; user-select:none; pointer-events:none;">Ψ</div>
   `).join('');
 
-  // --- PÁGINA 1: Ficha de Encaminhamento Técnico (sem imagem) ---
   const firstPage = `
     <div class="print-page" style="padding:0; position:relative; font-family:'Inter', sans-serif; color:#0F172A; box-sizing:border-box; display:flex; flex-direction:column; background:white; border:2px solid #0F172A;">
       ${watermark}
 
-      <!-- Moldura interna (dupla linha, estilo formulário oficial) -->
       <div style="position:absolute; inset:0.25cm; border:1px solid #94A3B8; z-index:0; pointer-events:none;"></div>
 
       <div style="position:relative; z-index:1; display:flex; flex-direction:column; height:100%; padding:0.7cm 0.9cm; box-sizing:border-box;">
 
-        <!-- Cabeçalho: identidade + data -->
         <table style="width:100%; border-collapse:collapse; margin-bottom:8px; table-layout:fixed;">
           <tr>
             <td style="border:1.5px solid #0F172A; padding:8px 14px; vertical-align:middle;">
               <div>
                 <div style="font-size:1.25rem; font-weight:800; letter-spacing:0.02em; color:#0F172A;">FICHA DE ENCAMINHAMENTO TÉCNICO</div>
-                <div style="font-size:0.68rem; font-weight:700; color:#475569; text-transform:uppercase; letter-spacing:0.04em; margin-top:2px;">Argo · Sistema Único de Assistência Social do Estado de Roraima</div>
+                <div style="font-size:0.68rem; font-weight:700; color:#475569; text-transform:uppercase; letter-spacing:0.04em; margin-top:2px;">Argo SUAS · Sistema Único de Assistência Social do Estado de Roraima</div>
               </div>
             </td>
             <td style="border:1.5px solid #0F172A; padding:8px 14px; text-align:center; width:180px;">
@@ -1516,7 +1860,6 @@ function printGuide(id) {
           </tr>
         </table>
 
-        <!-- Profissional responsável -->
         <table style="width:100%; border-collapse:collapse; margin-bottom:8px; table-layout:fixed;">
           <tr>
             <td style="border:1.5px solid #0F172A; background:#F1F5F9; padding:6px 12px; font-size:0.65rem; font-weight:800; text-transform:uppercase; letter-spacing:0.03em; width:220px;">Profissional Responsável</td>
@@ -1524,19 +1867,16 @@ function printGuide(id) {
           </tr>
         </table>
 
-        <!-- Corpo: Esquerda (Destino + Conduta) / Direita (Dados da Unidade, em formato de tabela) -->
         <div style="display:grid; grid-template-columns: 1fr 300px; flex-grow:1; min-height:0; border:1.5px solid #0F172A; border-top:none;">
 
-          <!-- Coluna esquerda -->
           <div style="display:flex; flex-direction:column; min-height:0; border-right:1.5px solid #0F172A; padding:14px;">
             <span style="font-size:0.65rem; font-weight:800; color:#475569; text-transform:uppercase; letter-spacing:0.03em;">Unidade de Destino</span>
-            <h2 style="margin:4px 0 12px 0; font-size:1.25rem; color:#115E59; font-family:'Lora', serif; font-weight:700; border-bottom:1px solid #CBD5E1; padding-bottom:10px;">${i.fullName}</h2>
+            <h2 style="margin:4px 0 12px 0; font-size:1.25rem; color:#0091C2; font-family:'Lora', serif; font-weight:700; border-bottom:1px solid #CBD5E1; padding-bottom:10px;">${i.fullName}</h2>
 
             <span style="font-size:0.65rem; font-weight:800; color:#475569; text-transform:uppercase; letter-spacing:0.03em; margin-bottom:6px; display:block;">Conduta e Orientações Técnicas</span>
-            <div id="printNoteBox" style="flex-grow:1; padding:14px; border:1.5px solid #0F172A; border-radius:4px; font-size:15px; line-height:1.5; white-space:pre-wrap; background:rgba(17,94,89,0.02); overflow:hidden;">${note}</div>
+            <div id="printNoteBox" style="flex-grow:1; padding:14px; border:1.5px solid #0F172A; border-radius:4px; font-size:15px; line-height:1.5; white-space:pre-wrap; background:rgba(17,94,89,0.02); overflow:hidden;">${escapeHtml(note)}</div>
           </div>
 
-          <!-- Coluna direita: ficha da unidade em formato tabular -->
           <div style="display:flex; flex-direction:column; height:100%;">
             <table style="width:100%; border-collapse:collapse; table-layout:fixed;">
               <tr>
@@ -1549,13 +1889,12 @@ function printGuide(id) {
               </tr>
               <tr>
                 <td style="background:#F1F5F9; padding:8px 8px; font-size:0.6rem; font-weight:800; text-transform:uppercase; letter-spacing:0.02em; white-space:nowrap; vertical-align:top;">Contato</td>
-                <td style="padding:8px 10px; font-size:${phoneFontSize}px; line-height:1.4; vertical-align:top; color:#115E59; font-weight:800;">${i.phones.join('<br>')}</td>
+                <td style="padding:8px 10px; font-size:${phoneFontSize}px; line-height:1.4; vertical-align:top; color:#0091C2; font-weight:800;">${i.phones.join('<br>')}</td>
               </tr>
             </table>
           </div>
         </div>
 
-        <!-- Rodapé e Assinatura -->
         <div style="margin-top:10px; display:flex; justify-content:space-between; align-items:flex-end; flex-shrink:0;">
           <div>
             <p style="margin:0; font-size:0.82rem; font-weight:700; color:#334155;">Boa Vista - RR, ${date}.</p>
@@ -1570,7 +1909,6 @@ function printGuide(id) {
     </div>
   `;
 
-  // --- PÁGINA 2: Anexo fotográfico (só existe se houver imagem) ---
   const secondPage = imgData ? `
     <div class="print-page" style="position:relative; padding:0.9cm 1.1cm; box-sizing:border-box; display:flex; flex-direction:column; background:white; border:2px solid #0F172A;">
       <div style="position:absolute; inset:0.25cm; border:1px solid #94A3B8; pointer-events:none;"></div>
@@ -1592,9 +1930,6 @@ function printGuide(id) {
 
   document.getElementById('print-area').innerHTML = firstPage + secondPage;
 
-  // Ajuste automático do texto de "Conduta e Orientações" para caber em uma
-  // única página sem cortar conteúdo. Reduz a fonte progressivamente até o
-  // texto caber na altura disponível da caixa (mínimo 8px de legibilidade).
   const noteBox = document.getElementById('printNoteBox');
   if (noteBox) {
     let fontSize = 15;
@@ -1619,15 +1954,42 @@ function exportData() {
 }
 
 document.getElementById('mainSearch').addEventListener('input', render);
-document.querySelectorAll('.filter-chip').forEach(c => c.addEventListener('click', () => {
-  document.querySelector('.filter-chip.active').classList.remove('active');
-  c.classList.add('active');
+
+document.getElementById('searchClearBtn').addEventListener('click', () => {
+  const input = document.getElementById('mainSearch');
+  input.value = '';
+  input.focus();
   render();
+});
+
+document.querySelectorAll('.filter-chip').forEach(c => c.addEventListener('click', () => {
+  const prevActive = document.querySelector('.filter-chip.active');
+  prevActive.classList.remove('active');
+  prevActive.setAttribute('aria-pressed', 'false');
+  c.classList.add('active');
+  c.setAttribute('aria-pressed', 'true');
+  render();
+  const controlsEl = document.querySelector('.controls');
+  const controlsBottom = controlsEl.getBoundingClientRect().bottom;
+  if (controlsBottom < 0 || window.scrollY > controlsEl.offsetTop + 400) {
+    controlsEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
 }));
+
+const backToTopBtn = document.getElementById('backToTop');
+window.addEventListener('scroll', () => {
+  backToTopBtn.classList.toggle('visible', window.scrollY > 600);
+}, { passive: true });
+backToTopBtn.addEventListener('click', () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  document.getElementById('mainSearch').focus();
+});
 
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('./sw.js').then(() => console.log('PWA Active'));
+    navigator.serviceWorker.register('./sw.js')
+      .then(() => console.log('PWA Active'))
+      .catch(err => console.warn('Falha ao registrar o Service Worker:', err));
   });
 }
 
