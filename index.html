@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Argo do SUAS · Gestão Técnica de Equipamentos</title>
+<title>Argo SUAS · Gestão Técnica de Equipamentos</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
@@ -19,6 +19,8 @@
     --brand-secondary: #0F172A;
     --brand-info: #B45309;
     --brand-info-light: #D97706;
+    --brand-team: #6c5ce7;
+    --brand-team-light: #8b7bf0;
     --text-main: #1E293B;
     --text-muted: #475569;
     --bg-main: #F8FAFC;
@@ -696,6 +698,135 @@
 
   .informe-meta span { color: var(--text-main); font-weight: 600; }
 
+  /* Cartão da categoria "Equipe Técnica" — visual de diretório de RH,
+     usando o acento roxo (--brand-team) para diferenciar de unidades e informes. */
+  .team-card {
+    border-top: 3px solid var(--brand-team);
+    grid-column: 1 / -1;
+  }
+
+  .team-card .card-top {
+    background: linear-gradient(180deg, rgba(108, 92, 231, 0.07), rgba(108, 92, 231, 0) 80%);
+  }
+
+  .team-card .card-top h3 {
+    color: var(--brand-team);
+  }
+
+  .team-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--brand-team);
+    flex-shrink: 0;
+  }
+
+  .team-tables {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 1.25rem;
+  }
+
+  @media (max-width: 900px) {
+    .team-tables { grid-template-columns: 1fr; }
+  }
+
+  .team-subcard {
+    border: 1px solid var(--border-ui);
+    border-radius: 10px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .team-subcard-header {
+    padding: 0.85rem 1.1rem;
+    font-weight: 800;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .team-subcard-header.fixa {
+    background: rgba(0, 145, 194, 0.08);
+    color: var(--brand-primary);
+  }
+
+  .team-subcard-header.volante {
+    background: rgba(108, 92, 231, 0.08);
+    color: var(--brand-team);
+  }
+
+  .team-subcard-note {
+    padding: 0.65rem 1.1rem;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    background: var(--bg-main);
+    border-bottom: 1px solid var(--border-ui);
+  }
+
+  .team-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.82rem;
+  }
+
+  .team-table th {
+    text-align: left;
+    padding: 0.6rem 1.1rem;
+    background: var(--bg-main);
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--text-muted);
+    font-weight: 800;
+  }
+
+  .team-table td {
+    padding: 0.65rem 1.1rem;
+    border-top: 1px solid var(--border-ui);
+    vertical-align: top;
+  }
+
+  .team-name {
+    font-weight: 700;
+    color: var(--text-main);
+    display: block;
+  }
+
+  .team-role-badge {
+    display: inline-block;
+    padding: 0.2rem 0.55rem;
+    border-radius: 5px;
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    background: rgba(0, 145, 194, 0.1);
+    color: var(--brand-primary);
+    white-space: nowrap;
+  }
+
+  .team-role-badge.volante {
+    background: rgba(108, 92, 231, 0.12);
+    color: var(--brand-team);
+  }
+
+  .team-tag-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .team-tag {
+    background: var(--bg-card);
+    border: 1px solid var(--border-ui);
+    padding: 0.3rem 0.6rem;
+    border-radius: 5px;
+    color: var(--text-muted);
+    font-size: 0.72rem;
+  }
+
   .external-resource-card {
     display: flex;
     align-items: center;
@@ -873,6 +1004,7 @@
       <button class="filter-chip" data-cat="bancos" aria-pressed="false">Rede Bancária</button>
       <button class="filter-chip" data-cat="previdencia" aria-pressed="false">Previdência</button>
       <button class="filter-chip" data-cat="informes" aria-pressed="false">📋 Informes</button>
+      <button class="filter-chip" data-cat="equipe" aria-pressed="false">👥 Equipe Técnica</button>
       <button class="filter-chip" data-cat="fav" aria-pressed="false">⭐ Favoritos</button>
     </div>
   </div>
@@ -1775,6 +1907,33 @@ const DATA = [
     phones: ["N/A"],
     services: "Atividades para o envelhecimento saudável.",
     desc: "Desenvolve atividades que contribuem para o envelhecimento saudável. Requisitos: • Ter 60 anos ou mais; • Estar inscrito no CadÚnico.<br>Atividades: atividades recreativas; acesso a informações e orientações; orientação psicológica, social e pedagógica.<br>Benefícios: bolsa; camiseta e lanche."
+  },
+  {
+    id: "equipe-cras-cristiana",
+    name: "Equipe Técnica",
+    fullName: "CRAS Cristiana Vicente Nunes - Equipe de Referência Territorial e Equipe Volante",
+    cat: ["equipe"],
+    address: "Rua Santo Agostinho, 193 - Centenário, Boa Vista-RR",
+    hours: "Segunda a sexta, 08:00 às 18:00",
+    phones: ["(95) 98402-6617"],
+    services: "PAIF, busca ativa, acompanhamento familiar e articulação em rede.",
+    desc: "O CRAS (Centro de Referência de Assistência Social) é a porta de entrada do SUAS. A equipe técnica, composta por assistentes sociais, psicólogos e pedagogos, atua no atendimento a famílias em vulnerabilidade social, realizando o PAIF, busca ativa, acompanhamento e articulação em rede. A Equipe Volante é responsável por levar serviços (PAIF, CadÚnico) a áreas de difícil acesso e populações dispersas.",
+    fixedTeam: [
+      { name: "Fernanda Gomes", role: "Psicóloga", bairros: "Buritis e Caimbé" },
+      { name: "Cléo Sousa", role: "Assistente Social", bairros: "Liberdade e Pricumã" },
+      { name: "Bárbara Parente", role: "Assistente Social", bairros: "Tancredo Neves, Cambará e Olímpico" },
+      { name: "Susy Andrade", role: "Pedagoga", bairros: "Centenário e Nova Canaã" },
+      { name: "Paloma de Assis", role: "Assistente Social", bairros: "Cinturão Verde e Jóquei Clube" },
+      { name: "Rafaela Garcia", role: "Assistente Social", bairros: "Asa Branca" }
+    ],
+    fixedCoverage: ["13 de Setembro", "Asa Branca", "Buritis", "Caimbé", "Cambará", "Centenário", "Cinturão Verde", "Jóquei Clube", "Liberdade", "Marechal Rondon", "Nova Canaã", "Olímpico", "Pricumã", "Araceli Souto Maior", "Tancredo Neves"],
+    volanteTeam: [
+      { name: "Keomara Teles", role: "Assistente Social", note: "Atendimento Itinerante" },
+      { name: "Danilo Braga", role: "Psicólogo", note: "Atendimento Itinerante" },
+      { name: "Paulo Xavier", role: "Psicólogo", note: "Atendimento Itinerante" }
+    ],
+    volanteDesc: "Responsável por levar serviços (PAIF, CadÚnico) a áreas de difícil acesso e populações dispersas.",
+    volanteCoverage: "Professora Araceli Souto Maior, 13 de Setembro e Ocupação Nova Vida."
   }
 ];
 
@@ -1784,7 +1943,9 @@ const ICONS = {
   phone: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>',
   star: '<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>',
   image: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>',
-  info: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>'
+  info: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>',
+  team: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>',
+  car: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/></svg>'
 };
 
 const MAX_IMAGE_BYTES = 5 * 1024 * 1024; // 5 MB
@@ -1861,6 +2022,114 @@ function informeMetaRow(icon, label, value) {
   return `<div class="info-group">${icon}<div><span class="label-tech">${label}</span>${value}</div></div>`;
 }
 
+// Renderiza o cartão especial da categoria "Equipe Técnica", reunindo a
+// Equipe de Referência Territorial (fixa) e a Equipe Volante numa única
+// visualização em tabelas, com busca client-side aplicada via filtro geral.
+function renderTeamCard(i, query) {
+  const q = (query || '').toLowerCase();
+
+  const fixedRows = (i.fixedTeam || []).filter(t =>
+    !q || t.name.toLowerCase().includes(q) || t.role.toLowerCase().includes(q) || t.bairros.toLowerCase().includes(q)
+  ).map(t => `
+    <tr>
+      <td><span class="team-name">${t.name}</span></td>
+      <td><span class="team-role-badge">${t.role}</span></td>
+      <td>${t.bairros}</td>
+    </tr>
+  `).join('');
+
+  const volanteRows = (i.volanteTeam || []).filter(t =>
+    !q || t.name.toLowerCase().includes(q) || t.role.toLowerCase().includes(q)
+  ).map(t => `
+    <tr>
+      <td>
+        <span class="team-name">${t.name}</span>
+        <small style="color:var(--text-muted); font-size:0.72rem;">${t.note}</small>
+      </td>
+      <td><span class="team-role-badge volante">${t.role}</span></td>
+    </tr>
+  `).join('');
+
+  const fixedEmpty = !fixedRows ? `<tr><td colspan="3" style="color:var(--text-muted); text-align:center; padding:1.25rem;">Nenhum técnico encontrado.</td></tr>` : '';
+  const volanteEmpty = !volanteRows ? `<tr><td colspan="2" style="color:var(--text-muted); text-align:center; padding:1.25rem;">Nenhum técnico encontrado.</td></tr>` : '';
+
+  return `
+    <div class="tech-card team-card">
+      <div class="card-top">
+        <div style="display:flex; justify-content:space-between; align-items:start;">
+          <div style="display:flex; align-items:center; gap:0.55rem;">
+            <span class="team-badge">${ICONS.team}</span>
+            <h3 style="margin:0;">${i.fullName}</h3>
+          </div>
+        </div>
+        <span class="subtitle">👥 Equipe Técnica · SEMADS - Prefeitura de Boa Vista</span>
+      </div>
+      <div class="card-body">
+        <div class="info-group">${ICONS.map}<div><span class="label-tech">Localização</span>${i.address}</div></div>
+        <div class="info-group">${ICONS.phone}<div><span class="label-tech">Contato Técnico</span>${i.phones.join(' · ')}</div></div>
+        <div class="desc-box">
+          <span class="label-tech">Escopo de Atuação</span>
+          ${i.desc}
+        </div>
+
+        <div class="team-tables">
+          <div class="team-subcard">
+            <div class="team-subcard-header fixa">${ICONS.map} Equipe de Referência Territorial</div>
+            <div style="overflow-x:auto;">
+              <table class="team-table">
+                <thead>
+                  <tr>
+                    <th>Técnico(a)</th>
+                    <th>Formação</th>
+                    <th>Bairros de Referência</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${fixedRows || fixedEmpty}
+                </tbody>
+              </table>
+            </div>
+            <div class="team-subcard-note">
+              <strong style="display:block; margin-bottom:0.4rem; color:var(--text-main); font-size:0.7rem; text-transform:uppercase;">Abrangência Geral</strong>
+              <div class="team-tag-list">
+                ${(i.fixedCoverage || []).map(b => `<span class="team-tag">${b}</span>`).join('')}
+              </div>
+            </div>
+          </div>
+
+          <div class="team-subcard">
+            <div class="team-subcard-header volante">${ICONS.car} Equipe Volante</div>
+            <div class="team-subcard-note" style="border-bottom:none;">${i.volanteDesc}</div>
+            <div style="overflow-x:auto;">
+              <table class="team-table">
+                <thead>
+                  <tr>
+                    <th>Técnico(a)</th>
+                    <th>Formação</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${volanteRows || volanteEmpty}
+                </tbody>
+              </table>
+            </div>
+            <div class="team-subcard-note">
+              <strong style="display:block; margin-bottom:0.3rem; color:var(--text-main); font-size:0.7rem; text-transform:uppercase;">Território Volante</strong>
+              ${i.volanteCoverage}
+            </div>
+          </div>
+        </div>
+
+        <textarea class="tech-notes" placeholder="Anotações Técnicas / Conduta..." oninput="saveNote('${i.id}', this.value)">${escapeHtml(localStorage.getItem('note_'+i.id) || '')}</textarea>
+      </div>
+      <div class="card-actions">
+        <button class="btn-tech btn-secondary" onclick="share('${i.id}')">Compartilhar</button>
+        <button class="btn-tech btn-primary" onclick="printGuide('${i.id}')">Gerar Guia</button>
+      </div>
+    </div>
+  `;
+}
+
 function render() {
   const query = document.getElementById('mainSearch').value.toLowerCase();
   const cat = document.querySelector('.filter-chip.active').dataset.cat;
@@ -1868,7 +2137,16 @@ function render() {
   const grid = document.getElementById('grid');
 
   const filtered = DATA.filter(i => {
-    const matchSearch = i.name.toLowerCase().includes(query) || i.address.toLowerCase().includes(query) || i.desc.toLowerCase().includes(query);
+    const isEquipe = i.cat.includes('equipe');
+    const teamSearchable = isEquipe ? [
+      i.name, i.fullName, i.address, i.desc,
+      ...(i.fixedTeam || []).flatMap(t => [t.name, t.role, t.bairros]),
+      ...(i.volanteTeam || []).flatMap(t => [t.name, t.role])
+    ].join(' ').toLowerCase() : null;
+
+    const matchSearch = isEquipe
+      ? teamSearchable.includes(query)
+      : (i.name.toLowerCase().includes(query) || i.address.toLowerCase().includes(query) || i.desc.toLowerCase().includes(query));
     const isFav = favs.includes(i.id);
     const matchCat = cat === 'all' ||
                      (cat === 'fav' ? isFav :
@@ -1892,6 +2170,10 @@ function render() {
   }
 
   grid.innerHTML = filtered.map(i => {
+    if (i.cat.includes('equipe')) {
+      return renderTeamCard(i, query);
+    }
+
     const imgData = localStorage.getItem('img_'+i.id);
     const imageBlock = imgData
       ? `<div class="image-preview">
