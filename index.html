@@ -969,7 +969,7 @@
         <img src="https://www.simbolosmunicipais.com.br/multimidia/rr/rr-boa-vista-bandeira-VvpTlaUS.jpg" alt="Bandeira de Boa Vista" title="Bandeira de Boa Vista" width="52" height="36" style="object-fit:cover; background:white;">
       </div>
       <h1>
-        <span class="brand-mark">Argo</span><span class="brand-mark" style="font-size:0.55em; font-style:normal; font-weight:600; color:#94A3B8; vertical-align:middle; margin-left:0.3em;">do SUAS</span>
+        <span class="brand-mark">Argo</span><span class="brand-mark" style="font-size:0.55em; font-style:normal; font-weight:600; color:#94A3B8; vertical-align:middle; margin-left:0.3em;">SUAS</span>
         <span class="brand-sub">Rede de Políticas Públicas de Roraima</span>
       </h1>
     </div>
@@ -1950,6 +1950,47 @@ const ICONS = {
 
 const MAX_IMAGE_BYTES = 5 * 1024 * 1024; // 5 MB
 
+// Wrapper seguro de localStorage: evita que o app inteiro quebre quando o
+// armazenamento não está disponível (modo privado do Safari, cookies
+// bloqueados, quota estourada, restrições de ITP) ou quando um valor salvo
+// está corrompido. Sem isso, uma única chamada não tratada (ex.: favoritos)
+// derrubava a tela inteira.
+const safeStorage = {
+  get(key, fallback = null) {
+    try {
+      const v = localStorage.getItem(key);
+      return v === null ? fallback : v;
+    } catch (e) {
+      return fallback;
+    }
+  },
+  getJSON(key, fallback) {
+    try {
+      const raw = localStorage.getItem(key);
+      if (raw === null) return fallback;
+      return JSON.parse(raw);
+    } catch (e) {
+      return fallback;
+    }
+  },
+  set(key, value) {
+    try {
+      localStorage.setItem(key, value);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  },
+  remove(key) {
+    try {
+      localStorage.removeItem(key);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+};
+
 const BF_HIGHLIGHT_HTML = `
   <div style="margin-top:0.75rem; padding:0.75rem; border-left:3px solid var(--brand-primary); background:rgba(17,94,89,0.06); border-radius:6px; font-size:0.8rem;">
     <strong style="color:var(--brand-primary);">Condicionalidades do Bolsa Família:</strong>
@@ -2120,7 +2161,7 @@ function renderTeamCard(i, query) {
           </div>
         </div>
 
-        <textarea class="tech-notes" placeholder="Anotações Técnicas / Conduta..." oninput="saveNote('${i.id}', this.value)">${escapeHtml(localStorage.getItem('note_'+i.id) || '')}</textarea>
+        <textarea class="tech-notes" placeholder="Anotações Técnicas / Conduta..." oninput="saveNote('${i.id}', this.value)">${escapeHtml(safeStorage.get('note_'+i.id, ''))}</textarea>
       </div>
       <div class="card-actions">
         <button class="btn-tech btn-secondary" onclick="share('${i.id}')">Compartilhar</button>
@@ -2133,7 +2174,7 @@ function renderTeamCard(i, query) {
 function render() {
   const query = document.getElementById('mainSearch').value.toLowerCase();
   const cat = document.querySelector('.filter-chip.active').dataset.cat;
-  const favs = JSON.parse(localStorage.getItem('favs') || '[]');
+  const favs = safeStorage.getJSON('favs', []);
   const grid = document.getElementById('grid');
 
   const filtered = DATA.filter(i => {
@@ -2174,7 +2215,7 @@ function render() {
       return renderTeamCard(i, query);
     }
 
-    const imgData = localStorage.getItem('img_'+i.id);
+    const imgData = safeStorage.get('img_'+i.id);
     const imageBlock = imgData
       ? `<div class="image-preview">
            <img src="${imgData}" alt="Anexo de ${i.name}">
@@ -2211,10 +2252,10 @@ function render() {
           ${metaRows}
           <div class="informe-box">
             <span class="label-tech" style="color:var(--brand-info-light);">O que é</span>
-            ${i.services}
+            ${Array.isArray(i.services) ? i.services.join(', ') : i.services}
             ${formatInformeDesc(i.desc)}
           </div>
-          <textarea class="tech-notes" placeholder="Anotações Técnicas / Conduta..." oninput="saveNote('${i.id}', this.value)">${escapeHtml(localStorage.getItem('note_'+i.id) || '')}</textarea>
+          <textarea class="tech-notes" placeholder="Anotações Técnicas / Conduta..." oninput="saveNote('${i.id}', this.value)">${escapeHtml(safeStorage.get('note_'+i.id, ''))}</textarea>
           <div class="image-attach-wrapper" id="img-wrap-${i.id}">
             ${imageBlock}
             <div class="image-error-msg" id="img-error-${i.id}" style="display:none;"></div>
@@ -2247,7 +2288,7 @@ function render() {
           <div style="margin-top:0.5rem; font-weight:600; color:var(--brand-primary); font-size:0.75rem;">SERVIÇOS: ${Array.isArray(i.services) ? i.services.join(', ') : i.services}</div>
           ${i.cat.includes('educacao') ? BF_HIGHLIGHT_HTML : ''}
         </div>
-        <textarea class="tech-notes" placeholder="Anotações Técnicas / Conduta..." oninput="saveNote('${i.id}', this.value)">${escapeHtml(localStorage.getItem('note_'+i.id) || '')}</textarea>
+        <textarea class="tech-notes" placeholder="Anotações Técnicas / Conduta..." oninput="saveNote('${i.id}', this.value)">${escapeHtml(safeStorage.get('note_'+i.id, ''))}</textarea>
         <div class="image-attach-wrapper" id="img-wrap-${i.id}">
           ${imageBlock}
           <div class="image-error-msg" id="img-error-${i.id}" style="display:none;"></div>
@@ -2292,10 +2333,9 @@ function handleImageUpload(event, id) {
 
   const reader = new FileReader();
   reader.onload = function() {
-    try {
-      localStorage.setItem('img_'+id, reader.result);
+    if (safeStorage.set('img_'+id, reader.result)) {
       render();
-    } catch (e) {
+    } else {
       showImageError(id, 'Não foi possível salvar a imagem (limite de armazenamento do navegador atingido).');
     }
   };
@@ -2306,22 +2346,20 @@ function handleImageUpload(event, id) {
 }
 
 function removeImage(id) {
-  localStorage.removeItem('img_'+id);
+  safeStorage.remove('img_'+id);
   render();
 }
 
 function saveNote(id, value) {
-  try {
-    localStorage.setItem('note_'+id, value);
-  } catch (e) {
+  if (!safeStorage.set('note_'+id, value)) {
     showImageError(id, 'Não foi possível salvar a anotação (armazenamento indisponível ou cheio).');
   }
 }
 
 function toggleFav(id) {
-  let f = JSON.parse(localStorage.getItem('favs') || '[]');
+  let f = safeStorage.getJSON('favs', []);
   f = f.includes(id) ? f.filter(x => x !== id) : [...f, id];
-  localStorage.setItem('favs', JSON.stringify(f));
+  safeStorage.set('favs', JSON.stringify(f));
   render();
 }
 
@@ -2333,8 +2371,8 @@ function share(id) {
 
 function printGuide(id) {
   const i = DATA.find(x => x.id === id);
-  const note = localStorage.getItem('note_'+id) || 'Avaliação técnica e conduta especializada indicadas.';
-  const imgData = localStorage.getItem('img_'+id);
+  const note = safeStorage.get('note_'+id) || 'Avaliação técnica e conduta especializada indicadas.';
+  const imgData = safeStorage.get('img_'+id);
   const date = new Date().toLocaleDateString('pt-BR', {day:'numeric', month:'long', year:'numeric'});
 
   const countLines = (txt) => (String(txt).match(/<br>/g) || []).length + 1;
@@ -2365,7 +2403,7 @@ function printGuide(id) {
             <td style="border:1.5px solid #0F172A; padding:8px 14px; vertical-align:middle;">
               <div>
                 <div style="font-size:1.25rem; font-weight:800; letter-spacing:0.02em; color:#0F172A;">FICHA DE ENCAMINHAMENTO TÉCNICO</div>
-                <div style="font-size:0.68rem; font-weight:700; color:#475569; text-transform:uppercase; letter-spacing:0.04em; margin-top:2px;">Argo do SUAS · Sistema Único de Assistência Social do Estado de Roraima</div>
+                <div style="font-size:0.68rem; font-weight:700; color:#475569; text-transform:uppercase; letter-spacing:0.04em; margin-top:2px;">Argo SUAS · Sistema Único de Assistência Social do Estado de Roraima</div>
               </div>
             </td>
             <td style="border:1.5px solid #0F172A; padding:8px 14px; text-align:center; width:180px;">
@@ -2443,7 +2481,16 @@ function printGuide(id) {
     </div>
   ` : '';
 
-  document.getElementById('print-area').innerHTML = firstPage + secondPage;
+  const printArea = document.getElementById('print-area');
+  printArea.innerHTML = firstPage + secondPage;
+
+  // #print-area fica com display:none fora do modo de impressão, então
+  // medir scrollHeight/clientHeight agora daria sempre 0x0 e o ajuste de
+  // fonte abaixo nunca reduziria nada. Para medir de verdade, forçamos
+  // layout temporariamente fora da tela (sem piscar conteúdo na UI) e
+  // depois devolvemos o controle ao CSS normal (display:none na tela,
+  // display:block apenas em @media print).
+  printArea.style.cssText = 'display:block; position:fixed; top:-10000px; left:-10000px; visibility:hidden;';
 
   const noteBox = document.getElementById('printNoteBox');
   if (noteBox) {
@@ -2455,12 +2502,13 @@ function printGuide(id) {
     }
   }
 
+  printArea.style.cssText = '';
   window.print();
 }
 
 function exportData() {
   const notes = {};
-  DATA.forEach(i => { const n = localStorage.getItem('note_'+i.id); if(n) notes[i.name] = n; });
+  DATA.forEach(i => { const n = safeStorage.get('note_'+i.id); if(n) notes[i.name] = n; });
   const b = new Blob([JSON.stringify(notes,null,2)], {type:'application/json'});
   const a = document.createElement('a');
   a.href = URL.createObjectURL(b);
@@ -2502,7 +2550,11 @@ backToTopBtn.addEventListener('click', () => {
 
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('./sw.js').then(() => console.log('PWA Active'));
+    navigator.serviceWorker.register('./sw.js').catch(() => {
+      // Falha ao registrar o Service Worker (ex.: arquivo sw.js ausente
+      // no deploy, ou navegador sem suporte) não deve travar o app —
+      // apenas o modo offline via cache fica indisponível.
+    });
   });
 }
 
