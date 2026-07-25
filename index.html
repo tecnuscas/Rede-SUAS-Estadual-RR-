@@ -1774,7 +1774,8 @@ const DATA = [
     hours: "Segunda a sábado, 08:00 às 22:00",
     phones: ["N/A"],
     services: "Atividades Esportivas e Culturais, Cursos (parceria SINE), Grupos de Convivência.",
-    desc: "Equipamento de assistência social com atividades de natureza esportiva e cultural: desenho e pintura, balé, ginástica rítmica, capoeira, jiu-jitsu, ritbox, futsal e forró. Oferece também cursos em parceria com o SINE, além de Grupos de Convivência e Fortalecimento de Vínculo."
+    desc: "Equipamento de assistência social com atividades de natureza esportiva e cultural: desenho e pintura, balé, ginástica rítmica, capoeira, jiu-jitsu, ritbox, futsal e forró. Oferece também cursos em parceria com o SINE, além de Grupos de Convivência e Fortalecimento de Vínculo.",
+    website: "https://sites.google.com/view/painel-cas-vila-jardim/p%C3%A1gina-inicial"
   },
   {
     id: "inss-boa-vista",
@@ -2046,8 +2047,20 @@ function formatInformeDesc(desc) {
   // Passos numerados "1) texto" viram itens em linha própria
   html = html.replace(/(\d+\))\s+/g, '<br>$1 ');
 
-  // Autolink de URLs soltas no texto
-  html = html.replace(/(https?:\/\/[^\s<]+)/g, '<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>');
+  // Autolink de URLs soltas no texto — sem arrastar pontuação de fechamento
+  // (parênteses, ponto, vírgula, ponto-e-vírgula) para dentro do href.
+  // Correção do bug em que "https://meu.inss.gov.br);" virava um único link
+  // com "); " incluído na URL, quebrando o destino do link.
+  html = html.replace(/(https?:\/\/[^\s<]+)/g, function(match) {
+    const trailingMatch = match.match(/[).,;:!?\]]+$/);
+    let url = match;
+    let suffix = '';
+    if (trailingMatch) {
+      suffix = trailingMatch[0];
+      url = match.slice(0, match.length - suffix.length);
+    }
+    return '<a href="' + url + '" target="_blank" rel="noopener noreferrer">' + url + '</a>' + suffix;
+  });
 
   // Limpeza de quebras de linha redundantes no início/meio
   html = html.replace(/^(<br>)+/, '').replace(/(<br>){2,}/g, '<br>');
@@ -2185,9 +2198,16 @@ function render() {
       ...(i.volanteTeam || []).flatMap(t => [t.name, t.role])
     ].join(' ').toLowerCase() : null;
 
+    // Serviços podem vir como string ou array — normalizamos para string
+    // antes de comparar, e incluímos no critério de busca. Antes, a busca
+    // só olhava name/address/desc, então termos que só existem em
+    // "services" (ex.: "BPC", "FGTS", "CadÚnico" em unidades cujo texto
+    // descritivo não repete a palavra) nunca traziam o resultado esperado.
+    const servicesText = (Array.isArray(i.services) ? i.services.join(' ') : (i.services || '')).toLowerCase();
+
     const matchSearch = isEquipe
       ? teamSearchable.includes(query)
-      : (i.name.toLowerCase().includes(query) || i.address.toLowerCase().includes(query) || i.desc.toLowerCase().includes(query));
+      : (i.name.toLowerCase().includes(query) || i.address.toLowerCase().includes(query) || i.desc.toLowerCase().includes(query) || servicesText.includes(query));
     const isFav = favs.includes(i.id);
     const matchCat = cat === 'all' ||
                      (cat === 'fav' ? isFav :
@@ -2294,7 +2314,8 @@ function render() {
           <div class="image-error-msg" id="img-error-${i.id}" style="display:none;"></div>
         </div>
       </div>
-      <div class="card-actions">
+      <div class="card-actions" ${i.website ? 'style="grid-template-columns: 1fr 1fr 1fr;"' : ''}>
+        ${i.website ? `<a class="btn-tech btn-secondary btn-link" href="${i.website}" target="_blank" rel="noopener noreferrer">Site Oficial</a>` : ''}
         <button class="btn-tech btn-secondary" onclick="share('${i.id}')">Compartilhar</button>
         <button class="btn-tech btn-primary" onclick="printGuide('${i.id}')">Gerar Guia</button>
       </div>
