@@ -78,12 +78,11 @@
     margin: 0;
     background: var(--bg-main);
     background-image:
-      url('https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/S%C3%ADmbolo_da_Psicologia.svg/1200px-S%C3%ADmbolo_da_Psicologia.svg.png'),
-      url('https://seeklogo.com/images/S/suas-logo-A78B0E8D10-seeklogo.com.png');
-    background-repeat: no-repeat, no-repeat;
-    background-position: bottom 5% right 5%, bottom 5% left 5%;
-    background-size: 300px, 200px;
-    background-attachment: fixed, fixed;
+      url('https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/S%C3%ADmbolo_da_Psicologia.svg/1200px-S%C3%ADmbolo_da_Psicologia.svg.png');
+    background-repeat: no-repeat;
+    background-position: bottom 5% right 5%;
+    background-size: 300px;
+    background-attachment: fixed;
     color: var(--text-main);
     font-family: var(--font-sans);
     line-height: 1.6;
@@ -94,9 +93,8 @@
     body {
       background-image:
         linear-gradient(rgba(2, 6, 23, 0.9), rgba(2, 6, 23, 0.9)),
-        url('https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/S%C3%ADmbolo_da_Psicologia.svg/1200px-S%C3%ADmbolo_da_Psicologia.svg.png'),
-        url('https://seeklogo.com/images/S/suas-logo-A78B0E8D10-seeklogo.com.png');
-      background-size: cover, 300px, 200px;
+        url('https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/S%C3%ADmbolo_da_Psicologia.svg/1200px-S%C3%ADmbolo_da_Psicologia.svg.png');
+      background-size: cover, 300px;
     }
   }
 
@@ -827,6 +825,183 @@
     font-size: 0.72rem;
   }
 
+  /* Cartão da categoria "Atendimento CAS" — painel de acesso rápido a
+     sistemas administrativos e pastas do Drive, usando o acento verde
+     (--brand-cas) para diferenciar dos demais cartões. */
+  :root {
+    --brand-cas: #009739;
+    --brand-cas-light: #16A34A;
+    --brand-cras: #0D9488;
+    --brand-cras-light: #14B8A6;
+  }
+
+  .cas-card {
+    border-top: 3px solid var(--brand-cas);
+    grid-column: 1 / -1;
+  }
+
+  .cas-card .card-top {
+    background: linear-gradient(180deg, rgba(0, 151, 57, 0.07), rgba(0, 151, 57, 0) 80%);
+  }
+
+  .cas-card .card-top h3 {
+    color: var(--brand-cas);
+  }
+
+  .cas-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--brand-cas);
+    flex-shrink: 0;
+  }
+
+  .cas-groups {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+  }
+
+  @media (max-width: 900px) {
+    .cas-groups { grid-template-columns: 1fr; }
+  }
+
+  .cas-group {
+    border: 1px solid var(--border-ui);
+    border-radius: 10px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .cas-group-header {
+    padding: 0.7rem 1.1rem;
+    font-weight: 800;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    background: rgba(0, 151, 57, 0.08);
+    color: var(--brand-cas);
+  }
+
+  .cas-link-list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .cas-link-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.7rem 1.1rem;
+    border-top: 1px solid var(--border-ui);
+    text-decoration: none;
+    color: var(--text-main);
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: background 0.15s;
+  }
+
+  .cas-link-item:hover {
+    background: var(--bg-main);
+  }
+
+  .cas-link-item svg {
+    color: var(--brand-cas);
+    flex-shrink: 0;
+  }
+
+  .cas-link-item .cas-link-arrow {
+    margin-left: auto;
+    color: var(--text-muted);
+    opacity: 0.6;
+  }
+
+  /* Cartão da categoria "Atendimento CRAS" — painel de acesso rápido a
+     sistemas municipais/federais, RMA e nuvens da equipe, usando o acento
+     turquesa (--brand-cras) para diferenciar dos demais cartões. */
+  .cras-card {
+    border-top: 3px solid var(--brand-cras);
+    grid-column: 1 / -1;
+  }
+
+  .cras-card .card-top {
+    background: linear-gradient(180deg, rgba(13, 148, 136, 0.07), rgba(13, 148, 136, 0) 80%);
+  }
+
+  .cras-card .card-top h3 {
+    color: var(--brand-cras);
+  }
+
+  .cras-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--brand-cras);
+    flex-shrink: 0;
+  }
+
+  .cras-groups {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+  }
+
+  @media (max-width: 900px) {
+    .cras-groups { grid-template-columns: 1fr; }
+  }
+
+  .cras-group {
+    border: 1px solid var(--border-ui);
+    border-radius: 10px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .cras-group-header {
+    padding: 0.7rem 1.1rem;
+    font-weight: 800;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    background: rgba(13, 148, 136, 0.08);
+    color: var(--brand-cras);
+  }
+
+  .cras-link-list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .cras-link-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.7rem 1.1rem;
+    border-top: 1px solid var(--border-ui);
+    text-decoration: none;
+    color: var(--text-main);
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: background 0.15s;
+  }
+
+  .cras-link-item:hover {
+    background: var(--bg-main);
+  }
+
+  .cras-link-item svg {
+    color: var(--brand-cras);
+    flex-shrink: 0;
+  }
+
+  .cras-link-item .cras-link-arrow {
+    margin-left: auto;
+    color: var(--text-muted);
+    opacity: 0.6;
+  }
+
   .external-resource-card {
     display: flex;
     align-items: center;
@@ -1005,6 +1180,8 @@
       <button class="filter-chip" data-cat="previdencia" aria-pressed="false">Previdência</button>
       <button class="filter-chip" data-cat="informes" aria-pressed="false">📋 Informes</button>
       <button class="filter-chip" data-cat="equipe" aria-pressed="false">👥 Equipe Técnica</button>
+      <button class="filter-chip" data-cat="cas" aria-pressed="false">🗂️ Atendimento CAS</button>
+      <button class="filter-chip" data-cat="cras" aria-pressed="false">🏢 Atendimento CRAS</button>
       <button class="filter-chip" data-cat="fav" aria-pressed="false">⭐ Favoritos</button>
     </div>
   </div>
@@ -1935,6 +2112,71 @@ const DATA = [
     ],
     volanteDesc: "Responsável por levar serviços (PAIF, CadÚnico) a áreas de difícil acesso e populações dispersas.",
     volanteCoverage: "Professora Araceli Souto Maior, 13 de Setembro e Ocupação Nova Vida."
+  },
+  {
+    id: "atendimento-cas",
+    name: "Atendimento CAS",
+    fullName: "Painel de Atendimento CAS - Acesso Rápido a Sistemas e Arquivos",
+    cat: ["cas"],
+    address: "R. James Meirelles Sobreiro Júnior, 1876 - Cidade Satélite, Boa Vista-RR, 69317-530",
+    hours: "Segunda a sábado, 08:00 às 22:00",
+    phones: ["N/A"],
+    services: "Acesso rápido a sistemas administrativos (SEI, Dados Pessoais) e sistemas de 2026 (Inscrição, Matrículas, Registro Diário), além das pastas compartilhadas da equipe no Google Drive.",
+    desc: "Painel de atalhos técnicos do Centro de Atendimento Social (CAS) para uso interno da equipe, reunindo acesso ao SEI (assinatura de relatórios), ao portal do servidor (dados pessoais), aos formulários e planilhas dos Sistemas 2026 (Inscrição, Matrículas, Registro Diário) e às pastas de trabalho de cada técnico no Google Drive.",
+    adminLinks: [
+      { label: "Assinar Relatório (SEI)", icon: "pen", url: "https://sei.rr.gov.br/portalsei/" },
+      { label: "Dados Pessoais", icon: "badge", url: "https://servidor.rr.gov.br/#/login" }
+    ],
+    systemLinks: [
+      { label: "Inscrição", icon: "form", url: "https://docs.google.com/forms/d/e/1FAIpQLSez0haWDLb9rjfvoaWWt0kuMg08qwKx7LLhhyRhzDOojVVxpg/viewform" },
+      { label: "Matrículas", icon: "table", url: "https://docs.google.com/spreadsheets/d/1bHXEpfJYvxkxgH1m584YorvgnGVrd1j4vYhPLuBW3AM/edit" },
+      { label: "Registro Diário", icon: "form", url: "https://docs.google.com/forms/d/e/1FAIpQLScTIV1jwi-p1RpyNM-_4_IET4MQXVwkP0zFPodbvJkvF7uw8Q/viewform" }
+    ],
+    driveLinks: [
+      { label: "Pasta Geral", url: "https://drive.google.com/drive/folders/1YGruf7xXsUTcwYhE0Ibte1g9nvmJojs6?usp=drive_link" },
+      { label: "Francisca", url: "https://drive.google.com/drive/folders/1pOHMids9KnQA599sVOdSkLSr91Ku-uwq" },
+      { label: "Camila", url: "https://drive.google.com/drive/folders/1hJBKv5DsqS34mtwTqr9oFntwGIANO42P" },
+      { label: "Pedagoga", url: "https://drive.google.com/drive/folders/1h-X1Do8vB3qG0OY0G8GeLukBiJkTPwxs" },
+      { label: "Paulo", url: "https://drive.google.com/drive/folders/1uC3Gt5FCm7xMg0Z-mxU_7V51RxZpBPVv" }
+    ]
+  },
+  {
+    id: "atendimento-cras",
+    name: "Atendimento CRAS",
+    fullName: "Painel de Atendimento CRAS - Sistemas Municipais, Federais e RMA",
+    cat: ["cras"],
+    address: "Rua Santo Agostinho, 193 - Centenário, Boa Vista-RR (CRAS Cristiana Vicente Nunes)",
+    hours: "Segunda a sexta, 08:00 às 18:00",
+    phones: ["(95) 98402-6617"],
+    services: "Acesso rápido a sistemas municipais de gestão, sistemas federais do Bolsa Família/CadÚnico, gestão de atendimentos (RMA) e pastas compartilhadas da equipe no Google Drive.",
+    desc: "Painel de atalhos técnicos do CRAS para uso interno da equipe, reunindo sistemas municipais (BV Cidadão, Cidade Social, Contracheque, Banco de Talentos, Cédula C, Calendário PMBV), sistemas federais (SIBEC, SIGPBF, Carteira do Idoso, CadÚnico, calendários de condicionalidades e pagamento do PBF), a gestão de atendimentos via RMA e as nuvens de arquivos de cada técnico no Google Drive.",
+    municipalLinks: [
+      { label: "BV Cidadão", icon: "badge", url: "https://bvcidadao.prefeitura.boavista.br/proton/login.asp" },
+      { label: "Cidade Social", icon: "building", url: "https://cidadesocial1.ae3tecnologia.com.br/login" },
+      { label: "Contracheque (SIPWEB)", icon: "layers", url: "http://sipweb.boavista.rr.gov.br:8080/sipweb/trabalhador/login/login.xhtml" },
+      { label: "Banco de Talentos", icon: "activity", url: "https://bt.pmbv.rr.gov.br/SMT73/open.do?sys=SMT" },
+      { label: "Cédula C", icon: "filebinary", url: "http://servicos.boavista.rr.gov.br/cedulac/" },
+      { label: "Calendário PMBV 2026", icon: "kanban", url: "CPMBV 2026.HTML" }
+    ],
+    federalLinks: [
+      { label: "SIBEC (Caixa)", icon: "bank", url: "https://www.beneficiossociais.caixa.gov.br/sibec2/sisgrSibec" },
+      { label: "SIGPBF", icon: "shield", url: "https://www.mds.gov.br/mds-sigpbf-web/carregarTelaLogin.jsf" },
+      { label: "Carteira do Idoso", icon: "idcard", url: "https://carteiraidoso.cidadania.gov.br/" },
+      { label: "Portal CadÚnico", icon: "database", url: "https://cadunico.dataprev.gov.br/portal/" },
+      { label: "Calendário Condicionalidades", icon: "wallet", url: "PBF.HTML" },
+      { label: "Calendário Pagamento", icon: "cash", url: "PagamentoPBF.html" }
+    ],
+    rmaLinks: [
+      { label: "RMA (MDS)", icon: "barchart", url: "RMA_Paulo Xavier_2026.html" },
+      { label: "Registro (Planilha)", icon: "table", url: "Registro de Atendimento (Planilha).html" },
+      { label: "Baixar RMA (.xlsx)", icon: "excel", url: "RMA - Geral - Limpo.xlsx" }
+    ],
+    driveLinks: [
+      { label: "Danilo", url: "https://drive.google.com/drive/folders/1MtK9Kz3mlxTwIESPp28YwiVtrNdI55Lt?usp=drive_link" },
+      { label: "Keomara", url: "https://drive.google.com/drive/folders/1VeGWP1MnhrQ7KDeaEZ7e55s3gBB1byD5?usp=drive_link" },
+      { label: "Geral Equipe", url: "https://drive.google.com/drive/folders/1Gnyc9nj00HstxcBeYHYvF7Pd7b_6q3Y5" },
+      { label: "Paulo Xavier", url: "https://drive.google.com/drive/folders/1nR7c8AsrhwWPyBYfmWkOmEIfyH349gXR" }
+    ]
   }
 ];
 
@@ -1946,7 +2188,27 @@ const ICONS = {
   image: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>',
   info: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>',
   team: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>',
-  car: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/></svg>'
+  car: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/></svg>',
+  folder: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>',
+  pen: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>',
+  badge: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.9 19.9a9 9 0 1 0-17.8 0"/><circle cx="12" cy="10" r="4"/><rect x="5" y="4" width="14" height="18" rx="2"/></svg>',
+  form: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/><path d="M9 15h6"/><path d="M9 11h6"/></svg>',
+  table: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/><line x1="9" y1="3" x2="9" y2="21"/></svg>',
+  external: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>',
+  building: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="1"/><line x1="9" y1="6" x2="9" y2="6.01"/><line x1="15" y1="6" x2="15" y2="6.01"/><line x1="9" y1="10" x2="9" y2="10.01"/><line x1="15" y1="10" x2="15" y2="10.01"/><line x1="9" y1="14" x2="9" y2="14.01"/><line x1="15" y1="14" x2="15" y2="14.01"/><line x1="9" y1="18" x2="15" y2="18"/></svg>',
+  layers: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>',
+  activity: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>',
+  filebinary: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/><text x="7" y="17" font-size="6" fill="currentColor" stroke="none">10</text><text x="7" y="20" font-size="6" fill="currentColor" stroke="none">01</text></svg>',
+  kanban: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="3" x2="9" y2="21"/><line x1="15" y1="3" x2="15" y2="21"/></svg>',
+  bank: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="21" x2="21" y2="21"/><line x1="5" y1="21" x2="5" y2="10"/><line x1="19" y1="21" x2="19" y2="10"/><line x1="12" y1="21" x2="12" y2="10"/><polygon points="12 2 21 8 3 8"/></svg>',
+  shield: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/><rect x="10" y="12" width="4" height="4" rx="0.5"/><path d="M12 12v-2"/></svg>',
+  idcard: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><circle cx="8" cy="12" r="2"/><line x1="14" y1="10" x2="19" y2="10"/><line x1="14" y1="14" x2="19" y2="14"/></svg>',
+  database: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5"/><path d="M3 12c0 1.66 4.03 3 9 3s9-1.34 9-3"/></svg>',
+  wallet: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"/><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"/><path d="M18 12a2 2 0 0 0 0 4h4v-4Z"/></svg>',
+  cash: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="3"/><path d="M6 9v0"/><path d="M18 15v0"/></svg>',
+  barchart: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>',
+  excel: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/><line x1="8" y1="13" x2="12" y2="18"/><line x1="12" y1="13" x2="8" y2="18"/></svg>',
+  cloud: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>'
 };
 
 const MAX_IMAGE_BYTES = 5 * 1024 * 1024; // 5 MB
@@ -2069,11 +2331,23 @@ function formatInformeDesc(desc) {
 }
 
 // Retorna uma linha de metadado (endereço/horário/contato) apenas quando
-// há valor útil — evita mostrar "N/A" nos cartões de Informes.
+// há valor útil — evita mostrar "N/A" nos cartões de Informes. Quando o
+// valor é do tipo "N/A - texto útil" (usado nos Informes para indicar que
+// não há endereço físico, mas há uma orientação de onde/como solicitar),
+// mostramos apenas o texto útil em vez de esconder a linha inteira.
 function informeMetaRow(icon, label, value) {
-  const clean = stripHtml(value || '').trim();
-  if (!clean || clean === 'N/A' || clean.toUpperCase().startsWith('N/A')) return '';
-  return `<div class="info-group">${icon}<div><span class="label-tech">${label}</span>${value}</div></div>`;
+  let display = value;
+  let clean = stripHtml(value || '').trim();
+  if (!clean) return '';
+
+  const naPrefixMatch = clean.match(/^n\/a\s*[-–]\s*(.+)$/i);
+  if (naPrefixMatch) {
+    display = naPrefixMatch[1];
+    clean = naPrefixMatch[1].trim();
+  }
+
+  if (!clean || clean.toUpperCase() === 'N/A') return '';
+  return `<div class="info-group">${icon}<div><span class="label-tech">${label}</span>${display}</div></div>`;
 }
 
 // Renderiza o cartão especial da categoria "Equipe Técnica", reunindo a
@@ -2184,6 +2458,164 @@ function renderTeamCard(i, query) {
   `;
 }
 
+// Renderiza o cartão especial da categoria "Atendimento CAS": um painel de
+// atalhos técnicos com três grupos de links (Administrativo, Sistemas 2026
+// e Pastas do Drive da equipe), todos abrindo em nova aba.
+function renderCasCard(i, query) {
+  const q = (query || '').toLowerCase();
+
+  function linkRow(label, url, icon) {
+    if (q && !label.toLowerCase().includes(q)) return '';
+    return `
+      <a class="cas-link-item" href="${url}" target="_blank" rel="noopener noreferrer">
+        ${icon}
+        <span>${label}</span>
+        <span class="cas-link-arrow">${ICONS.external}</span>
+      </a>
+    `;
+  }
+
+  const adminRows = (i.adminLinks || []).map(l => linkRow(l.label, l.url, ICONS[l.icon] || ICONS.form)).filter(Boolean).join('');
+  const systemRows = (i.systemLinks || []).map(l => linkRow(l.label, l.url, ICONS[l.icon] || ICONS.form)).filter(Boolean).join('');
+  const driveRows = (i.driveLinks || []).map(l => linkRow(l.label, l.url, ICONS.folder)).filter(Boolean).join('');
+
+  const emptyRow = `<div style="padding:0.9rem 1.1rem; color:var(--text-muted); font-size:0.8rem;">Nenhum atalho encontrado.</div>`;
+
+  return `
+    <div class="tech-card cas-card">
+      <div class="card-top">
+        <div style="display:flex; justify-content:space-between; align-items:start;">
+          <div style="display:flex; align-items:center; gap:0.55rem;">
+            <span class="cas-badge">${ICONS.folder}</span>
+            <h3 style="margin:0;">${i.name}</h3>
+          </div>
+        </div>
+        <span class="subtitle">🗂️ Atendimento CAS · Acesso Rápido a Sistemas e Arquivos</span>
+      </div>
+      <div class="card-body">
+        <div class="info-group">${ICONS.map}<div><span class="label-tech">Localização</span>${i.address}</div></div>
+        <div class="info-group">${ICONS.clock}<div><span class="label-tech">Disponibilidade</span>${i.hours}</div></div>
+        <div class="desc-box">
+          <span class="label-tech">Escopo do Painel</span>
+          ${i.desc}
+        </div>
+
+        <div class="cas-groups">
+          <div class="cas-group">
+            <div class="cas-group-header">Administrativo</div>
+            <div class="cas-link-list">
+              ${adminRows || emptyRow}
+            </div>
+          </div>
+
+          <div class="cas-group">
+            <div class="cas-group-header">Sistemas 2026</div>
+            <div class="cas-link-list">
+              ${systemRows || emptyRow}
+            </div>
+          </div>
+
+          <div class="cas-group" style="grid-column: 1 / -1;">
+            <div class="cas-group-header">Pastas da Equipe (Google Drive)</div>
+            <div class="cas-link-list">
+              ${driveRows || emptyRow}
+            </div>
+          </div>
+        </div>
+
+        <textarea class="tech-notes" placeholder="Anotações Técnicas / Conduta..." oninput="saveNote('${i.id}', this.value)">${escapeHtml(safeStorage.get('note_'+i.id, ''))}</textarea>
+      </div>
+      <div class="card-actions">
+        <button class="btn-tech btn-secondary" onclick="share('${i.id}')">Compartilhar</button>
+        <button class="btn-tech btn-primary" onclick="printGuide('${i.id}')">Gerar Guia</button>
+      </div>
+    </div>
+  `;
+}
+
+// Renderiza o cartão especial da categoria "Atendimento CRAS": um painel de
+// atalhos técnicos com quatro grupos de links (Sistemas Municipais, Sistemas
+// Federais, Gestão de Atendimentos/RMA e Nuvens de Arquivos da equipe).
+function renderCrasCard(i, query) {
+  const q = (query || '').toLowerCase();
+
+  function linkRow(label, url, icon) {
+    if (q && !label.toLowerCase().includes(q)) return '';
+    return `
+      <a class="cras-link-item" href="${url}" target="_blank" rel="noopener noreferrer">
+        ${icon}
+        <span>${label}</span>
+        <span class="cras-link-arrow">${ICONS.external}</span>
+      </a>
+    `;
+  }
+
+  const municipalRows = (i.municipalLinks || []).map(l => linkRow(l.label, l.url, ICONS[l.icon] || ICONS.form)).filter(Boolean).join('');
+  const federalRows = (i.federalLinks || []).map(l => linkRow(l.label, l.url, ICONS[l.icon] || ICONS.form)).filter(Boolean).join('');
+  const rmaRows = (i.rmaLinks || []).map(l => linkRow(l.label, l.url, ICONS[l.icon] || ICONS.form)).filter(Boolean).join('');
+  const driveRows = (i.driveLinks || []).map(l => linkRow(l.label, l.url, ICONS.cloud)).filter(Boolean).join('');
+
+  const emptyRow = `<div style="padding:0.9rem 1.1rem; color:var(--text-muted); font-size:0.8rem;">Nenhum atalho encontrado.</div>`;
+
+  return `
+    <div class="tech-card cras-card">
+      <div class="card-top">
+        <div style="display:flex; justify-content:space-between; align-items:start;">
+          <div style="display:flex; align-items:center; gap:0.55rem;">
+            <span class="cras-badge">${ICONS.building}</span>
+            <h3 style="margin:0;">${i.name}</h3>
+          </div>
+        </div>
+        <span class="subtitle">🏢 Atendimento CRAS · Sistemas Municipais, Federais e RMA</span>
+      </div>
+      <div class="card-body">
+        <div class="info-group">${ICONS.map}<div><span class="label-tech">Localização</span>${i.address}</div></div>
+        <div class="info-group">${ICONS.clock}<div><span class="label-tech">Disponibilidade</span>${i.hours}</div></div>
+        <div class="desc-box">
+          <span class="label-tech">Escopo do Painel</span>
+          ${i.desc}
+        </div>
+
+        <div class="cras-groups">
+          <div class="cras-group">
+            <div class="cras-group-header">Sistemas Municipais e Gestão</div>
+            <div class="cras-link-list">
+              ${municipalRows || emptyRow}
+            </div>
+          </div>
+
+          <div class="cras-group">
+            <div class="cras-group-header">Sistemas Federais e Bolsa Família</div>
+            <div class="cras-link-list">
+              ${federalRows || emptyRow}
+            </div>
+          </div>
+
+          <div class="cras-group">
+            <div class="cras-group-header">Gestão de Atendimentos (RMA)</div>
+            <div class="cras-link-list">
+              ${rmaRows || emptyRow}
+            </div>
+          </div>
+
+          <div class="cras-group">
+            <div class="cras-group-header">Nuvens de Arquivos (Google Drive)</div>
+            <div class="cras-link-list">
+              ${driveRows || emptyRow}
+            </div>
+          </div>
+        </div>
+
+        <textarea class="tech-notes" placeholder="Anotações Técnicas / Conduta..." oninput="saveNote('${i.id}', this.value)">${escapeHtml(safeStorage.get('note_'+i.id, ''))}</textarea>
+      </div>
+      <div class="card-actions">
+        <button class="btn-tech btn-secondary" onclick="share('${i.id}')">Compartilhar</button>
+        <button class="btn-tech btn-primary" onclick="printGuide('${i.id}')">Gerar Guia</button>
+      </div>
+    </div>
+  `;
+}
+
 function render() {
   const query = document.getElementById('mainSearch').value.toLowerCase();
   const cat = document.querySelector('.filter-chip.active').dataset.cat;
@@ -2192,10 +2624,27 @@ function render() {
 
   const filtered = DATA.filter(i => {
     const isEquipe = i.cat.includes('equipe');
+    const isCas = i.cat.includes('cas');
+    const isCras = i.cat.includes('cras');
     const teamSearchable = isEquipe ? [
       i.name, i.fullName, i.address, i.desc,
       ...(i.fixedTeam || []).flatMap(t => [t.name, t.role, t.bairros]),
       ...(i.volanteTeam || []).flatMap(t => [t.name, t.role])
+    ].join(' ').toLowerCase() : null;
+
+    const casSearchable = isCas ? [
+      i.name, i.fullName, i.address, i.desc,
+      ...(i.adminLinks || []).map(l => l.label),
+      ...(i.systemLinks || []).map(l => l.label),
+      ...(i.driveLinks || []).map(l => l.label)
+    ].join(' ').toLowerCase() : null;
+
+    const crasSearchable = isCras ? [
+      i.name, i.fullName, i.address, i.desc,
+      ...(i.municipalLinks || []).map(l => l.label),
+      ...(i.federalLinks || []).map(l => l.label),
+      ...(i.rmaLinks || []).map(l => l.label),
+      ...(i.driveLinks || []).map(l => l.label)
     ].join(' ').toLowerCase() : null;
 
     // Serviços podem vir como string ou array — normalizamos para string
@@ -2207,6 +2656,10 @@ function render() {
 
     const matchSearch = isEquipe
       ? teamSearchable.includes(query)
+      : isCas
+      ? casSearchable.includes(query)
+      : isCras
+      ? crasSearchable.includes(query)
       : (i.name.toLowerCase().includes(query) || i.address.toLowerCase().includes(query) || i.desc.toLowerCase().includes(query) || servicesText.includes(query));
     const isFav = favs.includes(i.id);
     const matchCat = cat === 'all' ||
@@ -2233,6 +2686,14 @@ function render() {
   grid.innerHTML = filtered.map(i => {
     if (i.cat.includes('equipe')) {
       return renderTeamCard(i, query);
+    }
+
+    if (i.cat.includes('cas')) {
+      return renderCasCard(i, query);
+    }
+
+    if (i.cat.includes('cras')) {
+      return renderCrasCard(i, query);
     }
 
     const imgData = safeStorage.get('img_'+i.id);
