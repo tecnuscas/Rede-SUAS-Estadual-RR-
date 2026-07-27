@@ -317,6 +317,52 @@
     scrollbar-width: none;
   }
 
+  @media (min-width: 768px) {
+    .filter-bar {
+      flex-wrap: wrap;
+      overflow-x: visible;
+      padding-bottom: 0;
+      row-gap: 0.6rem;
+      align-items: center;
+    }
+
+    /* separador visual antes do grupo de "painéis" internos (Informes em diante) */
+    .filter-chip[data-cat="informes"] {
+      margin-left: 0.75rem;
+      padding-left: calc(1rem + 0.75rem);
+      position: relative;
+    }
+
+    .filter-chip[data-cat="informes"]::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 1px;
+      height: 22px;
+      background: var(--border-ui);
+    }
+
+    /* separador antes de Favoritos */
+    .filter-chip[data-cat="fav"] {
+      margin-left: 0.75rem;
+      padding-left: calc(1rem + 0.75rem);
+      position: relative;
+    }
+
+    .filter-chip[data-cat="fav"]::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 1px;
+      height: 22px;
+      background: var(--border-ui);
+    }
+  }
+
   .filter-chip {
     white-space: nowrap;
     background: var(--bg-card);
@@ -328,6 +374,17 @@
     cursor: pointer;
     color: var(--text-muted);
     transition: all 0.2s;
+  }
+
+  .filter-chip:hover {
+    border-color: var(--brand-primary);
+    color: var(--brand-primary);
+  }
+
+  .filter-chip[aria-pressed="true"]:hover {
+    color: white;
+    border-color: var(--brand-primary-light);
+    background: var(--brand-primary-light);
   }
 
   .search-input-wrapper {
@@ -1168,7 +1225,7 @@
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
       </button>
     </div>
-    <div class="filter-bar" id="filterBar">
+    <div class="filter-bar" id="filterBar" role="group" aria-label="Filtrar por categoria de equipamento">
       <button class="filter-chip active" data-cat="all" aria-pressed="true">Todos os Equipamentos</button>
       <button class="filter-chip" data-cat="saude" aria-pressed="false">RAPS</button>
       <button class="filter-chip" data-cat="tea" aria-pressed="false">TEA / PcD</button>
@@ -2335,17 +2392,22 @@ function formatInformeDesc(desc) {
 // valor é do tipo "N/A - texto útil" (usado nos Informes para indicar que
 // não há endereço físico, mas há uma orientação de onde/como solicitar),
 // mostramos apenas o texto útil em vez de esconder a linha inteira.
+//
+// CORREÇÃO: a detecção do prefixo "N/A - " agora roda sobre o valor
+// ORIGINAL (com HTML) usando [\s\S] no lugar de "." — antes, o texto
+// exibido era reconstruído a partir da versão sem HTML (stripHtml),
+// então qualquer link/formatação depois do "N/A - " era descartado
+// silenciosamente, e valores com quebras de linha (<br>) faziam a
+// regex falhar (pois "." não casa com "\n"), deixando o "N/A - " visível.
 function informeMetaRow(icon, label, value) {
-  let display = value;
-  let clean = stripHtml(value || '').trim();
+  const raw = value || '';
+  let clean = stripHtml(raw).trim();
   if (!clean) return '';
 
-  const naPrefixMatch = clean.match(/^n\/a\s*[-–]\s*(.+)$/i);
-  if (naPrefixMatch) {
-    display = naPrefixMatch[1];
-    clean = naPrefixMatch[1].trim();
-  }
+  const naPrefixMatch = raw.match(/^\s*n\/a\s*[-–]\s*([\s\S]+)$/i);
+  const display = naPrefixMatch ? naPrefixMatch[1] : raw;
 
+  clean = stripHtml(display).trim();
   if (!clean || clean.toUpperCase() === 'N/A') return '';
   return `<div class="info-group">${icon}<div><span class="label-tech">${label}</span>${display}</div></div>`;
 }
