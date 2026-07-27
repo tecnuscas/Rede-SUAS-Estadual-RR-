@@ -308,13 +308,27 @@
     box-shadow: 0 0 0 3px rgba(0, 145, 194, 0.1);
   }
 
+  .filter-bar-wrapper {
+    position: relative;
+    margin-top: 1rem;
+  }
+
   .filter-bar {
     display: flex;
     gap: 0.5rem;
-    margin-top: 1rem;
     overflow-x: auto;
     padding-bottom: 0.5rem;
     scrollbar-width: none;
+    scroll-snap-type: x proximity;
+  }
+
+  .filter-bar::-webkit-scrollbar { display: none; }
+
+  @media (max-width: 767px) {
+    .filter-bar-wrapper {
+      -webkit-mask-image: linear-gradient(to right, transparent 0, black 20px, black calc(100% - 28px), transparent 100%);
+      mask-image: linear-gradient(to right, transparent 0, black 20px, black calc(100% - 28px), transparent 100%);
+    }
   }
 
   @media (min-width: 768px) {
@@ -367,13 +381,37 @@
     white-space: nowrap;
     background: var(--bg-card);
     border: 1px solid var(--border-ui);
-    padding: 0.5rem 1rem;
+    padding: 0.5rem 0.9rem;
     border-radius: 6px;
     font-size: 0.85rem;
     font-weight: 600;
     cursor: pointer;
     color: var(--text-muted);
     transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    scroll-snap-align: start;
+  }
+
+  .filter-chip .chip-icon {
+    display: inline-flex;
+    flex-shrink: 0;
+    opacity: 0.85;
+  }
+
+  .filter-chip .chip-icon svg { display: block; }
+
+  .filter-chip .chip-count {
+    font-size: 0.68rem;
+    font-weight: 800;
+    line-height: 1;
+    background: rgba(0, 145, 194, 0.1);
+    color: var(--brand-primary);
+    padding: 0.2rem 0.4rem;
+    border-radius: 999px;
+    min-width: 1.2em;
+    text-align: center;
   }
 
   .filter-chip:hover {
@@ -429,6 +467,11 @@
     background: var(--brand-primary);
     color: white;
     border-color: var(--brand-primary);
+  }
+
+  .filter-chip[aria-pressed="true"] .chip-count {
+    background: rgba(255, 255, 255, 0.25);
+    color: white;
   }
 
   .empty-state {
@@ -1297,21 +1340,79 @@
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
       </button>
     </div>
-    <div class="filter-bar" id="filterBar" role="group" aria-label="Filtrar por categoria de equipamento">
-      <button class="filter-chip active" data-cat="all" aria-pressed="true">Todos os Equipamentos</button>
-      <button class="filter-chip" data-cat="saude" aria-pressed="false">RAPS</button>
-      <button class="filter-chip" data-cat="tea" aria-pressed="false">TEA / PcD</button>
-      <button class="filter-chip" data-cat="social" aria-pressed="false">Assistência Social</button>
-      <button class="filter-chip" data-cat="educacao" aria-pressed="false">Educação</button>
-      <button class="filter-chip" data-cat="juridico" aria-pressed="false">Sistema Judicial</button>
-      <button class="filter-chip" data-cat="conselho" aria-pressed="false">Conselho Tutelar</button>
-      <button class="filter-chip" data-cat="bancos" aria-pressed="false">Rede Bancária</button>
-      <button class="filter-chip" data-cat="previdencia" aria-pressed="false">Previdência</button>
-      <button class="filter-chip" data-cat="informes" aria-pressed="false">📋 Informes</button>
-      <button class="filter-chip" data-cat="equipe" aria-pressed="false">👥 Equipe Técnica</button>
-      <button class="filter-chip" data-cat="cas" aria-pressed="false">🗂️ Atendimento CAS</button>
-      <button class="filter-chip" data-cat="cras" aria-pressed="false">🏢 Atendimento CRAS</button>
-      <button class="filter-chip" data-cat="fav" aria-pressed="false">⭐ Favoritos</button>
+    <div class="filter-bar-wrapper">
+      <div class="filter-bar" id="filterBar" role="group" aria-label="Filtrar por categoria de equipamento">
+        <button class="filter-chip active" data-cat="all" aria-pressed="true">
+          <span class="chip-icon" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></span>
+          <span>Todos os Equipamentos</span>
+          <span class="chip-count" id="count-all">0</span>
+        </button>
+        <button class="filter-chip" data-cat="saude" aria-pressed="false">
+          <span class="chip-icon" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></span>
+          <span>RAPS</span>
+          <span class="chip-count" id="count-saude">0</span>
+        </button>
+        <button class="filter-chip" data-cat="tea" aria-pressed="false">
+          <span class="chip-icon" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19.5 9.5a2.5 2.5 0 1 0-3.9-2.9A2.5 2.5 0 1 0 12 8a2.5 2.5 0 1 0-3.6-1.4A2.5 2.5 0 1 0 4.5 9.5a2.5 2.5 0 0 0 0 5 2.5 2.5 0 1 0 3.9 2.9 2.5 2.5 0 1 0 3.6-3.4 2.5 2.5 0 1 0 3.6 3.4 2.5 2.5 0 1 0 3.9-2.9 2.5 2.5 0 0 0 0-5Z"/></svg></span>
+          <span>TEA / PcD</span>
+          <span class="chip-count" id="count-tea">0</span>
+        </button>
+        <button class="filter-chip" data-cat="social" aria-pressed="false">
+          <span class="chip-icon" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+          <span>Assistência Social</span>
+          <span class="chip-count" id="count-social">0</span>
+        </button>
+        <button class="filter-chip" data-cat="educacao" aria-pressed="false">
+          <span class="chip-icon" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c0 1.5 3 3 6 3s6-1.5 6-3v-5"/></svg></span>
+          <span>Educação</span>
+          <span class="chip-count" id="count-educacao">0</span>
+        </button>
+        <button class="filter-chip" data-cat="juridico" aria-pressed="false">
+          <span class="chip-icon" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18"/><path d="M5 8h14"/><path d="M5 8 2 15a3 3 0 0 0 6 0Z"/><path d="M19 8l-3 7a3 3 0 0 0 6 0Z"/></svg></span>
+          <span>Sistema Judicial</span>
+          <span class="chip-count" id="count-juridico">0</span>
+        </button>
+        <button class="filter-chip" data-cat="conselho" aria-pressed="false">
+          <span class="chip-icon" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/></svg></span>
+          <span>Conselho Tutelar</span>
+          <span class="chip-count" id="count-conselho">0</span>
+        </button>
+        <button class="filter-chip" data-cat="bancos" aria-pressed="false">
+          <span class="chip-icon" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="21" x2="21" y2="21"/><line x1="5" y1="21" x2="5" y2="10"/><line x1="19" y1="21" x2="19" y2="10"/><line x1="12" y1="21" x2="12" y2="10"/><polygon points="12 2 21 8 3 8"/></svg></span>
+          <span>Rede Bancária</span>
+          <span class="chip-count" id="count-bancos">0</span>
+        </button>
+        <button class="filter-chip" data-cat="previdencia" aria-pressed="false">
+          <span class="chip-icon" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"/><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"/><path d="M18 12a2 2 0 0 0 0 4h4v-4Z"/></svg></span>
+          <span>Previdência</span>
+          <span class="chip-count" id="count-previdencia">0</span>
+        </button>
+        <button class="filter-chip" data-cat="informes" aria-pressed="false">
+          <span class="chip-icon" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></span>
+          <span>Informes</span>
+          <span class="chip-count" id="count-informes">0</span>
+        </button>
+        <button class="filter-chip" data-cat="equipe" aria-pressed="false">
+          <span class="chip-icon" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+          <span>Equipe Técnica</span>
+          <span class="chip-count" id="count-equipe">0</span>
+        </button>
+        <button class="filter-chip" data-cat="cas" aria-pressed="false">
+          <span class="chip-icon" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg></span>
+          <span>Atendimento CAS</span>
+          <span class="chip-count" id="count-cas">0</span>
+        </button>
+        <button class="filter-chip" data-cat="cras" aria-pressed="false">
+          <span class="chip-icon" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="1"/><line x1="9" y1="6" x2="9" y2="6.01"/><line x1="15" y1="6" x2="15" y2="6.01"/><line x1="9" y1="10" x2="9" y2="10.01"/><line x1="15" y1="10" x2="15" y2="10.01"/><line x1="9" y1="14" x2="9" y2="14.01"/><line x1="15" y1="14" x2="15" y2="14.01"/></svg></span>
+          <span>Atendimento CRAS</span>
+          <span class="chip-count" id="count-cras-panel">0</span>
+        </button>
+        <button class="filter-chip" data-cat="fav" aria-pressed="false">
+          <span class="chip-icon" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
+          <span>Favoritos</span>
+          <span class="chip-count" id="count-fav">0</span>
+        </button>
+      </div>
     </div>
   </div>
 </div>
@@ -2751,11 +2852,56 @@ function renderCrasCard(i, query) {
   `;
 }
 
+function updateChipCounts() {
+  const favs = safeStorage.getJSON('favs', []);
+  const counts = {
+    all: DATA.length, saude: 0, tea: 0, social: 0, educacao: 0, juridico: 0,
+    conselho: 0, bancos: 0, previdencia: 0, informes: 0, equipe: 0, cas: 0,
+    cras: 0, fav: favs.length
+  };
+  DATA.forEach(i => {
+    if (i.cat.includes('saude')) counts.saude++;
+    if (i.cat.includes('tea')) counts.tea++;
+    if (i.cat.includes('social') || i.cat.includes('idoso')) counts.social++;
+    if (i.cat.includes('educacao')) counts.educacao++;
+    if (i.cat.includes('juridico')) counts.juridico++;
+    if (i.cat.includes('conselho')) counts.conselho++;
+    if (i.cat.includes('bancos')) counts.bancos++;
+    if (i.cat.includes('previdencia')) counts.previdencia++;
+    if (i.cat.includes('informes')) counts.informes++;
+    if (i.cat.includes('equipe')) counts.equipe++;
+    if (i.cat.includes('cas')) counts.cas++;
+    if (i.cat.includes('cras')) counts.cras++;
+  });
+
+  const setCount = (id, value) => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = value;
+  };
+
+  setCount('count-all', counts.all);
+  setCount('count-saude', counts.saude);
+  setCount('count-tea', counts.tea);
+  setCount('count-social', counts.social);
+  setCount('count-educacao', counts.educacao);
+  setCount('count-juridico', counts.juridico);
+  setCount('count-conselho', counts.conselho);
+  setCount('count-bancos', counts.bancos);
+  setCount('count-previdencia', counts.previdencia);
+  setCount('count-informes', counts.informes);
+  setCount('count-equipe', counts.equipe);
+  setCount('count-cas', counts.cas);
+  setCount('count-cras-panel', counts.cras);
+  setCount('count-fav', counts.fav);
+}
+
 function render() {
   const query = document.getElementById('mainSearch').value.toLowerCase();
   const cat = document.querySelector('.filter-chip.active').dataset.cat;
   const favs = safeStorage.getJSON('favs', []);
   const grid = document.getElementById('grid');
+
+  updateChipCounts();
 
   const filtered = DATA.filter(i => {
     const isEquipe = i.cat.includes('equipe');
@@ -3086,7 +3232,7 @@ function printGuide(id) {
 
             <span style="font-size:0.65rem; font-weight:800; color:#475569; text-transform:uppercase; letter-spacing:0.03em; margin-bottom:6px; display:block;">Conduta e Orientações Técnicas</span>
             <div id="printNoteBox" style="flex-grow:1; padding:14px; border:1.5px solid #0F172A; border-radius:4px; font-size:15px; line-height:1.5; white-space:pre-wrap; background:rgba(17,94,89,0.02); overflow:hidden;">${escapeHtml(note)}</div>
-            ${pdfAttach ? `<div style="margin-top:8px; font-size:0.72rem; font-weight:700; color:#475569;">📎 Anexo digital em PDF: ${escapeHtml(pdfAttach.name || 'documento.pdf')} (incluído nas páginas seguintes desta impressão).</div>` : ''}
+            ${pdfAttach ? `<div style="margin-top:8px; font-size:0.72rem; font-weight:700; color:#475569;">📎 Anexo digital em PDF: ${escapeHtml(pdfAttach.name || 'documento.pdf')} (incluído na página seguinte desta impressão).</div>` : ''}
           </div>
 
           <div style="display:flex; flex-direction:column; height:100%;">
@@ -3140,28 +3286,18 @@ function printGuide(id) {
     </div>
   ` : '';
 
-  // Anexo em PDF: em vez de abrir em aba separada (comportamento anterior,
-  // que fazia o PDF "sair fora" da impressão da ficha), ele agora é
-  // embutido como página extra dentro da própria área de impressão, via
-  // <embed>, usando o visualizador de PDF nativo do navegador. Como esse
-  // carregamento é assíncrono, o disparo do window.print() é adiado até
-  // o "load" do embed (ou um tempo-limite de segurança), lá embaixo.
+  // Anexo em PDF: página só com o PDF puro (sem cabeçalho nem moldura
+  // igual à primeira folha) — uma simples unificação do anexo ao guia
+  // impresso, via <embed> com o visualizador nativo do navegador. Como
+  // esse carregamento é assíncrono, o disparo do window.print() é adiado
+  // até o "load" do embed (ou um tempo-limite de segurança), lá embaixo.
+  // Observação: <embed type="application/pdf"> depende do visualizador
+  // nativo — funciona bem em Chrome/Edge/Firefox desktop, mas não é
+  // suportado no Safari mobile (iOS); nesses casos, use o link "Abrir PDF"
+  // do próprio cartão para visualizar/imprimir o documento separadamente.
   const pdfPage = pdfAttach ? `
-    <div class="print-page" style="position:relative; padding:0.9cm 1.1cm; box-sizing:border-box; display:flex; flex-direction:column; background:white; border:2px solid #0F172A;">
-      <div style="position:absolute; inset:0.25cm; border:1px solid #94A3B8; pointer-events:none;"></div>
-      <div style="position:relative; z-index:1; display:flex; flex-direction:column; height:100%;">
-        <table style="width:100%; border-collapse:collapse; margin-bottom:10px; table-layout:fixed;">
-          <tr>
-            <td style="border:1.5px solid #0F172A; padding:8px 14px;">
-              <div style="font-size:1rem; font-weight:800; color:#0F172A;">ANEXO EM PDF</div>
-              <div style="font-size:0.68rem; font-weight:700; color:#475569; text-transform:uppercase;">${escapeHtml(pdfAttach.name || 'documento.pdf')}</div>
-            </td>
-          </tr>
-        </table>
-        <div style="flex-grow:1; border:1.5px solid #0F172A; border-radius:4px; overflow:hidden; background:#F8FAFC;">
-          <embed id="printPdfEmbed" src="${pdfAttach.data}" type="application/pdf" style="width:100%; height:100%; display:block;">
-        </div>
-      </div>
+    <div class="print-page" style="padding:0; margin:0; background:white;">
+      <embed id="printPdfEmbed" src="${pdfAttach.data}" type="application/pdf" style="width:100%; height:100%; display:block;">
     </div>
   ` : '';
 
@@ -3192,11 +3328,7 @@ function printGuide(id) {
   // de chamar window.print(), para o conteúdo do PDF já estar renderizado
   // na hora da impressão. Um tempo-limite de segurança garante que a
   // impressão aconteça mesmo se o evento "load" não disparar em algum
-  // navegador. Observação: <embed type="application/pdf"> depende do
-  // visualizador nativo do navegador — funciona bem em Chrome/Edge/Firefox
-  // desktop, mas não é suportado no Safari mobile (iOS); nesses casos, use
-  // o link "Abrir PDF" do próprio cartão para visualizar/imprimir o
-  // documento separadamente.
+  // navegador.
   if (pdfAttach) {
     const embedEl = document.getElementById('printPdfEmbed');
     let printed = false;
