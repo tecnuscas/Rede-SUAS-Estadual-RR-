@@ -628,6 +628,78 @@
     text-align: center;
   }
 
+  .pdf-preview {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    border: 1.5px solid var(--border-ui);
+    border-radius: 8px;
+    padding: 0.85rem 1rem;
+    background: var(--bg-main);
+  }
+
+  .pdf-preview .pdf-icon-box {
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    background: rgba(220, 38, 38, 0.1);
+    color: #DC2626;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .pdf-preview .pdf-info {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+
+  .pdf-preview .pdf-filename {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--text-main);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+  }
+
+  .pdf-preview .pdf-open-link {
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--brand-primary);
+    text-decoration: none;
+  }
+
+  .pdf-preview .pdf-open-link:hover {
+    text-decoration: underline;
+  }
+
+  .pdf-preview .pdf-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    flex-shrink: 0;
+  }
+
+  .pdf-preview .image-remove-btn {
+    position: static;
+    width: 28px;
+    height: 28px;
+    background: rgba(15, 23, 42, 0.08);
+    color: var(--text-muted);
+  }
+
+  .pdf-preview .image-remove-btn:hover {
+    background: #DC2626;
+    color: white;
+  }
+
   .card-actions {
     padding: 1.25rem;
     display: grid;
@@ -2265,10 +2337,11 @@ const ICONS = {
   cash: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="3"/><path d="M6 9v0"/><path d="M18 15v0"/></svg>',
   barchart: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>',
   excel: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/><line x1="8" y1="13" x2="12" y2="18"/><line x1="12" y1="13" x2="8" y2="18"/></svg>',
-  cloud: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>'
+  cloud: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>',
+  pdf: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/><text x="6.5" y="17.5" font-size="6.5" fill="currentColor" stroke="none" font-family="Inter, sans-serif" font-weight="800">PDF</text></svg>'
 };
 
-const MAX_IMAGE_BYTES = 5 * 1024 * 1024; // 5 MB
+const MAX_ATTACH_BYTES = 5 * 1024 * 1024; // 5 MB (imagem ou PDF)
 
 // Wrapper seguro de localStorage: evita que o app inteiro quebre quando o
 // armazenamento não está disponível (modo privado do Safari, cookies
@@ -2758,17 +2831,28 @@ function render() {
       return renderCrasCard(i, query);
     }
 
-    const imgData = safeStorage.get('img_'+i.id);
-    const imageBlock = imgData
-      ? `<div class="image-preview">
-           <img src="${imgData}" alt="Anexo de ${i.name}">
-           <button type="button" class="image-remove-btn" title="Remover imagem" onclick="removeImage('${i.id}')">✕</button>
-         </div>`
+    const attach = getAttachment(i.id);
+    const imageBlock = attach
+      ? (attach.type === 'pdf'
+          ? `<div class="pdf-preview">
+               <span class="pdf-icon-box">${ICONS.pdf}</span>
+               <div class="pdf-info">
+                 <span class="pdf-filename" title="${escapeHtml(attach.name || 'documento.pdf')}">${escapeHtml(attach.name || 'documento.pdf')}</span>
+                 <a class="pdf-open-link" href="${attach.data}" target="_blank" rel="noopener noreferrer">Abrir PDF</a>
+               </div>
+               <div class="pdf-actions">
+                 <button type="button" class="image-remove-btn" title="Remover anexo" onclick="removeAttachment('${i.id}')">✕</button>
+               </div>
+             </div>`
+          : `<div class="image-preview">
+               <img src="${attach.data}" alt="Anexo de ${i.name}">
+               <button type="button" class="image-remove-btn" title="Remover imagem" onclick="removeAttachment('${i.id}')">✕</button>
+             </div>`)
       : `<label class="btn-tech btn-secondary image-upload-label">
-           ${ICONS.image} Anexar Imagem
-           <input type="file" accept="image/*" style="display:none" onchange="handleImageUpload(event, '${i.id}')">
+           ${ICONS.image} Anexar Imagem ou PDF
+           <input type="file" accept="image/*,application/pdf" style="display:none" onchange="handleAttachUpload(event, '${i.id}')">
          </label>
-         <div class="image-attach-hint">Formatos de imagem, até 5MB</div>`;
+         <div class="image-attach-hint">Imagem ou PDF, até 5MB</div>`;
 
     const isInforme = i.cat.includes('informes');
 
@@ -2855,41 +2939,69 @@ function showImageError(id, msg) {
   }
 }
 
-function handleImageUpload(event, id) {
+// Lê o anexo salvo (imagem ou PDF) de um item. Mantém compatibilidade com
+// registros salvos no formato antigo (chave "img_<id>" contendo só a
+// dataURL da imagem, sem JSON), convertendo-os automaticamente para o
+// novo formato { type, data, name } na primeira leitura.
+function getAttachment(id) {
+  const raw = safeStorage.get('attach_'+id);
+  if (raw) {
+    try {
+      const parsed = JSON.parse(raw);
+      if (parsed && parsed.data) return parsed;
+    } catch (e) {
+      // ignora e cai no fallback legado abaixo
+    }
+  }
+  const legacyImg = safeStorage.get('img_'+id);
+  if (legacyImg) return { type: 'image', data: legacyImg, name: null };
+  return null;
+}
+
+function setAttachment(id, type, data, name) {
+  return safeStorage.set('attach_'+id, JSON.stringify({ type, data, name: name || null }));
+}
+
+function handleAttachUpload(event, id) {
   const file = event.target.files && event.target.files[0];
   if (!file) return;
 
   const errorEl = document.getElementById('img-error-'+id);
   if (errorEl) { errorEl.style.display = 'none'; errorEl.textContent = ''; }
 
-  if (!file.type.startsWith('image/')) {
-    showImageError(id, 'Selecione um arquivo de imagem válido.');
+  const isImage = file.type.startsWith('image/');
+  const isPdf = file.type === 'application/pdf';
+
+  if (!isImage && !isPdf) {
+    showImageError(id, 'Selecione uma imagem ou um arquivo PDF válido.');
     event.target.value = '';
     return;
   }
 
-  if (file.size > MAX_IMAGE_BYTES) {
+  if (file.size > MAX_ATTACH_BYTES) {
     const sizeMb = (file.size / (1024*1024)).toFixed(1);
-    showImageError(id, `Imagem muito grande (${sizeMb}MB). O limite é 5MB.`);
+    showImageError(id, `Arquivo muito grande (${sizeMb}MB). O limite é 5MB.`);
     event.target.value = '';
     return;
   }
 
   const reader = new FileReader();
   reader.onload = function() {
-    if (safeStorage.set('img_'+id, reader.result)) {
+    const type = isPdf ? 'pdf' : 'image';
+    if (setAttachment(id, type, reader.result, file.name)) {
       render();
     } else {
-      showImageError(id, 'Não foi possível salvar a imagem (limite de armazenamento do navegador atingido).');
+      showImageError(id, 'Não foi possível salvar o anexo (limite de armazenamento do navegador atingido).');
     }
   };
   reader.onerror = function() {
-    showImageError(id, 'Falha ao ler o arquivo de imagem.');
+    showImageError(id, 'Falha ao ler o arquivo.');
   };
   reader.readAsDataURL(file);
 }
 
-function removeImage(id) {
+function removeAttachment(id) {
+  safeStorage.remove('attach_'+id);
   safeStorage.remove('img_'+id);
   render();
 }
@@ -2916,7 +3028,9 @@ function share(id) {
 function printGuide(id) {
   const i = DATA.find(x => x.id === id);
   const note = safeStorage.get('note_'+id) || 'Avaliação técnica e conduta especializada indicadas.';
-  const imgData = safeStorage.get('img_'+id);
+  const attach = getAttachment(id);
+  const imgData = (attach && attach.type === 'image') ? attach.data : null;
+  const pdfAttach = (attach && attach.type === 'pdf') ? attach : null;
   const date = new Date().toLocaleDateString('pt-BR', {day:'numeric', month:'long', year:'numeric'});
 
   const countLines = (txt) => (String(txt).match(/<br>/g) || []).length + 1;
@@ -2972,6 +3086,7 @@ function printGuide(id) {
 
             <span style="font-size:0.65rem; font-weight:800; color:#475569; text-transform:uppercase; letter-spacing:0.03em; margin-bottom:6px; display:block;">Conduta e Orientações Técnicas</span>
             <div id="printNoteBox" style="flex-grow:1; padding:14px; border:1.5px solid #0F172A; border-radius:4px; font-size:15px; line-height:1.5; white-space:pre-wrap; background:rgba(17,94,89,0.02); overflow:hidden;">${escapeHtml(note)}</div>
+            ${pdfAttach ? `<div style="margin-top:8px; font-size:0.72rem; font-weight:700; color:#475569;">📎 Anexo digital em PDF: ${escapeHtml(pdfAttach.name || 'documento.pdf')} (disponível no sistema; aberto em aba própria para impressão em separado).</div>` : ''}
           </div>
 
           <div style="display:flex; flex-direction:column; height:100%;">
@@ -3047,6 +3162,15 @@ function printGuide(id) {
   }
 
   printArea.style.cssText = '';
+
+  // Quando há um PDF anexado, ele não pode ser embutido na página impressa
+  // (CSS/print não renderiza o conteúdo de um PDF), então é aberto em uma
+  // aba própria para que o usuário possa visualizá-lo/imprimi-lo separado,
+  // enquanto a ficha principal segue para a impressão normalmente.
+  if (pdfAttach) {
+    window.open(pdfAttach.data, '_blank', 'noopener');
+  }
+
   window.print();
 }
 
