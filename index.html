@@ -3086,7 +3086,7 @@ function printGuide(id) {
 
             <span style="font-size:0.65rem; font-weight:800; color:#475569; text-transform:uppercase; letter-spacing:0.03em; margin-bottom:6px; display:block;">Conduta e Orientações Técnicas</span>
             <div id="printNoteBox" style="flex-grow:1; padding:14px; border:1.5px solid #0F172A; border-radius:4px; font-size:15px; line-height:1.5; white-space:pre-wrap; background:rgba(17,94,89,0.02); overflow:hidden;">${escapeHtml(note)}</div>
-            ${pdfAttach ? `<div style="margin-top:8px; font-size:0.72rem; font-weight:700; color:#475569;">📎 Anexo digital em PDF: ${escapeHtml(pdfAttach.name || 'documento.pdf')} (disponível no sistema; aberto em aba própria para impressão em separado).</div>` : ''}
+            ${pdfAttach ? `<div style="margin-top:8px; font-size:0.72rem; font-weight:700; color:#475569;">📎 Anexo digital em PDF: ${escapeHtml(pdfAttach.name || 'documento.pdf')} (incluído nas páginas seguintes desta impressão).</div>` : ''}
           </div>
 
           <div style="display:flex; flex-direction:column; height:100%;">
@@ -3140,8 +3140,33 @@ function printGuide(id) {
     </div>
   ` : '';
 
+  // Anexo em PDF: em vez de abrir em aba separada (comportamento anterior,
+  // que fazia o PDF "sair fora" da impressão da ficha), ele agora é
+  // embutido como página extra dentro da própria área de impressão, via
+  // <embed>, usando o visualizador de PDF nativo do navegador. Como esse
+  // carregamento é assíncrono, o disparo do window.print() é adiado até
+  // o "load" do embed (ou um tempo-limite de segurança), lá embaixo.
+  const pdfPage = pdfAttach ? `
+    <div class="print-page" style="position:relative; padding:0.9cm 1.1cm; box-sizing:border-box; display:flex; flex-direction:column; background:white; border:2px solid #0F172A;">
+      <div style="position:absolute; inset:0.25cm; border:1px solid #94A3B8; pointer-events:none;"></div>
+      <div style="position:relative; z-index:1; display:flex; flex-direction:column; height:100%;">
+        <table style="width:100%; border-collapse:collapse; margin-bottom:10px; table-layout:fixed;">
+          <tr>
+            <td style="border:1.5px solid #0F172A; padding:8px 14px;">
+              <div style="font-size:1rem; font-weight:800; color:#0F172A;">ANEXO EM PDF</div>
+              <div style="font-size:0.68rem; font-weight:700; color:#475569; text-transform:uppercase;">${escapeHtml(pdfAttach.name || 'documento.pdf')}</div>
+            </td>
+          </tr>
+        </table>
+        <div style="flex-grow:1; border:1.5px solid #0F172A; border-radius:4px; overflow:hidden; background:#F8FAFC;">
+          <embed id="printPdfEmbed" src="${pdfAttach.data}" type="application/pdf" style="width:100%; height:100%; display:block;">
+        </div>
+      </div>
+    </div>
+  ` : '';
+
   const printArea = document.getElementById('print-area');
-  printArea.innerHTML = firstPage + secondPage;
+  printArea.innerHTML = firstPage + secondPage + pdfPage;
 
   // #print-area fica com display:none fora do modo de impressão, então
   // medir scrollHeight/clientHeight agora daria sempre 0x0 e o ajuste de
@@ -3163,15 +3188,30 @@ function printGuide(id) {
 
   printArea.style.cssText = '';
 
-  // Quando há um PDF anexado, ele não pode ser embutido na página impressa
-  // (CSS/print não renderiza o conteúdo de um PDF), então é aberto em uma
-  // aba própria para que o usuário possa visualizá-lo/imprimi-lo separado,
-  // enquanto a ficha principal segue para a impressão normalmente.
+  // Quando há PDF anexado, espera o <embed> carregar (evento "load") antes
+  // de chamar window.print(), para o conteúdo do PDF já estar renderizado
+  // na hora da impressão. Um tempo-limite de segurança garante que a
+  // impressão aconteça mesmo se o evento "load" não disparar em algum
+  // navegador. Observação: <embed type="application/pdf"> depende do
+  // visualizador nativo do navegador — funciona bem em Chrome/Edge/Firefox
+  // desktop, mas não é suportado no Safari mobile (iOS); nesses casos, use
+  // o link "Abrir PDF" do próprio cartão para visualizar/imprimir o
+  // documento separadamente.
   if (pdfAttach) {
-    window.open(pdfAttach.data, '_blank', 'noopener');
+    const embedEl = document.getElementById('printPdfEmbed');
+    let printed = false;
+    const triggerPrint = () => {
+      if (printed) return;
+      printed = true;
+      window.print();
+    };
+    if (embedEl) {
+      embedEl.addEventListener('load', triggerPrint, { once: true });
+    }
+    setTimeout(triggerPrint, 900);
+  } else {
+    window.print();
   }
-
-  window.print();
 }
 
 function exportData() {
