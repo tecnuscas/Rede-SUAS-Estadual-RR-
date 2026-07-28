@@ -1234,6 +1234,23 @@
   }
 
   #print-area { display: none; }
+
+  /* Dimensões da página impressa (A4 paisagem: 29,7cm x 21cm, menos 0,5cm
+     de margem de cada lado definida em @page = 28,7cm x 20cm de área útil).
+     Isso precisa valer FORA de @media print também: a função printGuide()
+     mede a altura do texto de anotações (noteBox.scrollHeight vs
+     clientHeight) fora da tela, em modo "tela" (screen), para decidir se
+     deve reduzir a fonte antes de imprimir. Se essas dimensões só existirem
+     dentro de @media print, a medição ocorre sem nenhuma altura de
+     referência, o container cresce para caber qualquer texto e o ajuste
+     automático de fonte nunca é acionado — anotações longas saem cortadas
+     silenciosamente na impressão (a caixa tem overflow:hidden). */
+  #print-area .print-page {
+    width: 28.7cm;
+    height: 20cm;
+    overflow: hidden;
+  }
+
   @media print {
     @page { size: landscape; margin: 0.5cm; }
 
@@ -1252,9 +1269,6 @@
     }
 
     #print-area .print-page {
-      width: 28.7cm;
-      height: 20cm;
-      overflow: hidden;
       page-break-after: always;
     }
     #print-area .print-page:last-child {
@@ -2379,14 +2393,13 @@ const DATA = [
     hours: "Segunda a sexta, 08:00 às 18:00",
     phones: ["(95) 98402-6617"],
     services: "Acesso rápido a sistemas municipais de gestão, sistemas federais do Bolsa Família/CadÚnico, gestão de atendimentos (RMA) e pastas compartilhadas da equipe no Google Drive.",
-    desc: "Painel de atalhos técnicos do CRAS para uso interno da equipe, reunindo sistemas municipais (BV Cidadão, Cidade Social, Contracheque, Banco de Talentos, Cédula C, Calendário PMBV), sistemas federais (SIBEC, SIGPBF, Carteira do Idoso, CadÚnico, calendários de condicionalidades e pagamento do PBF), a gestão de atendimentos via RMA e as nuvens de arquivos de cada técnico no Google Drive.",
+    desc: "Painel de atalhos técnicos do CRAS para uso interno da equipe, reunindo sistemas municipais (BV Cidadão, Cidade Social, Contracheque, Banco de Talentos, Cédula C), sistemas federais (SIBEC, SIGPBF, Carteira do Idoso, CadÚnico, calendários de condicionalidades e pagamento do PBF), a gestão de atendimentos via RMA e as nuvens de arquivos de cada técnico no Google Drive.",
     municipalLinks: [
       { label: "BV Cidadão", icon: "badge", url: "https://bvcidadao.prefeitura.boavista.br/proton/login.asp" },
       { label: "Cidade Social", icon: "building", url: "https://cidadesocial1.ae3tecnologia.com.br/login" },
       { label: "Contracheque (SIPWEB)", icon: "layers", url: "http://sipweb.boavista.rr.gov.br:8080/sipweb/trabalhador/login/login.xhtml" },
       { label: "Banco de Talentos", icon: "activity", url: "https://bt.pmbv.rr.gov.br/SMT73/open.do?sys=SMT" },
-      { label: "Cédula C", icon: "filebinary", url: "http://servicos.boavista.rr.gov.br/cedulac/" },
-      { label: "Calendário PMBV 2026", icon: "kanban", url: "CPMBV 2026.HTML" }
+      { label: "Cédula C", icon: "filebinary", url: "http://servicos.boavista.rr.gov.br/cedulac/" }
     ],
     federalLinks: [
       { label: "SIBEC (Caixa)", icon: "bank", url: "https://www.beneficiossociais.caixa.gov.br/sibec2/sisgrSibec" },
@@ -2584,6 +2597,29 @@ function informeMetaRow(icon, label, value) {
   clean = stripHtml(display).trim();
   if (!clean || clean.toUpperCase() === 'N/A') return '';
   return `<div class="info-group">${icon}<div><span class="label-tech">${label}</span>${display}</div></div>`;
+}
+
+// Prepara um campo (endereço, horário ou telefone) para a Ficha de
+// Encaminhamento impressa: remove o prefixo "N/A - texto útil" (mesma
+// regra usada acima em informeMetaRow para os cartões de Informes) e,
+// se o campo for exatamente "N/A" — sem nenhum texto útil —, devolve um
+// texto de fallback profissional em vez do valor cru.
+//
+// CORREÇÃO: até então, printGuide() usava i.address/i.hours/i.phones
+// diretamente, sem essa limpeza. Isso fazia a ficha impressa (um
+// documento oficial, assinado, endereçado a outra unidade/instituição)
+// sair com "N/A" cru no campo Horário/Contato, ou com o prefixo técnico
+// "N/A - " ainda visível no Endereço (ex.: "N/A - Solicitação pelo Meu
+// INSS"), inconsistente com o que já era exibido no card em tela.
+function cleanPrintField(value, fallback) {
+  const raw = value || '';
+  const naPrefixMatch = raw.match(/^\s*n\/a\s*[-–]\s*([\s\S]+)$/i);
+  const display = naPrefixMatch ? naPrefixMatch[1] : raw;
+  const clean = stripHtml(display).trim();
+  if (!clean || clean.toUpperCase() === 'N/A') {
+    return fallback;
+  }
+  return display;
 }
 
 // Renderiza o cartão especial da categoria "Equipe Técnica", reunindo a
@@ -3179,9 +3215,18 @@ function printGuide(id) {
   const pdfAttach = (attach && attach.type === 'pdf') ? attach : null;
   const date = new Date().toLocaleDateString('pt-BR', {day:'numeric', month:'long', year:'numeric'});
 
+  // Textos já limpos para impressão (ver cleanPrintField acima). Isso
+  // corrige o "N/A" cru e o prefixo técnico "N/A - " que apareciam sem
+  // tratamento na Ficha de Encaminhamento — um documento oficial e
+  // assinado, que precisa de linguagem profissional mesmo quando o dado
+  // de origem não tem endereço/horário/telefone reais.
+  const addressDisplay = cleanPrintField(i.address, 'Endereço não informado — consultar coordenação.');
+  const hoursDisplay = cleanPrintField(i.hours, 'A confirmar diretamente com a unidade.');
+  const phonesDisplay = cleanPrintField(i.phones.join('<br>'), 'Não informado — consultar coordenação.');
+
   const countLines = (txt) => (String(txt).match(/<br>/g) || []).length + 1;
-  const addressLines = countLines(i.address);
-  const phoneLines = countLines(i.phones.join('<br>'));
+  const addressLines = countLines(addressDisplay);
+  const phoneLines = countLines(phonesDisplay);
   const addressFontSize = addressLines <= 2 ? 13 : addressLines <= 4 ? 10.5 : 8.5;
   const phoneFontSize = phoneLines <= 1 ? 16 : phoneLines <= 3 ? 11.5 : 9;
 
@@ -3239,15 +3284,15 @@ function printGuide(id) {
             <table style="width:100%; border-collapse:collapse; table-layout:fixed;">
               <tr>
                 <td style="background:#F1F5F9; border-bottom:1.5px solid #0F172A; padding:8px 8px; font-size:0.6rem; font-weight:800; text-transform:uppercase; letter-spacing:0.02em; width:64px; white-space:nowrap; vertical-align:top;">Endereço</td>
-                <td style="border-bottom:1.5px solid #0F172A; padding:8px 10px; font-size:${addressFontSize}px; line-height:1.4; vertical-align:top; color:#1E293B; font-weight:700;">${i.address}</td>
+                <td style="border-bottom:1.5px solid #0F172A; padding:8px 10px; font-size:${addressFontSize}px; line-height:1.4; vertical-align:top; color:#1E293B; font-weight:700;">${addressDisplay}</td>
               </tr>
               <tr>
                 <td style="background:#F1F5F9; border-bottom:1.5px solid #0F172A; padding:8px 8px; font-size:0.6rem; font-weight:800; text-transform:uppercase; letter-spacing:0.02em; white-space:nowrap; vertical-align:top;">Horário</td>
-                <td style="border-bottom:1.5px solid #0F172A; padding:8px 10px; font-size:0.82rem; vertical-align:top; color:#1E293B; font-weight:700;">${i.hours}</td>
+                <td style="border-bottom:1.5px solid #0F172A; padding:8px 10px; font-size:0.82rem; vertical-align:top; color:#1E293B; font-weight:700;">${hoursDisplay}</td>
               </tr>
               <tr>
                 <td style="background:#F1F5F9; padding:8px 8px; font-size:0.6rem; font-weight:800; text-transform:uppercase; letter-spacing:0.02em; white-space:nowrap; vertical-align:top;">Contato</td>
-                <td style="padding:8px 10px; font-size:${phoneFontSize}px; line-height:1.4; vertical-align:top; color:#0091C2; font-weight:800;">${i.phones.join('<br>')}</td>
+                <td style="padding:8px 10px; font-size:${phoneFontSize}px; line-height:1.4; vertical-align:top; color:#0091C2; font-weight:800;">${phonesDisplay}</td>
               </tr>
             </table>
           </div>
