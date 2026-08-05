@@ -1209,30 +1209,141 @@
   }
 
   footer.site-footer {
-    margin-top: 3rem;
-    padding: 2rem 0 2.5rem;
+    margin-top: 3.5rem;
+    padding: 0;
     background: var(--brand-secondary);
     color: #94A3B8;
-    text-align: center;
+    position: relative;
+    overflow: hidden;
   }
 
-  footer.site-footer p {
+  .footer-flag-line {
+    height: 4px;
+    background: linear-gradient(
+      90deg,
+      #0091C2 0%, #0091C2 34%,
+      #FFFFFF 34%, #FFFFFF 40%,
+      #009739 40%, #009739 92%,
+      #ED1C24 92%, #ED1C24 100%
+    );
+    opacity: 0.85;
+  }
+
+  .footer-inner {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    padding: 2.25rem 1.5rem 2.5rem;
+    flex-wrap: wrap;
+  }
+
+  .footer-badge {
+    position: relative;
+    flex-shrink: 0;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--brand-primary-light);
+    background: rgba(0, 145, 194, 0.12);
+    border: 1px solid rgba(41, 171, 226, 0.35);
+  }
+
+  .footer-badge::after {
+    content: "";
+    position: absolute;
+    inset: -5px;
+    border-radius: 50%;
+    border: 1px solid rgba(41, 171, 226, 0.15);
+  }
+
+  .footer-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .footer-name {
     margin: 0;
-    font-size: 0.85rem;
-    letter-spacing: 0.02em;
-  }
-
-  footer.site-footer .footer-name {
     font-family: var(--font-serif);
     font-weight: 700;
     font-style: italic;
-    color: var(--brand-primary-light);
-    font-size: 1rem;
+    color: #F1F5F9;
+    font-size: 1.1rem;
+    letter-spacing: 0.01em;
   }
 
-  footer.site-footer .footer-sep {
+  .footer-meta {
+    margin: 0;
+    font-size: 0.82rem;
+    letter-spacing: 0.02em;
+    color: #94A3B8;
+  }
+
+  .footer-meta .footer-sep {
     color: #475569;
     margin: 0 0.5rem;
+  }
+
+  .footer-brand {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.2rem;
+    margin-left: auto;
+    padding-left: 1.5rem;
+    border-left: 1px solid rgba(148, 163, 184, 0.18);
+    text-align: right;
+  }
+
+  .footer-brand-mark {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--brand-primary-light);
+  }
+
+  .footer-brand-suas {
+    font-family: var(--font-sans);
+    font-style: normal;
+    font-weight: 700;
+    font-size: 0.6em;
+    color: #94A3B8;
+    letter-spacing: 0.05em;
+    margin-left: 0.3em;
+  }
+
+  .footer-tagline {
+    font-size: 0.66rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #64748B;
+  }
+
+  @media (max-width: 640px) {
+    .footer-inner {
+      flex-direction: column;
+      text-align: center;
+      gap: 1.1rem;
+      padding: 2rem 1.5rem 2.25rem;
+    }
+    .footer-text { align-items: center; }
+    .footer-brand {
+      align-items: center;
+      text-align: center;
+      margin-left: 0;
+      padding-left: 0;
+      border-left: none;
+      border-top: 1px solid rgba(148, 163, 184, 0.18);
+      padding-top: 1.1rem;
+      width: 100%;
+    }
   }
 
   .sr-only {
@@ -1466,16 +1577,23 @@
 </main>
 
 <footer class="site-footer">
-  <div class="container">
-    <p>
-      <span class="footer-name">Paulo Xavier</span>
-      <span class="footer-sep">·</span>
-      <span>CRP-20/09816</span>
-      <span class="footer-sep">·</span>
-      <span>Psicólogo</span>
-      <span class="footer-sep">·</span>
-      <span>Boa Vista, RR</span>
-    </p>
+  <div class="footer-flag-line" aria-hidden="true"></div>
+  <div class="container footer-inner">
+    <div class="footer-badge" aria-hidden="true">Ψ</div>
+    <div class="footer-text">
+      <p class="footer-name">Paulo Xavier</p>
+      <p class="footer-meta">
+        <span>CRP-20/09816</span>
+        <span class="footer-sep">·</span>
+        <span>Psicólogo</span>
+        <span class="footer-sep">·</span>
+        <span>Boa Vista, RR</span>
+      </p>
+    </div>
+    <div class="footer-brand">
+      <span class="footer-brand-mark">Argo<span class="footer-brand-suas">SUAS</span></span>
+      <span class="footer-tagline">Rede de Políticas Públicas de Roraima</span>
+    </div>
   </div>
 </footer>
 
@@ -3027,6 +3145,28 @@ const DATA = [
     phones: ["N/A"],
     services: "Atividades para o envelhecimento saudável.",
     desc: "Desenvolve atividades que contribuem para o envelhecimento saudável. Requisitos: • Ter 60 anos ou mais; • Estar inscrito no CadÚnico.<br>Atividades: atividades recreativas; acesso a informações e orientações; orientação psicológica, social e pedagógica.<br>Benefícios: bolsa; camiseta e lanche."
+  },
+  {
+    id: "tarifa-social-energia",
+    name: "Tarifa Social de Energia",
+    fullName: "Tarifa Social de Energia Elétrica (TSEE) e Desconto Social",
+    cat: ["informes"],
+    address: "Av. Capitão Ene Garcez, 691 - Centro, Boa Vista-RR, 69301-160",
+    hours: "N/A",
+    phones: ["N/A - consultar SAC no verso da fatura de energia"],
+    services: "Desconto na conta de luz para famílias de baixa renda.",
+    desc: "A Tarifa Social de Energia Elétrica (TSEE) reduz o valor da conta de luz para famílias de baixa renda, com base em normas da ANEEL atualizadas pela Lei nº 15.269/2025. Requisitos (basta atender a um): • Família inscrita no CadÚnico com renda mensal por pessoa de até meio salário mínimo; • Família com idoso ou pessoa com deficiência beneficiário do BPC/LOAS; • Família inscrita no CadÚnico com renda de até 3 salários mínimos, que tenha morador com doença ou deficiência cujo tratamento exija uso contínuo de aparelhos elétricos (mediante laudo médico); • Famílias indígenas ou quilombolas inscritas no CadÚnico, sem exigência de renda.<br>Desde 2026, existe também o Desconto Social, para famílias com renda per capita entre meio e 1 salário mínimo, com tarifa reduzida até 120 kWh de consumo.<br>Atividades: famílias com consumo de até 80 kWh/mês têm 100% de desconto na tarifa de energia; acima disso, paga-se apenas o valor excedente. O desconto incide só sobre a tarifa de energia — encargos, tributos e iluminação pública continuam sendo cobrados.<br>⚠️ Observações técnicas: a conta de luz precisa estar no nome de alguém da família beneficiada, com o mesmo CPF cadastrado no CadÚnico; o cadastro social precisa estar atualizado (prazo máximo de 24 meses) para o benefício não ser suspenso; cada família tem direito ao benefício em apenas uma unidade consumidora.<br>Canais para solicitação: • Verificar se a fatura já traz a classificação 'RESIDENCIAL BAIXA RENDA'; • Caso não conste, procurar o CRAS do bairro para atualizar o CadÚnico (ou o INSS, se o critério for o BPC) e depois contatar a Âmbar Energia (distribuidora local) para regularizar o cadastro tarifário."
+  },
+  {
+    id: "tarifa-social-agua-caer",
+    name: "Tarifa Social de Água (CAER)",
+    fullName: "Tarifa Social de Água e Esgoto – CAER",
+    cat: ["informes"],
+    address: "R. Melvin Jones, 219 - São Pedro, Boa Vista-RR, 69306-610",
+    hours: "N/A",
+    phones: ["0800-280-9520"],
+    services: "Desconto na conta de água e esgoto para famílias de baixa renda.",
+    desc: "A Tarifa Social de Água e Esgoto, prevista na Lei Federal nº 14.898/2024 e regulamentada localmente pela CAER (Companhia de Águas e Esgotos de Roraima), garante desconto de 50% sobre a tarifa de água e esgoto até um determinado volume mensal de consumo para famílias de baixa renda.<br>Requisitos: • Família inscrita no CadÚnico com renda mensal por pessoa de até meio salário mínimo, ou com integrante beneficiário do BPC/LOAS; • Cadastro atualizado no CadÚnico; • Unidade consumidora sem débitos pendentes com a CAER; • Em caso de imóvel alugado, apresentar contrato de locação vigente.<br>⚠️ Observações técnicas: a concessão pode ser cancelada caso vistoria constate divergência entre os dados declarados e a situação real do imóvel, retornando o usuário à tarifa residencial normal; a CAER também realiza ações itinerantes em bairros para cadastramento de famílias e renegociação de débitos.<br>Canais para solicitação: • E-mail: atendimento@caer.com.br; • Central telefônica: 0800-280-9520; • Presencialmente em uma Loja de Atendimento da CAER, com CadÚnico atualizado e documentos pessoais."
   },
   {
     id: "equipe-cras-cristiana",
